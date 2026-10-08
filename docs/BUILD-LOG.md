@@ -10,7 +10,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 | Milestone | Commit | Headline (measured) | The break worth telling |
 |---|---|---|---|
-| Phase 0 · scaffold | [TKTK] | — | — |
+| Phase 0 · scaffold | `b01f044` | — | — |
 
 ---
 
