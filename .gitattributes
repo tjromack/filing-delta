@@ -1,0 +1,4 @@
+# Pin LF everywhere: manifests and golden files are compared byte-for-byte.
+* text=auto eol=lf
+*.htm -text
+*.html -text

@@ -45,7 +45,10 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   live outside Python. That makes them harder to test and to read.
 - **Why:** the playbook names "REST integration under real rate limits" as a gap this build closes, so the client
   *is* part of the evidence. `curl` stays available for one-off bulk pulls such as golden fixtures.
-- **Rate ceiling:** [TKTK — set at M1. Conservative, documented, and asserted in a test.]
+- **Rate ceiling:** **5 req/s**, half of SEC's 10 (set at M1). `RateLimiter` refuses anything above 10, and
+  `test_rate_ceiling_is_never_exceeded` asserts no more than 5 requests in any 1-second window. A 429's
+  `Retry-After` pauses the limiter itself, so the wait applies to every request that follows. A 403 is never
+  retried, because SEC uses it for undeclared or abusive clients, and retrying would make it worse.
 
 ## FD-DEC 005 — Cite-or-abstain is a type, not a prompt instruction (2026-10-08)
 **Status:** Decided.
@@ -79,7 +82,7 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   exact model outputs.
 
 ## FD-DEC 008 — Corpus: companies, filing types, date range (2026-10-08)
-**Status:** *Proposed at M0 after the 18-document survey (`docs/design/section-parser.md` §1). Awaiting the lock.*
+**Status:** Decided. Locked 2026-10-08 after the 18-document survey (`docs/design/section-parser.md` §1).
 
 - **Companies (11).** Chosen so that each layout archetype is covered, not by market cap: Apple, Coca-Cola, Netflix,
   Walmart (January FYE), Pfizer, Ford (running headers), Weyco Group (small cap, four filer agents), Berkshire
@@ -102,7 +105,7 @@ citation/abstention report. If the check isn't written, the milestone isn't done
 **Status:** Decided (the default was accepted when the scaffold was approved, matching clear-pricer).
 
 ## FD-DEC 010 — Section parser: two independent signals, reconciled; lxml (2026-10-08)
-**Status:** *Proposed. See `docs/design/section-parser.md`.*
+**Status:** Decided. Approved 2026-10-08. See `docs/design/section-parser.md`.
 
 - **Decision:** locate boundaries with a heading-grammar scan *and* TOC-anchor resolution, then reconcile them.
   Handle the pointer-stub, cross-reference-index and pointer-out archetypes explicitly. Every (filing, section)
@@ -111,3 +114,17 @@ citation/abstention report. If the check isn't written, the milestone isn't done
 - **Alternative rejected:** heading regex alone. The TOC, running headers and archetypes B and C all defeat it
   silently. **Also rejected:** TOC anchors alone. They're missing in the Weyco 10-Q and wrong in GE FY2018.
 - **Why:** with two signals, a disagreement becomes a logged `partial` instead of a silently wrong boundary.
+
+## FD-DEC 011 — Corpus windows: 10-K by period of report; amendments excluded (2026-10-08)
+**Status:** Decided (M1).
+
+- **Decision:** a 10-K is in the corpus when its *period of report* is in 2018-01-01..2025-12-31. That gives eight
+  annual reports per filer whatever the fiscal year end (Apple ends in September, Walmart in January). A 10-Q is in
+  when its *filing date* is in 2025-01-01..2026-09-30. Forms are matched exactly, so 10-K/A and 10-Q/A are excluded.
+  The windows live in `corpus.toml`, and `corpus/manifest.csv` (committed) lists every accession ingested, with its
+  sha256.
+- **Alternative rejected:** windows by filing date for 10-Ks. A January-FYE filer then lands its "2025" report in
+  2026, and the per-filer year counts stop lining up.
+- **Alternative rejected:** including amendments. 10-K/As are often partial (Part III only, or a single exhibit),
+  and they'd break year-over-year pairing. If one turns out to restate Item 1A or Item 7, that's a known limitation
+  to state, not something to handle silently.

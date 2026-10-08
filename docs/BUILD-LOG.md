@@ -12,6 +12,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 |---|---|---|---|
 | Phase 0 · scaffold | `b01f044` | — | — |
 | M0 · parser design | `0c9f22e` | 18 docs / 11 filers surveyed; 4 layout archetypes | Item 7 is a one-sentence pointer at JPM and Exxon |
+| M1 · EDGAR client | [TKTK] | 144 filings / 681 MB; warm re-run = 0 requests; 25 tests | 90 of 245 cold requests were paged history (71 JPM) |
 
 ---
 
@@ -83,3 +84,47 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - **Stop:** approval of the parser design and the corpus lock (FD-DEC 008, 010).
 - Then M1: the EDGAR client (rate limiter, cache, 429-storm test).
+
+---
+
+## 2026-10-08 — M1 (EDGAR client + locked corpus fetched)
+
+### What happened
+- Corpus (FD-DEC 008) and parser design (FD-DEC 010) approved and locked.
+- Built `filing_delta/edgar/`. A `RateLimiter` (5 req/s, injectable clock). A `ResponseCache`: per-URL, sha256-checked
+  on read, atomic writes, only 200s cached. `EdgarClient`: a required "Name email" User-Agent; cache → limiter →
+  network → retry; equal-jitter exponential back-off; `Retry-After` honored in both delta-seconds and HTTP-date form
+  and applied as a *global* limiter pause; 403 never retried; an offline mode. `submissions.py`: recent plus paged
+  history, de-duplicated by accession, with pure `select()` against `corpus.toml`. A `filing-delta fetch` CLI writes
+  `corpus/manifest.csv`.
+- 25 tests, all with a scripted `httpx.MockTransport` and a fake clock (no network, no real sleeping; the suite
+  runs in 0.24 s).
+- Fetched the locked corpus: **144 filings (88 10-K, 56 10-Q), 681 MB**. Every filer has exactly 8 10-Ks. The 10-Qs
+  are 5 per filer, except Apple's 6 (its fiscal quarters put two filings in January). The cold fetch made 245 requests
+  with 0 retries, and 19.1 s of the run time was rate-limit sleep.
+
+### Decisions
+- FD-DEC 004 is now complete: a **5 req/s** ceiling, the global pause on `Retry-After`, and no retry on 403.
+- FD-DEC 011: 10-Ks are windowed by *period of report*, so every filer gets 8 whatever its FYE, and amendments are
+  excluded. `corpus/manifest.csv` (committed) is the record of exactly what was ingested.
+
+### Learnings
+- **Most of the cold fetch's requests weren't filings.** 90 of 245 were paged submissions history, 71 of them JPM's
+  alone. (JPM files enormous numbers of structured-note prospectuses.) Each page lists its `filingFrom`/`filingTo`,
+  so pages that end before the window are now skipped. Under the new rule the warm offline re-run touched 215 URLs
+  (144 docs + 11 heads + 60 pages), so 30 requests are saved on any future cold fetch. The manifest was unchanged.
+- Only **12 of 144** documents are pre-iXBRL; issuers adopted iXBRL faster than the FY2018 window start suggested.
+  The pre-iXBRL era is therefore thin. The parser goldens should include several of those 12 on purpose.
+- `uv pip install -e ".[dev]" --native-tls` works for the whole dependency set through the proxy.
+
+### What broke (+ fix)
+- Nothing broke in the client itself. The first test run was green, so I mutation-checked it rather than trust it:
+  ignoring `Retry-After` → 2 tests fail; retrying 403 → 1 fails. Replacing the global limiter pause with an inline
+  sleep → **0 fail**. That's an *equivalent* mutant in a single-threaded client (both delay the next request
+  identically), not a gap. It would stop being equivalent if fetching ever went concurrent, and then that test
+  needs a concurrent variant.
+
+### Open / next
+- **Stop:** approval of M1.
+- Then M2: implement the approved section parser, with hand-verified boundary goldens (Trevor confirms them) and the
+  published parse-success rate.

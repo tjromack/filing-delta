@@ -1,0 +1,29 @@
+[project]
+name = "filing-delta"
+version = "0.1.0"
+description = "Deterministic period-over-period diffs of SEC filing narrative sections, plus cite-or-abstain grounded QA."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Trevor J. Romack" }]
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28,<0.29",
+    "truststore>=0.10",
+    "lxml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=9.0"]
+
+[project.scripts]
+filing-delta = "filing_delta.cli:main"
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["filing_delta*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

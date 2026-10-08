@@ -1,0 +1,70 @@
+# The locked corpus (FD-DEC 008, 2026-10-08). The single source of truth for what is ingested.
+# Companies were chosen to cover the four section layouts in docs/design/section-parser.md, not by size.
+
+[windows.10-K]
+# By period of report (the fiscal period end), inclusive. That gives 8 annual reports per filer whatever its fiscal
+# year end: Apple ends in September, Walmart in January.
+period_from = "2018-01-01"
+period_to = "2025-12-31"
+
+[windows.10-Q]
+# By filing date, inclusive.
+filed_from = "2025-01-01"
+filed_to = "2026-09-30"
+
+# Amendments (10-K/A, 10-Q/A) are excluded: they are often partial and would break year-over-year pairing.
+
+[[company]]
+cik = 320193
+name = "Apple Inc."
+archetype = "A"
+
+[[company]]
+cik = 21344
+name = "Coca-Cola Co"
+archetype = "A"
+
+[[company]]
+cik = 1065280
+name = "Netflix Inc"
+archetype = "A"
+
+[[company]]
+cik = 104169
+name = "Walmart Inc."
+archetype = "A"   # January FYE; straight quotes
+
+[[company]]
+cik = 78003
+name = "Pfizer Inc"
+archetype = "A"
+
+[[company]]
+cik = 37996
+name = "Ford Motor Co"
+archetype = "A"   # "(Continued)" running headers
+
+[[company]]
+cik = 106532
+name = "Weyco Group Inc"
+archetype = "A"   # small cap; four filer agents; &#146; entities; 10-Q without TOC links
+
+[[company]]
+cik = 1067983
+name = "Berkshire Hathaway Inc"
+archetype = "A"
+
+[[company]]
+cik = 19617
+name = "JPMorgan Chase & Co"
+archetype = "B"   # Item 7 is a pointer stub; 10-Q Part II Item 1A points out to the 10-K (D)
+
+[[company]]
+cik = 34088
+name = "Exxon Mobil Corp"
+archetype = "B"   # Item 7 points to the Financial Section
+
+[[company]]
+cik = 40545
+name = "General Electric Co"
+archetype = "C"   # cross-reference index; the deliberate stress case

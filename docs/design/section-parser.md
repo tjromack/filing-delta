@@ -1,6 +1,6 @@
 # Section-parser design (M0)
 
-**Status:** proposed, awaiting approval. No parser code exists yet.
+**Status:** approved 2026-10-08 (FD-DEC 010). Implementation is M2.
 **Scope:** extract **Item 1A (Risk Factors)** and **Item 7 (MD&A)** from 10-K primary documents, and
 **Part II Item 1A** and **Part I Item 2 (MD&A)** from 10-Qs. Produce canonical text with stable offsets, a
 recorded outcome for every (filing, section), and enough evidence to audit each decision.

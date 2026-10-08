@@ -27,15 +27,17 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       that only says "no material changes")
 - [x] `docs/design/section-parser.md` — strategy, outcome model (`ok`/`partial`/`failed` + reasons), offsets
       contract (the char spans that citations depend on), and golden-fixture plan
-- [ ] Lock the corpus: companies, filing types, exact date range (FD-DEC 008) (proposed; awaiting approval)
-- [ ] **Gate:** design doc approved, corpus locked. **← stop**
+- [x] Lock the corpus: companies, filing types, exact date range (FD-DEC 008)
+- [x] **Gate:** design doc approved, corpus locked (2026-10-08).
 
-## M1 — EDGAR client
-- [ ] Required `EDGAR_USER_AGENT`; token-bucket rate ceiling (FD-DEC 004); content-addressed cache; back-off honoring `Retry-After`
-- [ ] Fetch by CIK and form type through the submissions API; resolve primary documents
-- [ ] **Tests:** a simulated 429 storm (injected transport) asserts back-off, an eventual success, and that the rate
-      ceiling is never exceeded; a second run against a warm cache makes **zero** network requests
-- [ ] **Gate:** locked corpus fetched; re-run = 0 requests (measured). **← stop**
+## M1 — EDGAR client ✅ (2026-10-08)
+- [x] Required `EDGAR_USER_AGENT`; rate ceiling 5 req/s (FD-DEC 004); content-addressed, sha256-checked cache; back-off honoring `Retry-After`
+- [x] Fetch by CIK and form type through the submissions API (paged history; pre-window pages skipped); primary documents resolved
+- [x] **Tests (25):** a simulated 429 storm (injected transport, fake clock) asserts back-off, Retry-After, an eventual success and a global
+      pause; the rate ceiling is never exceeded; 403 is never retried; 404/storm responses are not cached; warm cache = **zero** requests;
+      offline mode never touches the network; a corrupted cache entry is detected. Mutation-checked (2 of 3 mutants killed; the 3rd is equivalent)
+- [x] **Gate:** locked corpus fetched: 144 filings (88 10-K, 56 10-Q), 681 MB, `corpus/manifest.csv`; warm re-run = 0 network requests,
+      manifest byte-identical. **← stop**
 
 ## M2 — section parser (Item 1A, Item 7) with failure logging
 - [ ] Implement the approved design; pure core, no I/O

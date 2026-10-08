@@ -31,8 +31,9 @@ deterministic processing from model judgment, and scoring the model half.
   what that means for a security, and nothing it outputs is forward-looking.
 - **It doesn't claim financial-analysis expertise.** "Material" here is a labeled text-change category, not a legal
   or accounting materiality determination.
-- **It doesn't cover anything outside its ingested corpus.** Coverage: filing types **[TKTK]**, companies **[TKTK]**,
-  date range **[TKTK]**. Questions outside that range get an abstention.
+- **It doesn't cover anything outside its ingested corpus.** Coverage: **10-K** with a period of report from 2018-01-01 to
+  2025-12-31, and **10-Q** filed 2025-01-01 to 2026-09-30, for **11 companies** (`corpus.toml`; every accession in
+  `corpus/manifest.csv`). Amendments are excluded. Questions outside that range get an abstention.
 - It doesn't parse exhibits, financial statements or XBRL tables as narrative. XBRL company facts are joined as
   context only.
 
@@ -49,7 +50,7 @@ deterministic processing from model judgment, and scoring the model half.
 | Golden-file diff tests | The diff is deterministic and correct on known pairs | [TKTK] |
 | Material/cosmetic confusion matrix vs. hand labels | How good the model judgment is, and where it's wrong | [TKTK] |
 | `spancheck` citation + abstention report | Answers cite real spans and abstain when they should | [TKTK] |
-| Simulated 429 storm | The EDGAR client backs off and recovers without breaking fair access | [TKTK] |
+| Simulated 429 storm | The EDGAR client backs off and recovers without breaking fair access | Passing (`tests/test_edgar_client.py`); warm re-run of the full corpus = 0 requests |
 
 ## Data
 
