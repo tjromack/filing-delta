@@ -230,3 +230,21 @@ table-cell joining need). Note that `uv pip install --native-tls` works through 
   distribution that justified them.
 - **Sub-heading ranks inside a followed pointer** (where JPM's MD&A ends) depend on the in-document TOC structure.
   JPM states the page range ("pages 46–160"), so the page map can act as a cross-check there.
+
+---
+
+## 5. Amendments during implementation (M2, 2026-10-08)
+
+The approved design held. Running it over the full corpus refined it in these places; each is a DECISIONS entry:
+
+- **A third section kind, `absent`** (FD-DEC 012): a verified omission is neither a success nor a failure.
+- **Following a pointer uses running-header extent** (FD-DEC 013), checked against any page range the pointer states.
+- **TOC-anchored sections end after their TOC group** (FD-DEC 014), with GE's cross-reference index as the check.
+- **Furniture rules tightened** (FD-DEC 015) after two rules were found deleting real content.
+- **Running headers that are Item headings.** Berkshire's 10-Q prints "Item 2. Management's Discussion…" atop every
+  MD&A page, so the first occurrence is the heading. "(Continued)" headers never are.
+- **Title lines and run-in headings.** A bare title line directly under the heading or anchor ("RISK FACTORS") is
+  excluded from the text. A run-in heading paragraph ("RISK FACTORS. The following…", GE 2020+) is kept.
+- **The archetype C page check** turned out to be practical: GE's footers read "2025 FORM 10-K 23",
+  "GE 2020 FORM 10-K 44" or "2025 2Q FORM 10-Q 5", and the lenient footer reader handles all three.
+- **Exhibit incorporation was real** (Pfizer FY2018–19). It is `failed: exhibit_incorporation`, as §3 anticipated.

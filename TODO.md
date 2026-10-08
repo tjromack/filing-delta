@@ -39,11 +39,16 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] **Gate:** locked corpus fetched: 144 filings (88 10-K, 56 10-Q), 681 MB, `corpus/manifest.csv`; warm re-run = 0 network requests,
       manifest byte-identical. **← stop**
 
-## M2 — section parser (Item 1A, Item 7) with failure logging
-- [ ] Implement the approved design; pure core, no I/O
-- [ ] Every filing → `ok` / `partial` / `failed` + reason → `docs/parse-failures.md` + parse-success rate
-- [ ] **Golden-file tests** on hand-verified section boundaries across filers and eras
-- [ ] **Gate:** published parse-success rate over the full corpus; every failure explained. **← stop**
+## M2 — section parser (Item 1A, Item 7) with failure logging (2026-10-08) — awaiting golden confirmation
+- [x] Implement the approved design; pure core, no I/O (`filing_delta/parse/`: blocks → headings/furniture → locate)
+- [x] Every filing → `ok` / `partial` / `failed` (+ `absent`, FD-DEC 012) + reasons → `docs/parse-failures.md` +
+      `docs/parse-report.md` (`filing-delta parse`, byte-reproducible)
+- [x] 22 mechanism tests, one per layout mechanism, plus a regression test for every bug found during M2
+- [x] **Golden-file tests**: 28 sections from 14 filings across every archetype and era (`tests/golden/sections.json`)
+- [ ] **Trevor confirms the 28 golden boundaries** (`docs/golden-review.md`). Until then they're "proposed": they
+      catch any change in the parser's output, but they don't yet prove the boundaries are correct.
+- [x] **Gate:** parse-success rate over the full corpus is published (270/272 present = 99.3%; 16 absent; the 2
+      failures are Pfizer FY2018–19 exhibit incorporation, explained). **← stop**
 
 ## M3 — paragraph diff + alignment
 - [ ] Paragraph segmentation; alignment across periods (unchanged / reworded / moved / added / removed)

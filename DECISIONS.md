@@ -128,3 +128,52 @@ citation/abstention report. If the check isn't written, the milestone isn't done
 - **Alternative rejected:** including amendments. 10-K/As are often partial (Part III only, or a single exhibit),
   and they'd break year-over-year pairing. If one turns out to restate Item 1A or Item 7, that's a known limitation
   to state, not something to handle silently.
+
+## FD-DEC 012 — A third section kind: `absent` (2026-10-08)
+**Status:** Decided (M2; an amendment to the FD-DEC 010 design).
+
+- **Decision:** a section the filer verifiably omitted is recorded as `outcome=ok, form_kind=absent`, with the
+  evidence that proves the omission. That means either a 10-Q whose Part II items are found without an Item 1A and
+  no "risk factors" heading anywhere in Part II (Exxon and Ford 10-Qs from Q2 2025, Weyco 2026), or a
+  cross-reference-index row that says "Not applicable" (GE 10-Qs). The published parse-success rate is `ok`/present;
+  absent sections are counted in their own column and are neither successes nor failures.
+- **Alternative rejected:** recording them as `failed: no_heading`. That turns a correct reading into a failure and
+  hides the difference between "the parser couldn't find it" and "the filer didn't include it".
+- **Alternative rejected:** counting them as successes. That would inflate the rate with sections that have no text.
+
+## FD-DEC 013 — Following a pointer: running-header extent, checked against stated pages (2026-10-08)
+**Status:** Decided (M2).
+
+- **Decision:** when Item 7 is a one-line pointer (JPM, Exxon), the target section is the run of pages whose running
+  header carries its title. It starts at the first header and ends at the page break after the last one. If the
+  pointer states a page range ("appears on pages 46–160"), title lines on those pages count even when they aren't
+  running headers. Occurrences outside the range are dropped. The page numbers printed inside the slice are then
+  compared with the stated range, and a mismatch downgrades the result to `partial`.
+- **Alternative rejected:** ending at the next TOC anchor. On Exxon that ended the MD&A after 1,300 characters,
+  because the first "anchor" was a line in Exxon's Financial Section TOC.
+- **Alternative rejected:** ending at the next Item heading. Exxon's and JPM's MD&As sit *after* Item 15, in the
+  financial section, so that ran to the end of the document.
+
+## FD-DEC 014 — TOC-anchored sections end after their TOC group (2026-10-08)
+**Status:** Decided (M2).
+
+- **Decision:** where a section has no Item heading (GE everywhere; JPM's 10-Q MD&A), the start is its named TOC
+  anchor. The end is the next anchor target *after the section's TOC group*: its own entry plus the entries nested
+  under it. Nesting means indented deeper (GE 2020+), or, in an Item-style TOC, entries up to the next Item or Part
+  line (JPM 10-Q). For a TOC with no hierarchy around the section (GE 2018–19), the group is every entry that starts
+  before the last page the cross-reference index gives for the item; that rule is recorded as
+  `end_from_index_pages`. GE's index page ranges then verify every GE section against its printed page footers.
+- **Alternative rejected:** the next TOC line as the end. That cuts an MD&A at its first subsection (GE 2025:
+  472 characters).
+- **Alternative rejected:** the next TOC line *in TOC order*. JPM's 10-Q prints the MD&A before the financial
+  statements but lists it after them, so this would have swallowed the financial statements.
+
+## FD-DEC 015 — Running headers need consecutive pages; page numbers need a page break (2026-10-08)
+**Status:** Decided (M2; both found as content-loss bugs during the corpus runs).
+
+- **Decision:** short text counts as a running header/footer only if it recurs at least three times in a chain of
+  occurrences each within two pages of the previous. A bare number counts as a page number only if it sits next to
+  a page break (or, in a document with no page-break markup, outside any multi-cell table row).
+- **What it fixed:** the earlier "repeated three times near a page break" rule deleted JPM 2020's real "COVID-19
+  Pandemic" subheading, which sat atop three pages far apart, and then read it as "page 19". The earlier "any bare
+  1–3 digit block" rule deleted numeric cells from MD&A tables (Weyco's MD&A regained 64 characters of numbers).

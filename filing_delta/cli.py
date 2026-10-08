@@ -58,6 +58,28 @@ def cmd_fetch(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_parse(args: argparse.Namespace) -> int:
+    from .parse.report import run, write_reports
+
+    rows = run(ROOT, CACHE_DIR, ROOT / "data" / "sections")
+    write_reports(rows, ROOT / "docs")
+    present = [r for r in rows if r.form_kind != "absent"]
+    ok = sum(r.outcome == "ok" for r in present)
+    print(f"{len(rows)} sections ({len(present)} present): ok {ok}, "
+          f"partial {sum(r.outcome == 'partial' for r in present)}, failed {sum(r.outcome == 'failed' for r in present)}"
+          f" -> docs/parse-report.md, docs/parse-failures.md")
+    return 0
+
+
+def cmd_golden(args: argparse.Namespace) -> int:
+    from .parse.golden import propose
+
+    n, confirmed = propose(ROOT, CACHE_DIR)
+    print(f"{n} golden sections ({confirmed} human-confirmed, {n - confirmed} proposed) -> tests/golden/sections.json,"
+          f" docs/golden-review.md")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     load_env()
     p = argparse.ArgumentParser(prog="filing-delta")
@@ -65,6 +87,10 @@ def main(argv: list[str] | None = None) -> int:
     f = sub.add_parser("fetch", help="fetch the locked corpus (cache-first) and write corpus/manifest.csv")
     f.add_argument("--offline", action="store_true", help="never touch the network; fail on any cache miss")
     f.set_defaults(func=cmd_fetch)
+    pa = sub.add_parser("parse", help="parse every cached filing; write docs/parse-report.md + docs/parse-failures.md")
+    pa.set_defaults(func=cmd_parse)
+    g = sub.add_parser("golden", help="propose golden boundaries for review (never overwrites confirmed ones)")
+    g.set_defaults(func=cmd_golden)
     args = p.parse_args(argv)
     return args.func(args)
 

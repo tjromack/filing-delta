@@ -42,6 +42,9 @@ This is **BUILD 3** of the portfolio slate: the second regulated vertical, the f
 - **TLS-inspecting corporate proxy.** Python `requests`/`httpx` (and Node/uv) fail cert verification on this machine,
   while `curl` (which uses the OS trust store) works. For Python HTTPS, call `truststore.inject_into_ssl()` before any
   client is built. For one-off bulk downloads, prefer `curl`. Don't spend time debugging TLS.
+- **Don't patch regex source through a shell heredoc + Python string.** On M2 this wrote `\b` into the
+  file as a literal backspace (0x08) and doubled other backslashes, and the regexes silently stopped matching. Use the
+  Edit tool for code edits.
 - **uv through the proxy:** `uv pip install --native-tls …` works.
 - **`spancheck` comes from PyPI** (`pip install spancheck`), pinned in `pyproject.toml`. Do not vendor or fork it.
   If it lacks something, open an issue on spancheck itself.

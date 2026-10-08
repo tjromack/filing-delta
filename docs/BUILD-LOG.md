@@ -13,6 +13,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | Phase 0 · scaffold | `b01f044` | — | — |
 | M0 · parser design | `0c9f22e` | 18 docs / 11 filers surveyed; 4 layout archetypes | Item 7 is a one-sentence pointer at JPM and Exxon |
 | M1 · EDGAR client | `df70a0d` | 144 filings / 681 MB; warm re-run = 0 requests; 25 tests | 90 of 245 cold requests were paged history (71 JPM) |
+| M2 · section parser | [TKTK] | 270/272 present sections ok (99.3%), 16 absent, 2 failed (exhibit); 28 goldens proposed | lxml reused element ids and merged table rows; two furniture rules deleted real content |
 
 ---
 
@@ -128,3 +129,63 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - **Stop:** approval of M1.
 - Then M2: implement the approved section parser, with hand-verified boundary goldens (Trevor confirms them) and the
   published parse-success rate.
+
+---
+
+## 2026-10-08 — M2 (section parser + published parse rate)
+
+### What happened
+- M1 approved. Built `filing_delta/parse/` to the approved design:
+  - `blocks.py`: decoding, C1 remap, and a block stream that never drops text sitting beside child blocks.
+  - `headings.py`: the heading grammar, furniture, and TOC detection.
+  - `locate.py`: two signals reconciled, archetypes B/C/D, the outcome model, and the sanity gates.
+  - `report.py` / `golden.py`: published outputs.
+  - New CLI commands: `filing-delta parse` and `filing-delta golden`.
+- Ran the parser over all 144 filings after every change and read the failures in the filings themselves before
+  touching code. The first full pass had 10 failed and 41 partial sections. The final pass has
+  **270 of 272 present sections `ok` (99.3%)**, 16 verified-absent, 0 partial, and 2 failed. The two failures are
+  Pfizer FY2018–19, whose MD&A is incorporated from the annual "Financial Report" exhibit, as design §3 anticipated.
+- **The 99.3% is the parser grading itself through its sanity gates. It is not proof.** So I read the first and
+  last characters of every 10-K section. That turned up two more defects (a trailing "Parts I and II" heading in
+  JPM's Item 1A, and title lines left at the top of GE 2018–19) and cleared one suspect: Netflix 2019's MD&A really
+  does end on a table. The real check is the 28 golden boundaries, which Trevor confirms in `docs/golden-review.md`.
+- Tests: 22 mechanism tests plus 28 golden sections plus a hygiene test, on top of M1's 25. The suite has 77 tests.
+
+### Decisions
+- FD-DEC 012 (`absent` kind), 013 (pointer → running-header extent, checked against stated pages), 014
+  (TOC-group end; GE's index as the check), 015 (furniture rules tightened). Design §5 lists the amendments.
+
+### Learnings
+- **The page check earned its keep.** Once GE's cross-reference index page ranges were compared with the page
+  footers inside each slice, every boundary rule that looked fine by eye but was wrong got caught: GE's MD&A cut at
+  its first subsection, JPM 2019–20 picking up the MD&A header on pages outside the MD&A, and GE 2018–19's flat TOC.
+- **Two "furniture" rules were deleting real content.** One treated any bare number as a page number, which ate
+  table cells. The other treated anything repeated three times near a page break as a running header, which ate
+  JPM's "COVID-19 Pandemic" subheading. Both now need structural evidence (FD-DEC 015). Removing text is the
+  dangerous operation, so it needs the strictest rules.
+- **The 10-Q Part II Item 1A is often simply not there** (Exxon, Ford, Weyco 2026). Which section kinds can exist
+  turned out to be a design question, not a parsing detail.
+- Real layouts beat the design's guesses in a few places. JPM prints its MD&A title once, then ~38 pages of segment
+  headers, then the title again on alternate pages. Berkshire repeats the Item 2 heading as the running header. GE
+  runs its headings into the first paragraph.
+
+### What broke (+ fix)
+- **lxml proxy ids.** Table rows were keyed by `id()` of lxml element proxies, which lxml reuses after garbage
+  collection, so unrelated rows merged. That produced GE's "Item 1C. Cybersecurity 23 Part III" and Exxon's missing
+  headings. Fixed with a row counter; `test_rows_are_never_merged_across_tables` builds 3,000 tables to keep it
+  fixed.
+- **Backspace characters in regex source.** Patching code through a shell heredoc turned `\b` into 0x08, three
+  times, and the regexes silently stopped matching (the GE page check found nothing; the Part-entry rule never
+  fired). Fixed with the Edit tool. Now a CLAUDE.md gotcha plus `test_repo_hygiene.py`.
+- **A silently skipped check.** The first index page check never ran on GE, because its rows say "7-22" without the
+  word "pages". Fixed, and a range that can't be checked is now recorded as `page_range_not_stated` instead of
+  passing quietly.
+- **The tightened title-line rule.** A fixture showed a one-sentence pointer stub starting with "Management's
+  discussion and analysis…" being dropped as a "title". The corpus escaped only because JPM's stubs are long. The
+  rule now requires a bare title (title plus at most 60 characters, no sentence).
+- **A false alarm on coverage.** Weyco's 94–98% "text coverage" was 3,422 zero-width spaces that my metric counted
+  and the block stream rightly treats as whitespace.
+
+### Open / next
+- **Stop:** Trevor confirms (or corrects) the 28 golden boundaries in `docs/golden-review.md`, then approves M2.
+- Then M3: paragraph segmentation and the deterministic period-over-period diff.
