@@ -67,7 +67,7 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   infrastructure. Hardcoding the model id has already broken once (`claude-sonnet-5` was deprecated).
 
 ## FD-DEC 007 — Keyless reproducibility via recorded model responses (2026-10-08)
-**Status:** *Proposed.*
+**Status:** Decided (the default was accepted when the scaffold was approved on 2026-10-08).
 
 - **Decision:** cache every model request/response by a hash of (provider, model, prompt, params). Ship the cache,
   together with the EDGAR cache for the locked corpus, as a GitHub Release artifact. A cold clone then reproduces the
@@ -79,12 +79,35 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   exact model outputs.
 
 ## FD-DEC 008 — Corpus: companies, filing types, date range (2026-10-08)
-**Status:** *Open. To be locked at M0 after looking at real filings, not picked blind.*
+**Status:** *Proposed at M0 after the 18-document survey (`docs/design/section-parser.md` §1). Awaiting the lock.*
 
-- **Proposal to confirm:** about 8–12 companies across 4–5 sectors, mixing filer agents and HTML eras (including at
-  least one older, pre-iXBRL-styled filer as a parser stress case). 10-K Item 1A and Item 7 for 3–5 consecutive
-  fiscal years, plus 10-Q Part II Item 1A over the same window.
+- **Companies (11).** Chosen so that each layout archetype is covered, not by market cap: Apple, Coca-Cola, Netflix,
+  Walmart (January FYE), Pfizer, Ford (running headers), Weyco Group (small cap, four filer agents), Berkshire
+  Hathaway, JPMorgan Chase (pointer stub, plus a 10-Q that points out to the 10-K), Exxon Mobil (pointer to the
+  Financial Section), and General Electric (cross-reference index, the deliberate stress case).
+- **10-K:** fiscal years **2018–2025**, eight per company and seven year-over-year diffs. The range crosses the
+  2019–2021 iXBRL transition (the parser has to survive both eras) and the FY2019→FY2020 pandemic risk-factor
+  rewrite (real, large drift to classify).
+- **10-Q:** filed **2025-01-01 → 2026-09-30**. Part II Item 1A and Part I Item 2.
+- **Alternative rejected:** the most recent 3 years only. It's cheaper, but it has a single HTML era and no large
+  drift event, so it would under-test both the parser and the classifier.
+- **Alternative rejected:** dropping GE. It would raise the parse-success rate by hiding the hardest layout.
+  Keeping it and publishing its outcome is the point.
 - **8-K's role (open):** 8-Ks are event-driven, with no year-over-year counterpart, so they don't fit the diff. The
   proposal is to use them only in the grounded-QA corpus, where they are a good source of unanswerable-but-plausible
   questions. 8-K Item 2.02 points to exhibits, which are out of scope.
 - The README will state the exact filing types and date range once this is locked.
+
+## FD-DEC 009 — License: MIT (2026-10-08)
+**Status:** Decided (the default was accepted when the scaffold was approved, matching clear-pricer).
+
+## FD-DEC 010 — Section parser: two independent signals, reconciled; lxml (2026-10-08)
+**Status:** *Proposed. See `docs/design/section-parser.md`.*
+
+- **Decision:** locate boundaries with a heading-grammar scan *and* TOC-anchor resolution, then reconcile them.
+  Handle the pointer-stub, cross-reference-index and pointer-out archetypes explicitly. Every (filing, section)
+  gets an `ok`/`partial`/`failed` record with reasons and evidence. Canonical text (citation offsets) is kept
+  separate from the folded comparison key (the diff). Library: lxml.
+- **Alternative rejected:** heading regex alone. The TOC, running headers and archetypes B and C all defeat it
+  silently. **Also rejected:** TOC anchors alone. They're missing in the Weyco 10-Q and wrong in GE FY2018.
+- **Why:** with two signals, a disagreement becomes a logged `partial` instead of a silently wrong boundary.

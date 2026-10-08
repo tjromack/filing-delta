@@ -20,14 +20,14 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] `git init` + first commit + push to `tjromack/filing-delta` (private). **← stop for approval**
 
 ## M0 — section-parsing design + corpus lock (design only, no feature code)
-- [ ] Pull a stratified sample of real filings by hand (`curl`, declared UA, into `data/`): several filers, filer
-      agents and HTML eras, 10-K and 10-Q
-- [ ] Catalog how Item 1A / Item 7 boundaries actually appear (TOC links vs. headings, table-wrapped headings,
+- [x] Pull a stratified sample of real filings by hand (`curl`, declared UA, into `data/`): several filers, filer
+      agents and HTML eras, 10-K and 10-Q. 18 docs / 11 filers (`tools/m0_fetch.py`, `tools/m0_survey/`)
+- [x] Catalog how Item 1A / Item 7 boundaries actually appear (TOC links vs. headings, table-wrapped headings,
       "Item 1A." vs. "ITEM 1A —", page-break artifacts, items incorporated by reference, a 10-Q Part II Item 1A
       that only says "no material changes")
-- [ ] `docs/design/section-parser.md` — strategy, outcome model (`ok`/`partial`/`failed` + reasons), offsets
+- [x] `docs/design/section-parser.md` — strategy, outcome model (`ok`/`partial`/`failed` + reasons), offsets
       contract (the char spans that citations depend on), and golden-fixture plan
-- [ ] Lock the corpus: companies, filing types, exact date range (FD-DEC 008)
+- [ ] Lock the corpus: companies, filing types, exact date range (FD-DEC 008) (proposed; awaiting approval)
 - [ ] **Gate:** design doc approved, corpus locked. **← stop**
 
 ## M1 — EDGAR client

@@ -58,4 +58,4 @@ policy is followed: a declared User-Agent, a rate ceiling below SEC's limit, and
 
 ## License
 
-[TKTK]
+MIT. See `LICENSE`.
