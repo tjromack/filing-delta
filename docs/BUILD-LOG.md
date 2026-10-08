@@ -11,7 +11,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | Milestone | Commit | Headline (measured) | The break worth telling |
 |---|---|---|---|
 | Phase 0 · scaffold | `b01f044` | — | — |
-| M0 · parser design | [TKTK] | 18 docs / 11 filers surveyed; 4 layout archetypes | Item 7 is a one-sentence pointer at JPM and Exxon |
+| M0 · parser design | `0c9f22e` | 18 docs / 11 filers surveyed; 4 layout archetypes | Item 7 is a one-sentence pointer at JPM and Exxon |
 
 ---
 
