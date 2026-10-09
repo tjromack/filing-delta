@@ -189,3 +189,8 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - **Stop:** Trevor confirms (or corrects) the 28 golden boundaries in `docs/golden-review.md`, then approves M2.
 - Then M3: paragraph segmentation and the deterministic period-over-period diff.
+
+### 2026-10-08 — M2 review note (Trevor)
+- MD&A isn't credible on its own unless the audited sections back it. Recorded as FD-DEC 016: an explicit
+  "unaudited narrative" limit in the README now, plus a proposed M5 option to reconcile MD&A numeric claims
+  against audited XBRL facts. A good catch for the case study: it sharpens what "material change" can and can't mean.

@@ -29,6 +29,9 @@ deterministic processing from model judgment, and scoring the model half.
 
 - **It is not investment advice.** It reports what filings say and how the text changed. It makes no judgment about
   what that means for a security, and nothing it outputs is forward-looking.
+- **It doesn't verify what management says.** Item 1A and Item 7 (MD&A) are unaudited management narrative,
+  and MD&A figures are often non-GAAP. The tool shows what the text says and how it changed, not whether it is
+  accurate. Only the audited financial statements carry that weight.
 - **It doesn't claim financial-analysis expertise.** "Material" here is a labeled text-change category, not a legal
   or accounting materiality determination.
 - **It doesn't cover anything outside its ingested corpus.** Coverage: **10-K** with a period of report from 2018-01-01 to

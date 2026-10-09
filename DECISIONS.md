@@ -177,3 +177,18 @@ citation/abstention report. If the check isn't written, the milestone isn't done
 - **What it fixed:** the earlier "repeated three times near a page break" rule deleted JPM 2020's real "COVID-19
   Pandemic" subheading, which sat atop three pages far apart, and then read it as "page 19". The earlier "any bare
   1–3 digit block" rule deleted numeric cells from MD&A tables (Weyco's MD&A regained 64 characters of numbers).
+
+## FD-DEC 016 — Narrative sections are unaudited; say so, and consider an audited cross-check at M5 (2026-10-08)
+**Status:** The limit is decided. The cross-check is *proposed* and will be decided at M5.
+
+- **Context (Trevor, M2 review):** Item 7 (MD&A) and Item 1A are management's unaudited narrative. MD&A figures are
+  often non-GAAP, and they're only as credible as their reconciliation to the audited financial statements (Item 8).
+- **Decided now:** the README and every answer that cites these sections say plainly that the source is
+  unaudited management discussion. The tool reports what management *said* and how it changed. It never presents
+  a narrative claim as a verified fact.
+- **Proposed for M5:** XBRL company facts are tagged from the audited financial statements. M5 could go beyond
+  "join facts as context" and check numeric claims in MD&A paragraphs (revenue, net income, segment totals)
+  against the audited XBRL values for the same period. Each claim would be labeled *reconciles*, *differs* or
+  *non-GAAP / not tagged*. The output would be a published reconciliation rate, scored on a hand-labeled sample.
+- **Why not now:** M3 (the diff) doesn't depend on it, and adding it now would widen scope before the core is
+  done. Deciding at M5 keeps the queue honest.

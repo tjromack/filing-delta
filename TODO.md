@@ -65,6 +65,8 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 ## M5 — XBRL company facts join
 - [ ] Company-facts endpoint through the same client; join selected facts to filing periods as context
 - [ ] **Tests:** period alignment (fiscal vs. calendar, amendments); facts never presented as narrative
+- [ ] **Decide FD-DEC 016:** reconcile MD&A numeric claims against audited XBRL facts (*reconciles* / *differs*
+      / *non-GAAP or untagged*), with a published reconciliation rate scored on a hand-labeled sample
 - [ ] **Gate:** join verified on the corpus. **← stop**
 
 ## M6 — retrieval + grounded QA (cite or abstain)
