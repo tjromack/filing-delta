@@ -192,3 +192,48 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   *non-GAAP / not tagged*. The output would be a published reconciliation rate, scored on a hand-labeled sample.
 - **Why not now:** M3 (the diff) doesn't depend on it, and adding it now would widen scope before the core is
   done. Deciding at M5 keeps the queue honest.
+
+## FD-DEC 017 — Diff units and pairing (2026-10-12)
+**Status:** Decided (M3).
+
+- **Units:** a section is split into paragraphs, headings (short, no sentence-ending punctuation) and whole *data*
+  tables (2+ rows of mostly short cells with a number somewhere). A layout table row is one unit. A lone bullet glyph
+  joins the text after it, and a sentence re-joined across a page break stays one unit. Every unit is an exact
+  [start, end) span of the canonical text, so later citations can point into it.
+- **Unchanged** means equal comparison keys (Unicode compatibility forms, quote and dash styles and whitespace are
+  treated as equal). Case and punctuation changes are *reworded* with the deterministic fact `formatting_only`.
+  Number-only edits get the fact `numbers_only`. These are observations handed to M4, not materiality calls.
+- **Pairs:** each 10-K against the same company's previous 10-K. Each 10-Q against the same fiscal quarter a year
+  earlier (consecutive quarters of MD&A differ by design). A pair with a pointer/absent/failed side is a state change,
+  with no paragraph diff.
+- **Alternative rejected:** line- or sentence-level diff. Filers re-wrap and re-split sentences constantly, and a
+  paragraph is the unit a reader means by "newly disclosed".
+- **Alternative rejected:** DuckDB for diff storage now. JSON per pair is deterministic and diffable in git review.
+  DuckDB comes in with the read view (M8).
+
+## FD-DEC 018 — Alignment thresholds come from human labels (2026-10-12)
+**Status:** *Pending Trevor's labels* (`docs/alignment-labeling.md`; scored by `tools/eval_alignment.py`).
+
+- **Context:** the aligner's decision between "reworded" and "removed + added" *is* the product's headline claim
+  ("newly disclosed"). The first run used a token-sequence ratio of 0.5 everywhere. Reading the flagged pairs showed
+  three failure shapes: a heavy in-place rewording (Walmart ESG, 0.36) reported as removed + added; an expanded
+  paragraph (Walmart's India enforcement matter, old text wholly inside a paragraph twice its length, ratio 0.345)
+  missed because the ratio punishes length change; and a doubtful match on shared legal boilerplate at 0.72.
+- **Interim:** a gap pass (both units in the same gap between in-order neighbours) at ratio ≥ 0.35, plus the global
+  pass at ≥ 0.5. Both thresholds are provisional.
+- **Decision process:** 70 real candidate pairs, sampled by ratio band × containment bin across all 176 diffs (6,100
+  candidates) and shown to the labeler blind (no scores, no current decision). Rules are scored by stratum-weighted
+  precision and recall. The final thresholds and any containment rule are chosen from that table and published with
+  it. The 70 labeled pairs become a regression test for the aligner.
+- **Why not tune by eye:** I picked the examples that exposed the problem, so tuning to them would mean grading my
+  own work on my own test set.
+
+## FD-DEC 019 — A pointer's stated page range is exact (2026-10-12)
+**Status:** Decided (M3; a fix to FD-DEC 013, found by the M3 diff's edge flags).
+
+- **Decision:** when a pointer states its pages, the section ends at the end of the stated last page, and the page
+  check requires the observed range to equal the stated range. The one-page tolerance stays only for
+  cross-reference-index ranges (GE), where a section can legitimately end at the top of its last page.
+- **What it fixed:** JPM's MD&A lost its last page (the forward-looking statements) in 5 of 8 years. The running
+  header that set the end is printed on alternate pages only, and a one-page tolerance hid the shortfall.
+- **Learning:** a tolerance added for one layout masked an error in another. Tolerances are now per-mechanism.

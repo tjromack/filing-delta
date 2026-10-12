@@ -48,6 +48,7 @@ neither successes nor failures.
 | `running_header_extent` | 16 |
 | `item_omitted` | 11 |
 | `filtered_by_stated_pages` | 8 |
+| `end_at_stated_last_page` | 5 |
 | `xref_not_applicable` | 5 |
 | `end_from_index_pages` | 4 |
 | `exhibit_incorporation` | 2 |
@@ -55,4 +56,4 @@ neither successes nor failures.
 
 ## Length floor calibration (10-K, full sections)
 
-The `too_short` gate fires below 5,000 characters for a full 10-K Item 1A or Item 7. Over the 174 parsed full 10-K sections: min 15,375 · p05 18,161 · median 71,956 · max 427,558 characters. The floor sits well below the smallest real section, so it only catches stubs that were not recognized as pointers.
+The `too_short` gate fires below 5,000 characters for a full 10-K Item 1A or Item 7. Over the 174 parsed full 10-K sections: min 15,375 · p05 18,161 · median 71,956 · max 432,670 characters. The floor sits well below the smallest real section, so it only catches stubs that were not recognized as pointers.

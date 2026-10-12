@@ -80,6 +80,16 @@ def cmd_golden(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_diff(args: argparse.Namespace) -> int:
+    from .diff.run import run
+
+    recs = run(ROOT / "data" / "sections", ROOT / "data" / "diffs", ROOT / "docs")
+    full = [r for r in recs if r["state"] == "full -> full"]
+    print(f"{len(recs)} pairs ({len(full)} diffed, {sum(bool(r['flags']) for r in full)} flagged) -> data/diffs/,"
+          f" docs/diff-report.md")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     load_env()
     p = argparse.ArgumentParser(prog="filing-delta")
@@ -91,6 +101,8 @@ def main(argv: list[str] | None = None) -> int:
     pa.set_defaults(func=cmd_parse)
     g = sub.add_parser("golden", help="propose golden boundaries for review (never overwrites confirmed ones)")
     g.set_defaults(func=cmd_golden)
+    d = sub.add_parser("diff", help="diff each section against the prior period; write docs/diff-report.md")
+    d.set_defaults(func=cmd_diff)
     args = p.parse_args(argv)
     return args.func(args)
 

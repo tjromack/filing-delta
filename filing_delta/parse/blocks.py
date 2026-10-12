@@ -47,6 +47,7 @@ class Block:
     text: str
     in_table: bool = False
     row: int | None = None          # sequence number of the enclosing <tr>, if any
+    table: int | None = None        # sequence number of the innermost enclosing <table>, if any
     cell: int = 0                   # position of the cell within its row
     bold: bool = False
     is_link: bool = False           # all of the text is inside <a href>
@@ -104,6 +105,8 @@ class _Walker:
         self.cell_stack: list[int] = []
         self.c1 = 0
         self.row_seq = 0
+        self.table_seq = 0
+        self.table_stack: list[int] = []
         self.indent_stack: list[float] = []
 
     def add_text(self, text: str | None, bold: bool, in_link: bool) -> None:
@@ -125,6 +128,7 @@ class _Walker:
             self.blocks.append(Block(
                 idx=len(self.blocks), text=text, in_table=self.table_depth > 0,
                 row=self.row_stack[-1] if self.row_stack else None,
+                table=self.table_stack[-1] if self.table_stack else None,
                 cell=self.cell_stack[-1] if self.cell_stack else 0,
                 bold=all(b for _, b, _ in visible), is_link=all(a for _, _, a in visible),
                 ids=tuple(self.pending_ids), page_break_before=self.pending_break,
@@ -163,6 +167,8 @@ class _Walker:
             self.block_stack.append(el)
         if tag == "table":
             self.table_depth += 1
+            self.table_seq += 1
+            self.table_stack.append(self.table_seq)
         if tag == "tr":
             # A counter, not id(el): lxml reuses ids of garbage-collected element proxies, which merged
             # unrelated rows (found on GE and Exxon during M2).
@@ -190,6 +196,7 @@ class _Walker:
         if tag == "table":
             self.flush()
             self.table_depth -= 1
+            self.table_stack.pop()
         if is_block:
             self.flush()
             self.block_stack.pop()

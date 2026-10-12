@@ -214,3 +214,49 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 ### Open / next
 - M2 is done pending Trevor's approval to start M3: paragraph segmentation and the deterministic diff.
+
+---
+
+## 2026-10-12 — M3 part 1 (diff built; thresholds waiting on human labels)
+
+### What happened
+- M2 closed and M3 started. The parser's block map now carries table and row ids (text unchanged, all 28 goldens
+  still pass).
+- Built `filing_delta/diff/`:
+  - `segment.py`: paragraph, heading and data-table units, each an exact canonical span.
+  - `normalize.py`: comparison keys that treat quote style, dash style and whitespace as equal.
+  - `align.py`: exact → global fuzzy (≥ 0.5) → gap pass (≥ 0.35) → max-weight in-order chain → split/merge.
+  - `run.py`: pairing, anomaly flags, `docs/diff-report.md`.
+- `filing-delta diff`: 200 pairs, 176 diffed paragraph by paragraph, 24 recorded as state changes.
+- **Trevor asked whether there would be more chances to confirm the parsing is right.** This milestone answered it
+  on its first run: the diff's edge flags exposed a parser boundary error that M2's own checks had passed (below).
+- Tests: 17 synthetic diff tests plus 3 corpus invariants. The suite has 97 tests.
+
+### Decisions
+- FD-DEC 017 (units, keys, pairing), 018 (thresholds from human labels; pending), 019 (a pointer's stated page range
+  is exact).
+
+### Learnings
+- **The diff is a second check on the parser.** A boundary that is wrong by one page is invisible inside one filing
+  but shows up as text appearing and disappearing at the edge of the section from year to year.
+- **The aligner decides the headline claim.** "Removed + added" versus "reworded" is the difference between "newly
+  disclosed" and "the same risk, rewritten". Three concrete failure shapes appeared in one Walmart pair. The
+  thresholds therefore come from a blind, stratified human labeling sample, not from tuning on the examples I found.
+- **Expansion breaks ratio similarity.** An old paragraph wholly contained in a new one twice its length scores 0.345.
+  Containment is now a candidate measure in the labeling sample.
+
+### What broke (+ fix)
+- **JPM's MD&A lost its last page in 5 of 8 years.** The end came from the last running header, and JPM prints that
+  header on alternate pages. M2's one-page tolerance (meant for GE's index) hid it. Fix: end at the stated last page,
+  exact check for stated pointer ranges (FD-DEC 019). The JPM 2021 remainder turned out to be JPM's own stated range
+  excluding the forward-looking statements that year.
+- **Two weak tests.** The first diff tests passed with the ordering weight removed and with the global fuzzy pass
+  removed. One test case couldn't tell weighted from unweighted ordering, and the new gap pass covered for the global
+  pass. Added targeted tests; all 5 mutants are now killed.
+- **Shell quoting again.** A `python -c` one-liner with Windows backslashes failed to parse. Probes are now script
+  files in the scratchpad.
+
+### Open / next
+- **Stop:** Trevor labels the 70 pairs in `docs/alignment-labeling.md`. Then thresholds are set from
+  `tools/eval_alignment.py`, the diff is re-run, flags are re-checked, precision/recall are published, and M3 is
+  committed for the gate.

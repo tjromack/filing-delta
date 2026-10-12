@@ -158,10 +158,14 @@ def _anchor_targets_for(doc: _Doc, part: str | None, item: str, title: str) -> l
     return sorted(set(out))
 
 
-def _text_between(doc: _Doc, start: int, end: int, skip_rows: set[int]) -> tuple[str, int, list[tuple[int, int, int]]]:
-    """Canonical text of blocks in [start, end), minus furniture and the heading row (design §2.4)."""
+def _text_between(doc: _Doc, start: int, end: int, skip_rows: set[int]) -> tuple[str, int, list[tuple]]:
+    """Canonical text of blocks in [start, end), minus furniture and the heading row (design §2.4).
+
+    The block map records, for each block, (char start, char end, block index, table id, row id). M3 uses the
+    table and row ids to segment the text into paragraph and table units.
+    """
     parts: list[str] = []
-    block_map: list[tuple[int, int, int]] = []
+    block_map: list[tuple] = []
     joins = 0
     pos = 0
     prev_open = False
@@ -178,7 +182,7 @@ def _text_between(doc: _Doc, start: int, end: int, skip_rows: set[int]) -> tuple
                 sep = "\n\n"
             parts.append(sep)
             pos += len(sep)
-        block_map.append((pos, pos + len(t), b.idx))
+        block_map.append((pos, pos + len(t), b.idx, b.table, b.row))
         parts.append(t)
         pos += len(t)
         prev_open = not re.search(r"[.!?:;”\"’')\]]\s*$", t)
@@ -292,9 +296,12 @@ def _verify_pages(doc: _Doc, res: ParseResult, stated: str, index_row: bool = Fa
     nums = _page_numbers(doc, res.start_block, res.end_block or res.start_block)
     res.evidence["stated_pages"] = [lo, hi]
     res.evidence["observed_pages"] = [min(nums), max(nums)] if nums else []
-    # One page of tolerance each way: index ranges are page-granular, and a section can end at the top of its last
-    # stated page (so that page's footer falls in the next section).
-    if nums and lo - 1 <= min(nums) <= lo + 1 and hi - 1 <= max(nums) <= hi:
+    # Index ranges (GE) are page-granular: a section can end at the top of its last stated page, so that page's footer
+    # falls in the next section. One page of tolerance there. A pointer that names its pages ("appears on pages
+    # 46-160", JPM) is held exactly: the M3 diff caught a tolerated one-page shortfall that dropped JPM's last MD&A
+    # page in five of eight years.
+    tol = 1 if index_row else 0
+    if nums and lo - 1 <= min(nums) <= lo + 1 and hi - tol <= max(nums) <= hi:
         res.reasons.append("page_range_verified")
     else:
         res.downgrade("page_range_mismatch")
@@ -315,9 +322,20 @@ def _follow_pointer(doc: _Doc, res: ParseResult, stub_text: str, title: str) -> 
         res.reasons.append("pointer_target_not_found")
         return
     start, end, n = ext
+    reasons = ["followed_pointer", "running_header_extent"]
+    if rng:
+        reasons.append("filtered_by_stated_pages")
+        # The filer named the last page; the section runs to the end of it. Running headers alone stop short when
+        # the last page carries none (JPM prints its MD&A header on alternate pages only).
+        pages = _block_pages(doc)
+        last = [b.idx for b in doc.blocks[start:] if b.idx in doc.furn and pages.get(b.idx) == rng[1]
+                and page_number(b.text, lenient=b.idx in doc.running) == rng[1]]
+        if last and last[-1] + 1 > end:
+            end = last[-1] + 1
+            reasons.append("end_at_stated_last_page")
     _slice(doc, res, start, end)
     res.evidence["running_headers"] = n
-    res.reasons += ["followed_pointer", "running_header_extent"] + (["filtered_by_stated_pages"] if rng else [])
+    res.reasons += reasons
     _verify_pages(doc, res, stub_text)
 
 

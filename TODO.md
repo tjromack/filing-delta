@@ -49,10 +49,17 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] **Gate:** parse-success rate over the full corpus is published (270/272 present = 99.3%; 16 absent; the 2
       failures are Pfizer FY2018–19 exhibit incorporation, explained). **← stop**
 
-## M3 — paragraph diff + alignment
-- [ ] Paragraph segmentation; alignment across periods (unchanged / reworded / moved / added / removed)
-- [ ] **Golden-file diff tests** + a determinism test (byte-identical output across runs)
-- [ ] **Gate:** diff over the full corpus, with golden tests green. **← stop**
+## M3 — paragraph diff + alignment (in progress, 2026-10-12)
+- [x] Segmentation into paragraph / heading / data-table units; exact canonical spans (FD-DEC 017)
+- [x] Alignment: unchanged / reworded / moved / split / merged / added / removed, deterministic, no model
+- [x] `filing-delta diff`: 200 pairs (176 diffed) → `data/diffs/` + `docs/diff-report.md`, byte-reproducible
+- [x] Edge/churn anomaly flags, each checked by hand → `docs/diff-anomalies.md` (found and fixed JPM's lost last
+      MD&A page, FD-DEC 019)
+- [x] 17 synthetic diff tests (mutation-checked: 5 of 5 mutants killed) + 3 corpus invariants (coverage, spans,
+      byte-identical re-diff)
+- [ ] **Trevor labels the 70 alignment pairs** (`docs/alignment-labeling.md`) → thresholds set from
+      `tools/eval_alignment.py` (FD-DEC 018) → precision/recall published → labels become a regression test
+- [ ] **Gate:** diff over the full corpus with human-set thresholds and published aligner precision/recall. **← stop**
 
 ## M4 — material/cosmetic classifier + hand labels + confusion matrix
 - [ ] Labeling guide (what "material" means here, with examples), written **before** labeling

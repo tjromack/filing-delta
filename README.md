@@ -3,8 +3,9 @@
 **See what a company newly disclosed, quietly dropped, or materially reworded between filings — with every claim
 traceable to the exact span it came from.**
 
-> **Status: under construction.** Nothing below is a result yet. The quickstart, coverage and verification numbers
-> are filled in as each milestone ships (see `TODO.md`). Unknowns are marked `[TKTK]`.
+> **Status: under construction.** Ingestion and section parsing are done and verified (see *How it's verified*).
+> The diff, classifier, grounded QA and quickstart are in progress (`TODO.md`). Results not yet measured are marked
+> `[TKTK]`.
 
 ## What it does
 
