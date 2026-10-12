@@ -7,6 +7,7 @@ traceable to the exact span it came from.**
 > are filled in as each milestone ships (see `TODO.md`). Unknowns are marked `[TKTK]`.
 
 ## What it does
+[![M8ven Score](https://m8ven.ai/badge/mcp/tjromack-clear-pricer-mcp-7v9m47?v=8a242f1dd1bd8ec6970fc4d7a8896075)](https://m8ven.ai/mcp/tjromack-clear-pricer-mcp-7v9m47?s=readme)
 
 1. **Fetches** 10-K, 10-Q and 8-K filings from SEC EDGAR, honoring EDGAR's fair-access rules: a declared
    User-Agent, a rate limit, and a local cache so a re-run makes zero requests.
@@ -63,5 +64,3 @@ policy is followed: a declared User-Agent, a rate ceiling below SEC's limit, and
 ## License
 
 MIT. See `LICENSE`.
-
-[![M8ven Score](https://m8ven.ai/badge/mcp/tjromack-clear-pricer-mcp-7v9m47?v=8a242f1dd1bd8ec6970fc4d7a8896075)](https://m8ven.ai/mcp/tjromack-clear-pricer-mcp-7v9m47?s=readme)
