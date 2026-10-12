@@ -1,5 +1,4 @@
 # filing-delta
-[![M8ven Score](https://m8ven.ai/badge/mcp/tjromack-clear-pricer-mcp-7v9m47?v=8a242f1dd1bd8ec6970fc4d7a8896075)](https://m8ven.ai/mcp/tjromack-clear-pricer-mcp-7v9m47?s=readme)
 
 **See what a company newly disclosed, quietly dropped, or materially reworded between filings — with every claim
 traceable to the exact span it came from.**
