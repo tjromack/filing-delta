@@ -17,15 +17,24 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def labels() -> dict[str, str]:
-    text = (ROOT / "docs" / "alignment-labeling.md").read_text(encoding="utf-8")
+def _read(path: Path, allowed: str) -> dict[str, str]:
+    if not path.exists():
+        return {}
     out = {}
-    for block in re.split(r"^## ", text, flags=re.M)[1:]:
-        ident = block.split(" ", 1)[0]
-        m = re.search(r"\*\*Label:\*\*[ \t]*([YNyn?])", block)
+    for block in re.split(r"^## ", path.read_text(encoding="utf-8"), flags=re.M)[1:]:
+        m = re.search(rf"\*\*Label:\*\*[ \t]*([{allowed}])", block)
         if m:
-            out[ident] = m.group(1).upper()
+            out[block.split(" ", 1)[0]] = m.group(1).upper()
     return out
+
+
+def labels() -> dict[str, str]:
+    """First-pass labels, overridden by the second (instance) pass where present. T = same template, different
+    instance, which counts as 'not the same disclosure' (N) for matching."""
+    first = _read(ROOT / "docs" / "alignment-labeling.md", "YNyn?")
+    second = _read(ROOT / "docs" / "alignment-relabel.md", "YNTynt?")
+    merged = {**first, **second}
+    return {k: ("N" if v == "T" else v) for k, v in merged.items()}
 
 
 def _norm(t: str) -> str:
