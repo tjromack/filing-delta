@@ -21,8 +21,11 @@ from difflib import SequenceMatcher
 from .normalize import tokens
 from .segment import Unit
 
-REWORD_MIN = 0.5       # token-sequence similarity for "the same paragraph, reworded", anywhere in the section
-GAP_MIN = 0.35         # lower bar when both units sit in the same gap between in-order neighbours (FD-DEC 018)
+# Set from 67 human labels (FD-DEC 018; docs/alignment-eval.md): at 0.35 the stratum-weighted precision and recall
+# are 0.90 / 0.90. At the first guess of 0.5 they were 0.96 / 0.62, which missed a third of real rewordings. Each
+# miss is a false "newly disclosed".
+REWORD_MIN = 0.35      # token-sequence similarity for "the same paragraph, reworded"
+GAP_MIN = REWORD_MIN   # the gap pass nominates candidates by position; it doesn't lower the bar
 GAP_MAX_PAIRS = 40_000 # a gap bigger than this (old x new units) is left to the global pass
 COVER_MIN = 0.8        # share of a unit's 3-grams found in one unit on the other side, for split/merge
 MIN_SHINGLES = 5       # a split/merge needs at least this many 3-grams (fragments like "None." can't qualify)
@@ -153,9 +156,9 @@ def align(old_text: str, old: list[Unit], new_text: str, new: list[Unit]) -> lis
         old_used.add(i)
         new_used.add(j)
 
-    # 2b. Gap pass: between consecutive in-order matches, a removed and an added unit in the same gap are very likely
-    # the same paragraph rewritten. Position is evidence, so the similarity bar is lower here (Walmart FY2025's ESG
-    # risk factor was reported as removed + added at 0.36).
+    # 2b. Gap pass: the global pass only *nominates* pairs that share a word 3-gram, so a heavy rewording with no
+    # three words in common is never considered. Here, units left in the same gap between consecutive in-order
+    # matches are nominated by position instead. The acceptance bar is the same labeled threshold.
     chain1 = _max_weight_increasing([(o, n, (new[n].end - new[n].start) * s) for o, n, s in matches])
     anchors = sorted((matches[k][0], matches[k][1]) for k in chain1)
     bounds = [(-1, -1)] + anchors + [(len(old), len(new))]

@@ -64,7 +64,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | ld harm Ford Credit’s reputation or lead to further litigation. Moreover, in response to audits, inspections, or investigations conducted by regulatory authorities, Ford Credit has in the past modified and may in the future modify its operations or take other actions, such as remunerating customers. |
 | after end | ITEM 1B. Unresolved Staff Comments. ⏎ None. |
 
-### 10-K Item 7 — `ok` / `full` · 156,005 chars · status: **confirmed**
+### 10-K Item 7 — `ok` / `full` · 156,004 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -160,7 +160,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | isplacement. This could require JPMorganChase to invest in additional employee training, manage impacts on morale and retention, and compete for employment candidates who possess more advanced technological skills, all of which could have a negative impact on JPMorganChase’s business and operations. |
 | after end | Parts I and II ⏎ Item 1B. Unresolved Staff Comments. |
 
-### 10-K Item 7 — `ok` / `full` · 392,752 chars · status: **confirmed**
+### 10-K Item 7 — `ok` / `full` · 392,751 chars · status: **confirmed**
 
 Reasons: `followed_pointer, running_header_extent, filtered_by_stated_pages, page_range_verified`
 
@@ -284,7 +284,7 @@ Reasons: `exhibit_incorporation`
 
 *Why it's golden:* D · 10-Q pointer out · MD&A from TOC anchor only · [0001628280-26-054343](https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm)
 
-### 10-Q Part I Item 2 — `ok` / `full` · 275,357 chars · status: **confirmed**
+### 10-Q Part I Item 2 — `ok` / `full` · 275,356 chars · status: **confirmed**
 
 Reasons: `anchor_only, single_signal, toc_group_end`
 

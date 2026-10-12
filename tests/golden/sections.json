@@ -14,7 +14,8 @@
   "head": "The following summarizes factors that could have a material adverse effect on the Company’s business, reputation, result",
   "tail": "ock may decline significantly, which could have a material adverse impact on investor confidence and employee retention.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "8f0c2453b249b5277a9f708094d807f8ae01ee6a69429103700ae6301d183251"
  },
  {
   "accession": "0000320193-25-000079",
@@ -31,7 +32,8 @@
   "head": "The following discussion should be read in conjunction with the consolidated financial statements and accompanying notes",
   "tail": " with management’s expectations could have a material impact on the Company’s financial condition and operating results.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "e642e7eafe5845b728ca52e498e777fc914ab9e9c08fab784798e093e06206ae"
  },
  {
   "accession": "0000320193-18-000145",
@@ -48,7 +50,8 @@
   "head": "The following discussion of risk factors contains forward-looking statements. These risk factors may be important to und",
   "tail": "sly accrued, the Company’s financial condition, operating results and cash flows could be materially adversely affected.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "d170eec06bbc3271490f5eaadf3efd8a140ab8774faf16cc3af495f3b23f2dcb"
  },
  {
   "accession": "0000320193-18-000145",
@@ -65,7 +68,8 @@
   "head": "This section and other parts of this Annual Report on Form 10-K (“Form 10-K”) contain forward-looking statements, within",
   "tail": "he Company’s financial condition and operating results for that reporting period could be materially adversely affected.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "387ec805722835342517a97e067c0d26d190f1753da46dc164e6dcf59b143273"
  },
  {
   "accession": "0000037996-26-000015",
@@ -82,7 +86,8 @@
   "head": "We have listed below the material risk factors applicable to us grouped into the following categories: Operational Risks",
   "tail": " in the past modified and may in the future modify its operations or take other actions, such as remunerating customers.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "0909381dc47ee280f179ac31bdfb98150fdc45d17644d76efb399c4023505ce5"
  },
  {
   "accession": "0000037996-26-000015",
@@ -94,12 +99,13 @@
   "outcome": "ok",
   "form_kind": "full",
   "reasons": [],
-  "chars": 156005,
-  "sha256": "7bb388cd538f70dcad73ed3bbf492d9bee4d61542ec7cf9ba1d799e9baa77f5e",
+  "chars": 156004,
+  "sha256": "3c86bdb74d4fd5bdf473e37c749446e424d13190fe0c4c1b33fcf02e8c5b602d",
   "head": "Key Trends and Economic Factors Affecting Ford and the Automotive Industry\n\nTrade Policy. To the extent governments in v",
   "tail": "T NOT YET ADOPTED\n\nFor a discussion of recent accounting standards, see Note 3 of the Notes to the Financial Statements.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted. Re-derived 2026-10-12: paragraph breaks changed only (words_sha256 unchanged).",
+  "words_sha256": "83e7ba676ae64ab2513c67ed81459825111839ee1b44efaf42396b64ac418c2d"
  },
  {
   "accession": "0001144204-19-013992",
@@ -116,7 +122,8 @@
   "head": "There are various factors that affect the Company’s business, results of operations and financial condition, many of whi",
   "tail": "ess continuity, the loss of inventory or business data and damage to infrastructure, warehouses or distribution centers.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "d1a35d14a92c598d22475f67301bde9bbe834f6c96dfa25f648285d9c7703958"
  },
  {
   "accession": "0001144204-19-013992",
@@ -133,7 +140,8 @@
   "head": "GENERAL\n\nThe Company designs and markets quality and innovative footwear for men, women and children under a portfolio o",
   "tail": "lysis for a given year.\n\nRecent Accounting Pronouncements\n\nSee Note 3 of the Notes to Consolidated Financial Statements.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "b3b024aefe2ea51600a0d3595ffaf439bb39d68c6752eccce2b3bbd643dc79b4"
  },
  {
   "accession": "0001193125-19-048926",
@@ -150,7 +158,8 @@
   "head": "Berkshire and its subsidiaries (referred to herein as “we,” “us,” “our” or similar expressions) are subject to certain r",
   "tail": "nding when needed could adversely affect the results of operations, liquidity and capital resources of these businesses.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "845024c6c9fcaa5b02caef4ddb880e5b3b07da542932607d655c9820b197299b"
  },
  {
   "accession": "0001193125-19-048926",
@@ -167,7 +176,8 @@
   "head": "Results of Operations\n\nNet earnings attributable to Berkshire Hathaway shareholders for each of the past three years are",
   "tail": "l likely be adversely affected. We may utilize derivative contracts to manage a portion of commodity price risks at BHE.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "0ba2a091203ea3d2c98803976bd2d94d42d4fb86637c12888998f661ad7e812b"
  },
  {
   "accession": "0000104169-25-000021",
@@ -184,7 +194,8 @@
   "head": "The risks described below could, in ways we may or may not be able to accurately predict, materially and adversely affec",
   "tail": "ectations could adversely affect public perception of our business, associate morale or customer or shareholder support.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "26281330187514fbd07868a18fead6253acb9621b7425330d9df103a4f8734ac"
  },
  {
   "accession": "0000104169-25-000021",
@@ -201,7 +212,8 @@
   "head": "Overview\n\nThis discussion, which presents our results for the fiscal years ended January 31, 2025 (\"fiscal 2025\"), Janua",
   "tail": "ons requires judgment, the use of estimates in certain cases and the interpretation and application of complex tax laws.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "2eaee3eaf8e4c53ad7529dd3129c9fccf227d264c2fa142cef89f3b24fad4e78"
  },
  {
   "accession": "0001628280-26-008131",
@@ -218,7 +230,8 @@
   "head": "The following discussion sets forth the material risk factors that could affect JPMorganChase’s financial condition and ",
   "tail": "ore advanced technological skills, all of which could have a negative impact on JPMorganChase’s business and operations.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "89cccb52a9f1b94708457486c7d895193f54f1fdb3a5af444b884b9c67ba3f96"
  },
  {
   "accession": "0001628280-26-008131",
@@ -235,12 +248,13 @@
    "filtered_by_stated_pages",
    "page_range_verified"
   ],
-  "chars": 392752,
-  "sha256": "139ecf7760a0b586dce5647c20338a48284570c89de0af6dc05fee59217dd853",
+  "chars": 392751,
+  "sha256": "91066de0382d2b7908dec837343bcaada63c54154bd58dd1956d609e98003404",
   "head": "The following is Management’s discussion and analysis of the financial condition and results of operations (“MD&A”) of J",
   "tail": "ay make in any subsequent Annual Reports on Form 10-Ks, Quarterly Reports on Form 10-Qs, or Current Reports on Form 8-K.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted. Re-derived 2026-10-12: paragraph breaks changed only (words_sha256 unchanged).",
+  "words_sha256": "1aebff0242c003fb704ca7bfa23521044ba22d298a29a026c53edbddd4851e69"
  },
  {
   "accession": "0000034088-26-000045",
@@ -257,7 +271,8 @@
   "head": "ExxonMobil’s financial and operating results are subject to a variety of risks inherent in the global oil, gas, and petr",
   "tail": "ness plans could differ materially due to, among other things, the factors discussed above and elsewhere in this report.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "35d27c09e61aa0f2a80b972ec5dd89db7867ce45485a310e678c8633942f6379"
  },
  {
   "accession": "0000034088-26-000045",
@@ -277,7 +292,8 @@
   "head": "FORWARD-LOOKING STATEMENTS\n\nStatements related to future events; projections; descriptions of strategic, operating, and ",
   "tail": "t to predict. The Corporation’s unrecognized tax benefits and a description of open tax years are summarized in Note 15.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "ae736f16473a8561e1f22bc5a77eccb09936f7c5fc599c1d1c633c472c8897a3"
  },
  {
   "accession": "0000040545-26-000008",
@@ -301,7 +317,8 @@
   "head": "RISK FACTORS. The following discussion of the material factors, events and uncertainties that may make an investment in ",
   "tail": "ental bodies in those markets. See Note 24 for further information about legal proceedings and other loss contingencies.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "54feff19e81bf6418e91f068c91d8a676a5309ff9a8f87548ed0947932f5bead"
  },
  {
   "accession": "0000040545-26-000008",
@@ -325,7 +342,8 @@
   "head": "MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS (MD&A). The consolidated financial",
   "tail": "ormance metric at the company level for our annual executive incentive plan and performance stock units granted in 2025.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "8200d7184f3a7780372315f31bc642449ef8fd9f3ffb18b2e72046c2cc4d9a60"
  },
  {
   "accession": "0000040545-19-000014",
@@ -348,7 +366,8 @@
   "head": "The following discussion of risk factors contains \"forward-looking statements,\" as discussed in the Forward-Looking Stat",
   "tail": "2 to the consolidated financial statements for further information about legal proceedings and other loss contingencies.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "e88dbf4acc9e0646c6f2c92c473a3e0785c399d978a306993f9ae1a464904fde"
  },
  {
   "accession": "0000040545-19-000014",
@@ -371,7 +390,8 @@
   "head": "The consolidated financial statements of General Electric Company (the Company) combine the industrial manufacturing and",
   "tail": "ial net debt* to provide investors more clarity regarding how the credit rating agencies measure GE industrial leverage.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "9f07ce20f280c68b7021c283336d4eecb5a41ded5130458a838ffe4110d9e98c"
  },
  {
   "accession": "0000078003-19-000015",
@@ -388,7 +408,8 @@
   "head": "The statements in this Section describe the major risks to our business and should be considered carefully. In addition,",
   "tail": " to the threat of terrorist activity in the U.S. and other parts of the world and related U.S. military action overseas.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "0ba914cb609bdbcb44fc0086a3333afd58624a4a7a01b066729c756c587a2ef0"
  },
  {
   "accession": "0000078003-19-000015",
@@ -407,7 +428,8 @@
   "head": "Information required by this item is incorporated by reference from the discussion under the heading Financial Review in",
   "tail": "s item is incorporated by reference from the discussion under the heading Financial Review in our 2018 Financial Report.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "dae9e0e3ce6e3fee90aa876959a5a995d4a60c68169f7119c8fd9ab2428a0fc6"
  },
  {
   "accession": "0001628280-26-054343",
@@ -423,12 +445,13 @@
    "single_signal",
    "toc_group_end"
   ],
-  "chars": 275357,
-  "sha256": "a341f09bf9c021d97ecd57bfda63121f0701be214f1d5c882fe30471b8ffad24",
+  "chars": 275356,
+  "sha256": "c98f349a000ad1d7c1d390d625955fd7483d9029033194dd6a34624182a3d82d",
   "head": "The following is Management’s discussion and analysis of the financial condition and results of operations (“MD&A”) of J",
   "tail": "m may make in any subsequent Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q or Current Reports on Form 8-K.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted. Re-derived 2026-10-12: paragraph breaks changed only (words_sha256 unchanged).",
+  "words_sha256": "259f76c6c4645aeedbb123041414f03dcd85a14fb0c84ad314745a7fb5414c64"
  },
  {
   "accession": "0001628280-26-054343",
@@ -447,7 +470,8 @@
   "head": "Refer to Part I, Item 1A: Risk Factors on pages 9–31 of JPMorganChase’s 2025 Form 10-K and Forward-Looking Statements on",
   "tail": "ion and regulation section on pages 2-6 of JPMorganChase’s 2025 Form 10-K for information on Supervision and Regulation.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "acedcec4896b194ddebbf8c8f93e59986ab9acf80e1bd0185a44ae367f39686a"
  },
  {
   "accession": "0001104659-26-092615",
@@ -466,7 +490,8 @@
   "head": "FORWARD-LOOKING STATEMENTS\n\nThis report contains certain forward-looking statements within the meaning of the “safe harb",
   "tail": " provide adequate support for the cash needs of the business for at least one year, although there can be no assurances.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "4f8d3f8dee68fcb5b12835c3bb09bd7f4aef1b5a6ebf0a4552d8c190f9cd606b"
  },
  {
   "accession": "0001104659-26-092615",
@@ -485,7 +510,8 @@
   "head": "",
   "tail": "",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
  {
   "accession": "0001193125-26-341032",
@@ -502,7 +528,8 @@
   "head": "Results of Operations\n\nNet earnings attributable to Berkshire shareholders are disaggregated in the table that follows. ",
   "tail": "s in general economic and market factors that affect the prices of securities or the industries in which we do business.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "cd94fb953968c5a2959d2a2fe143600e4b7af2f07e4eca9ff68c3ca7ced8baa6"
  },
  {
   "accession": "0001193125-26-341032",
@@ -521,6 +548,7 @@
   "head": "Our significant business risks are described in Item 1A to Form 10-K for the year ended December 31, 2025, to which refe",
   "tail": "erating results could result in a decline in the value of our securities and the loss of all or part of your investment.",
   "status": "confirmed",
-  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted."
+  "note": "Confirmed by Trevor 2026-10-12 against the EDGAR filing (golden-review-worksheet.md process); no issues noted.",
+  "words_sha256": "a650b0c084e31ea77466dbabbb4c0acdb682ecc1f16eb46715f0ddc6efe5dc52"
  }
 ]

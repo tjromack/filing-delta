@@ -140,15 +140,16 @@ def test_reworded_and_moved_far_is_found_by_the_global_pass():
     assert op.status == "moved" and op.new == [5] and op.facts["edited"] is True
 
 
-def test_heavily_reworded_in_place_is_found_by_the_gap_pass():
-    """Similarity below the global bar (0.5) but above the gap bar (0.35), between the same two neighbours."""
-    old = [P[0], "Our reputation may be adversely affected if we are not able to satisfy varied stakeholder "
-                 "expectations with respect to our environmental, social and governance goals and commitments.", P[2]]
-    new = [P[0], "Not satisfying stakeholder expectations with respect to our environmental, social and governance "
-                 "efforts could adversely affect our reputation or subject us to regulatory or litigation risk.", P[2]]
+def test_rewording_with_no_shared_three_word_phrase_is_found_by_the_gap_pass():
+    """The global pass only nominates pairs sharing a word 3-gram. Here every 3-gram is broken, but the units sit
+    between the same two neighbours and still score above the threshold, so the gap pass must match them."""
+    words = "our ability to retain key personnel depends on compensation culture and labor market conditions".split()
+    old_p = " ".join(words) + "."
+    new_p = " ".join(w + " broadly" for w in words) + "."
+    old, new = [P[0], old_p, P[2]], [P[0], new_p, P[2]]
     ops, _, _ = run(old, new)
     (op,) = [o for o in ops if o.old == [1]]
-    assert op.status == "reworded" and op.facts.get("gap_match") is True and 0.35 <= op.similarity < 0.5
+    assert op.status == "reworded" and op.facts.get("gap_match") is True
 
 
 def test_split_and_merge():

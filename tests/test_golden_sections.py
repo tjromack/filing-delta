@@ -14,6 +14,7 @@ import pytest
 
 from filing_delta.edgar.cache import ResponseCache
 from filing_delta.parse import parse_document
+from filing_delta.parse.golden import words_sha256
 
 ROOT = Path(__file__).resolve().parents[1]
 GOLDEN = json.loads((ROOT / "tests" / "golden" / "sections.json").read_text(encoding="utf-8"))
@@ -36,6 +37,7 @@ def test_golden_section(entry):
     assert len(r.text) == entry["chars"]
     assert (r.text[:120], r.text[-120:]) == (entry["head"], entry["tail"])
     assert r.sha256 == entry["sha256"]
+    assert words_sha256(r.text) == entry["words_sha256"]
 
 
 def test_golden_set_covers_every_archetype_and_outcome():

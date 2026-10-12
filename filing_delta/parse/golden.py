@@ -4,11 +4,17 @@
 entry stays `"status": "proposed"` until Trevor reads its boundary context in the review sheet and marks it
 `"confirmed"`. A confirmed entry is never overwritten by a re-proposal. If the parser's output for it changes, the
 golden test fails, and the change has to be explained.
+
+`rederive()` is the one exception, and a narrow one. A confirmed entry may be refreshed only if its
+whitespace-insensitive hash (`words_sha256`) is unchanged: the same words between the same boundaries, with only
+paragraph breaks changed. Anything else stays failing until a human looks at it.
 """
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
+import re
 from pathlib import Path
 
 from ..edgar.cache import ResponseCache
@@ -78,7 +84,7 @@ def propose(root: Path, cache_dir: Path) -> tuple[int, int]:
                 "accession": m["accession"], "company": m["company"], "form": m["form"],
                 "report_date": m["report_date"], "document": doc_name, "section": section,
                 "outcome": r.outcome, "form_kind": r.form_kind, "reasons": r.reasons,
-                "chars": len(r.text), "sha256": r.sha256,
+                "chars": len(r.text), "sha256": r.sha256, "words_sha256": words_sha256(r.text),
                 "head": r.text[:120], "tail": r.text[-120:],
                 "status": "proposed", "note": "",
             }
@@ -112,3 +118,34 @@ def propose(root: Path, cache_dir: Path) -> tuple[int, int]:
                                                     newline="\n")
     confirmed = sum(e["status"] == "confirmed" for e in entries)
     return len(entries), confirmed
+
+
+def words_sha256(text: str) -> str:
+    """Hash of the text with all whitespace runs collapsed: unchanged by paragraph-break changes, by nothing else."""
+    return hashlib.sha256(re.sub(r"\s+", " ", text).strip().encode("utf-8")).hexdigest()
+
+
+def rederive(root: Path, cache_dir: Path, today: str) -> tuple[list[str], list[str]]:
+    """Refresh confirmed entries whose words are unchanged; return (refreshed, still-failing) ids."""
+    cache = ResponseCache(cache_dir)
+    urls = {r["accession"]: r["url"] for r in csv.DictReader((root / "corpus" / "manifest.csv").open(encoding="utf-8"))}
+    path = root / "tests" / "golden" / "sections.json"
+    entries = json.loads(path.read_text(encoding="utf-8"))
+    parsed: dict[str, dict] = {}
+    refreshed, failing = [], []
+    for e in entries:
+        if e["accession"] not in parsed:
+            parsed[e["accession"]] = parse_filing(flatten(cache.get(urls[e["accession"]]).body), e["form"])
+        r = parsed[e["accession"]][e["section"]]
+        ident = f"{e['document']}:{e['section']}"
+        if r.sha256 == e["sha256"] and (r.outcome, r.form_kind) == (e["outcome"], e["form_kind"]):
+            continue
+        same_words = e.get("words_sha256") == words_sha256(r.text)
+        if same_words and (r.outcome, r.form_kind) == (e["outcome"], e["form_kind"]):
+            e.update(chars=len(r.text), sha256=r.sha256, head=r.text[:120], tail=r.text[-120:], reasons=r.reasons)
+            e["note"] += f" Re-derived {today}: paragraph breaks changed only (words_sha256 unchanged)."
+            refreshed.append(ident)
+        else:
+            failing.append(ident)
+    path.write_text(json.dumps(entries, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    return refreshed, failing

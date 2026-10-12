@@ -28,6 +28,33 @@ def labels() -> dict[str, str]:
     return out
 
 
+def _norm(t: str) -> str:
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def as_run(items: list[dict]) -> None:
+    """Set item['as_run'] from the current diffs: did the aligner pair the units holding these exact texts?
+
+    Items are mapped to current units by their frozen text (a unit containing it), because segmentation fixes can
+    renumber units. Also records whether an unmatched old unit was paired with some *other* unit instead.
+    """
+    cache: dict[str, dict] = {}
+    for it in items:
+        rec = cache.setdefault(it["file"], json.loads((ROOT / "data" / "diffs" / it["file"]).read_text(encoding="utf-8")))
+        texts = {}
+        for side in ("old", "new"):
+            full = (ROOT / "data" / "sections" / rec[side]["accession"] / f"{rec['section']}.txt").read_text(
+                encoding="utf-8")
+            want = _norm(it[f"{side}_text"])
+            hits = [k for k, (_, s, e) in enumerate(rec[f"{side}_units"]) if want in _norm(full[s:e])]
+            texts[side] = hits[0] if hits else None
+        o, n = texts["old"], texts["new"]
+        pair = next((op for op in rec["ops"] if o in op["old"] and n in op["new"]), None)
+        other = next((op for op in rec["ops"] if o in op["old"] and op["new"]), None)
+        it["as_run"] = (pair["status"] if pair else ("elsewhere:" + other["status"] if other else "unmatched")) \
+            if o is not None and n is not None else "unmapped"
+
+
 def score(items, pop, predict):
     """Weighted precision/recall: each labeled item stands for (stratum population / labeled in stratum) pairs."""
     per = defaultdict(int)
@@ -71,7 +98,10 @@ def main() -> None:
         its = [i for i in items if i["stratum"] == s]
         lines.append(f"| {s} | {pop[s]:,} | {len(its)} | {sum(i['label'] == 'Y' for i in its)} | "
                      f"{sum(i['label'] == 'N' for i in its)} |")
-    rules = {"current aligner (as run)": lambda i: i["current"].startswith("matched (")}
+    as_run(items)
+    rules = {"aligner when labeled (ratio ≥ 0.5, gap ≥ 0.35)": lambda i: i["current"].startswith("matched ("),
+             "**aligner as it runs now**": lambda i: i["as_run"] in ("unchanged", "reworded", "moved", "split",
+                                                                     "merged")}
     for r in (0.35, 0.4, 0.45, 0.5, 0.55, 0.6):
         rules[f"ratio >= {r}"] = lambda i, r=r: i["ratio"] >= r
         for c in (0.6, 0.7, 0.8, 0.9):
@@ -81,12 +111,16 @@ def main() -> None:
         p, rc, f1, raw = score(items, pop, f)
         lines.append(f"| {name} | {p:.2f} | {rc:.2f} | {f1:.2f} | {raw.get('tp', 0)}/{raw.get('fp', 0)}/"
                      f"{raw.get('fn', 0)}/{raw.get('tn', 0)} |")
-    lines += ["", "## Disagreements with the current aligner", ""]
+    lines += ["", "## Disagreements with the aligner as it runs now", "",
+              "`elsewhere:` means the aligner paired the old paragraph with a *different* new paragraph. That can be a"
+              " second valid counterpart, so those are listed separately from outright misses.", ""]
     for i in items:
-        cur = i["current"].startswith("matched (")
+        cur = rules["**aligner as it runs now**"](i)
         if cur != (i["label"] == "Y"):
-            lines.append(f"- {i['id']} · {i['company']} · {i['section']} · label {i['label']} · aligner: {i['current']}"
+            lines.append(f"- {i['id']} · {i['company']} · {i['section']} · label {i['label']} · aligner: {i['as_run']}"
                          f" · ratio {i['ratio']} · containment {i['containment']}")
+    unmapped = [i["id"] for i in items if i["as_run"] == "unmapped"]
+    lines += ["", f"Items that could not be mapped to current units: {unmapped or 'none'}."]
     (ROOT / "docs" / "alignment-eval.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     print(f"{len(items)} labeled ({unsure} '?', {len(missing)} missing) -> docs/alignment-eval.md")
 

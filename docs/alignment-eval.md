@@ -19,7 +19,8 @@ Estimates are weighted by each stratum's share of the 6,100 candidate pairs (raw
 
 | Rule | Precision | Recall | F1 | raw tp/fp/fn/tn |
 |---|---|---|---|---|
-| current aligner (as run) | 0.94 | 0.66 | 0.78 | 28/3/23/13 |
+| aligner when labeled (ratio ≥ 0.5, gap ≥ 0.35) | 0.94 | 0.66 | 0.78 | 28/3/23/13 |
+| **aligner as it runs now** | 0.94 | 0.71 | 0.81 | 31/3/20/13 |
 | ratio >= 0.35 | 0.90 | 0.90 | 0.90 | 42/6/9/10 |
 | ratio >= 0.35 or containment >= 0.6 | 0.88 | 0.94 | 0.91 | 47/10/4/6 |
 | ratio >= 0.35 or containment >= 0.7 | 0.89 | 0.91 | 0.90 | 44/8/7/8 |
@@ -51,31 +52,32 @@ Estimates are weighted by each stratum's share of the 6,100 candidate pairs (raw
 | ratio >= 0.6 or containment >= 0.8 | 0.94 | 0.52 | 0.67 | 17/3/34/13 |
 | ratio >= 0.6 or containment >= 0.9 | 0.98 | 0.47 | 0.63 | 14/1/37/15 |
 
-## Disagreements with the current aligner
+## Disagreements with the aligner as it runs now
 
-- A02 · Apple Inc. · 10K_1A · label Y · aligner: not matched (removed) · ratio 0.405 · containment 0.708
-- A04 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.268 · containment 0.567
-- A06 · COCA COLA CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.326 · containment 0.719
-- A12 · Walmart Inc. · 10K_7 · label Y · aligner: matched elsewhere · ratio 0.63 · containment 0.945
-- A13 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.4 · containment 0.867
-- A15 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.517 · containment 0.523
-- A17 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.283 · containment 0.6
-- A18 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.26 · containment 0.357
-- A19 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.251 · containment 0.611
-- A21 · EXXON MOBIL CORP · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.4 · containment 0.45
-- A22 · COCA COLA CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.559 · containment 0.591
-- A27 · PFIZER INC · 10K_7 · label N · aligner: matched (reworded) · ratio 0.354 · containment 0.615
-- A29 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.311 · containment 0.667
-- A32 · COCA COLA CO · 10K_7 · label Y · aligner: matched elsewhere · ratio 0.422 · containment 0.628
-- A33 · JPMORGAN CHASE & CO · 10Q_P1_2 · label Y · aligner: matched elsewhere · ratio 0.354 · containment 0.875
-- A37 · BERKSHIRE HATHAWAY INC · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.454 · containment 0.5
-- A38 · EXXON MOBIL CORP · 10K_7 · label Y · aligner: matched elsewhere · ratio 0.545 · containment 0.562
-- A40 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.545 · containment 0.562
-- A43 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.291 · containment 0.593
-- A46 · JPMORGAN CHASE & CO · 10Q_P1_2 · label Y · aligner: matched elsewhere · ratio 0.545 · containment 0.714
-- A48 · JPMORGAN CHASE & CO · 10K_7 · label N · aligner: matched (moved) · ratio 0.537 · containment 0.656
-- A51 · BERKSHIRE HATHAWAY INC · 10K_7 · label N · aligner: matched (merged) · ratio 0.271 · containment 0.958
-- A64 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.566 · containment 0.625
-- A68 · WEYCO GROUP INC · 10Q_P1_2 · label Y · aligner: not matched (removed) · ratio 0.346 · containment 0.35
-- A69 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.254 · containment 1.0
-- A70 · EXXON MOBIL CORP · 10K_7 · label Y · aligner: not matched (removed) · ratio 0.353 · containment 0.508
+`elsewhere:` means the aligner paired the old paragraph with a *different* new paragraph. That can be a second valid counterpart, so those are listed separately from outright misses.
+
+- A04 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: unmatched · ratio 0.268 · containment 0.567
+- A06 · COCA COLA CO · 10K_7 · label Y · aligner: elsewhere:moved · ratio 0.326 · containment 0.719
+- A12 · Walmart Inc. · 10K_7 · label Y · aligner: elsewhere:moved · ratio 0.63 · containment 0.945
+- A13 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: unmatched · ratio 0.4 · containment 0.867
+- A15 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: elsewhere:moved · ratio 0.517 · containment 0.523
+- A17 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: unmatched · ratio 0.283 · containment 0.6
+- A18 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: unmatched · ratio 0.26 · containment 0.357
+- A19 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: unmatched · ratio 0.251 · containment 0.611
+- A21 · EXXON MOBIL CORP · 10K_7 · label Y · aligner: unmatched · ratio 0.4 · containment 0.45
+- A22 · COCA COLA CO · 10K_7 · label Y · aligner: unmatched · ratio 0.559 · containment 0.591
+- A29 · GENERAL ELECTRIC CO · 10K_7 · label Y · aligner: unmatched · ratio 0.311 · containment 0.667
+- A31 · GENERAL ELECTRIC CO · 10K_7 · label N · aligner: moved · ratio 0.494 · containment 0.704
+- A32 · COCA COLA CO · 10K_7 · label Y · aligner: elsewhere:reworded · ratio 0.422 · containment 0.628
+- A33 · JPMORGAN CHASE & CO · 10Q_P1_2 · label Y · aligner: elsewhere:reworded · ratio 0.354 · containment 0.875
+- A38 · EXXON MOBIL CORP · 10K_7 · label Y · aligner: elsewhere:moved · ratio 0.545 · containment 0.562
+- A40 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: unmatched · ratio 0.545 · containment 0.562
+- A43 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: unmatched · ratio 0.291 · containment 0.593
+- A46 · JPMORGAN CHASE & CO · 10Q_P1_2 · label Y · aligner: elsewhere:moved · ratio 0.545 · containment 0.714
+- A48 · JPMORGAN CHASE & CO · 10K_7 · label N · aligner: moved · ratio 0.537 · containment 0.656
+- A51 · BERKSHIRE HATHAWAY INC · 10K_7 · label N · aligner: merged · ratio 0.271 · containment 0.958
+- A64 · JPMORGAN CHASE & CO · 10K_7 · label Y · aligner: unmatched · ratio 0.566 · containment 0.625
+- A68 · WEYCO GROUP INC · 10Q_P1_2 · label Y · aligner: unmatched · ratio 0.346 · containment 0.35
+- A70 · EXXON MOBIL CORP · 10K_7 · label Y · aligner: unmatched · ratio 0.353 · containment 0.508
+
+Items that could not be mapped to current units: none.

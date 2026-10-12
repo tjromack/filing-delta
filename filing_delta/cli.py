@@ -72,8 +72,15 @@ def cmd_parse(args: argparse.Namespace) -> int:
 
 
 def cmd_golden(args: argparse.Namespace) -> int:
-    from .parse.golden import propose
+    from datetime import date
 
+    from .parse.golden import propose, rederive
+
+    if args.rederive:
+        refreshed, failing = rederive(ROOT, CACHE_DIR, date.today().isoformat())
+        print(f"refreshed (paragraph breaks only): {refreshed or 'none'}")
+        print(f"still failing (words or outcome changed; needs a human): {failing or 'none'}")
+        return 1 if failing else 0
     n, confirmed = propose(ROOT, CACHE_DIR)
     print(f"{n} golden sections ({confirmed} human-confirmed, {n - confirmed} proposed) -> tests/golden/sections.json,"
           f" docs/golden-review.md")
@@ -100,6 +107,8 @@ def main(argv: list[str] | None = None) -> int:
     pa = sub.add_parser("parse", help="parse every cached filing; write docs/parse-report.md + docs/parse-failures.md")
     pa.set_defaults(func=cmd_parse)
     g = sub.add_parser("golden", help="propose golden boundaries for review (never overwrites confirmed ones)")
+    g.add_argument("--rederive", action="store_true",
+                   help="refresh confirmed entries whose words are unchanged (paragraph-break changes only)")
     g.set_defaults(func=cmd_golden)
     d = sub.add_parser("diff", help="diff each section against the prior period; write docs/diff-report.md")
     d.set_defaults(func=cmd_diff)

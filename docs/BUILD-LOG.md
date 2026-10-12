@@ -260,3 +260,36 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - **Stop:** Trevor labels the 70 pairs in `docs/alignment-labeling.md`. Then thresholds are set from
   `tools/eval_alignment.py`, the diff is re-run, flags are re-checked, precision/recall are published, and M3 is
   committed for the gate.
+
+---
+
+## 2026-10-12 — M3 part 2 (labels in; a segmentation fix; a question about what the labels mean)
+
+### What happened
+- Trevor labeled all 70 pairs (67 Y/N, 3 '?') and added notes. One note ("NEW cuts off early… others too") led to a
+  systematic check: 4.8% of paragraph units ended mid-sentence. The cause was the parser re-joining a page-split
+  sentence only when the continuation started lowercase ("…information on the" | "Company's…" stayed split). Fixed
+  with a capitalised-continuation rule, limited to page breaks, paragraph-length blocks, and non-heading,
+  non-list, non-table continuations.
+- The fix changed 3 confirmed golden texts by exactly one paragraph break each. Golden entries now carry a
+  whitespace-insensitive `words_sha256`, and `filing-delta golden --rederive` refreshes a confirmed entry *only* if
+  its words are unchanged. The 3 were verified against the confirmed texts and refreshed. Anything else still fails
+  and needs a human.
+- Before the fix changed unit numbering, the labeled texts were frozen into `tests/golden/alignment_sample.json`, so
+  the evaluator maps labels to current units by text.
+- Threshold set provisionally to 0.35 (pairwise rule: precision/recall 0.90/0.90 against the labels). But the aligner
+  *as it runs* scores 0.94/0.71. The gap comes from 1:1 matching: a labeled "Y" partner is often already the better
+  partner of a different old paragraph.
+
+### Learnings
+- **Reading the labels shows the labeling question was ambiguous.** Several Y labels pair *the same template about a
+  different subject* (North America vs Asia Pacific unit-case volume; India refranchising vs Odwalla discontinuation).
+  Trevor's notes say "similar type of disclosure". For a "newly disclosed" tool, a new event in an old template is
+  new. The instructions said "same disclosure… not a new topic", which doesn't separate *type* from *instance*
+  clearly. Asked Trevor to decide the criterion rather than reinterpreting his labels myself.
+- Mid-sentence endings: what remains is ~950 lead-ins to bullet lists (by design: each bullet is its own unit so a
+  new bullet is visible) and ~210 (0.7%) splits without a page break. Recorded as a known limitation.
+
+### Open / next
+- Trevor: the label criterion (type vs instance). Then re-score, finalize the threshold, publish, and add the labels
+  as a regression test.

@@ -169,23 +169,38 @@ def _text_between(doc: _Doc, start: int, end: int, skip_rows: set[int]) -> tuple
     joins = 0
     pos = 0
     prev_open = False
+    prev_cell = False
+    para_len = 0          # length of the paragraph being built (since the last block break)
+    crossed = False       # a page break or removed furniture lies between the previous block and this one
     for b in doc.blocks[start:end]:
         if b.idx in doc.furn or (b.row is not None and b.row in skip_rows):
+            crossed = True
             continue
+        crossed = crossed or b.page_break_before
         t = b.text
         if parts:
-            # Re-join a sentence split by a page break (furniture removed between the halves).
-            if prev_open and t[:1].islower():
+            # Re-join a sentence split by a page break (furniture removed between the halves). A lowercase
+            # continuation always joins. A capitalised one ("...information on the" | "Firm's ...") joins only across
+            # a page break, after a paragraph-length block, and when it doesn't read as a heading, list item or table
+            # cell. Found by Trevor during M3 labeling: ~4.8% of paragraphs ended mid-sentence.
+            cap_join = (crossed and para_len > 120 and not prev_cell and b.row is None
+                        and not (len(t) <= 120 and not re.search(r"[.!?:;]\s*$", t))
+                        and not re.match(r"^(?:[•●◦▪■\-–—*]|\(?[a-z0-9]{1,3}[.)]\s|item\s+\d)", t, re.I))
+            if prev_open and (t[:1].islower() or cap_join):
                 sep = " "
                 joins += 1
             else:
                 sep = "\n\n"
+                para_len = 0
             parts.append(sep)
             pos += len(sep)
         block_map.append((pos, pos + len(t), b.idx, b.table, b.row))
         parts.append(t)
         pos += len(t)
+        para_len += len(t)
         prev_open = not re.search(r"[.!?:;”\"’')\]]\s*$", t)
+        prev_cell = b.row is not None
+        crossed = False
     return "".join(parts), joins, block_map
 
 
