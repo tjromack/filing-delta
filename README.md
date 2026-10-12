@@ -49,7 +49,7 @@ deterministic processing from model judgment, and scoring the model half.
 
 | Check | What it proves | Result |
 |---|---|---|
-| Golden-file parser tests | Section boundaries are found correctly across filers and HTML eras | 28 sections / 14 filings; human confirmation pending (`docs/golden-review.md`) |
+| Golden-file parser tests | Section boundaries are found correctly across filers and HTML eras | 28 sections / 14 filings, every archetype and HTML era, each boundary confirmed by hand against the filing (`docs/golden-review.md`) |
 | Published parse-success rate + failure log | Parse failures are surfaced, not hidden | 270 of 272 present sections `ok` (99.3%), 16 verified-absent, 2 failed (exhibit incorporation): `docs/parse-report.md` |
 | Golden-file diff tests | The diff is deterministic and correct on known pairs | [TKTK] |
 | Material/cosmetic confusion matrix vs. hand labels | How good the model judgment is, and where it's wrong | [TKTK] |

@@ -6,7 +6,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 
 *Why it's golden:* A · iXBRL · linked TOC · [0000320193-25-000079](https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm)
 
-### 10-K Item 1A — `ok` / `full` · 67,734 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 67,734 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -16,7 +16,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars |  shares. If the Company fails to meet expectations related to future growth, profitability, dividends, share repurchases or other market expectations, the price of the Company’s stock may decline significantly, which could have a material adverse impact on investor confidence and employee retention. |
 | after end | Item 1B. Unresolved Staff Comments ⏎ None. |
 
-### 10-K Item 7 — `ok` / `full` · 18,050 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 18,050 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -30,7 +30,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 
 *Why it's golden:* A · pre-iXBRL · split-cell headings · [0000320193-18-000145](https://www.sec.gov/Archives/edgar/data/320193/000032019318000145/a10-k20189292018.htm)
 
-### 10-K Item 1A — `ok` / `full` · 55,143 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 55,143 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -40,7 +40,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | ffective tax rates were to increase, particularly in the U.S. or Ireland, or if the ultimate determination of the Company’s taxes owed is for an amount in excess of amounts previously accrued, the Company’s financial condition, operating results and cash flows could be materially adversely affected. |
 | after end | Item 1B. ⏎ Unresolved Staff Comments |
 
-### 10-K Item 7 — `ok` / `full` · 57,466 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 57,466 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -54,7 +54,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 
 *Why it's golden:* A · '(Continued)' running headers · [0000037996-26-000015](https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm)
 
-### 10-K Item 1A — `ok` / `full` · 93,118 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 93,118 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -64,7 +64,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | ld harm Ford Credit’s reputation or lead to further litigation. Moreover, in response to audits, inspections, or investigations conducted by regulatory authorities, Ford Credit has in the past modified and may in the future modify its operations or take other actions, such as remunerating customers. |
 | after end | ITEM 1B. Unresolved Staff Comments. ⏎ None. |
 
-### 10-K Item 7 — `ok` / `full` · 156,005 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 156,005 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -78,7 +78,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 
 *Why it's golden:* A · pre-iXBRL · bare 'ITEM 1A' + title line · [0001144204-19-013992](https://www.sec.gov/Archives/edgar/data/106532/000114420419013992/tv515153_10k.htm)
 
-### 10-K Item 1A — `ok` / `full` · 16,942 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 16,942 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -88,7 +88,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | pany’s business could be harmed due to the event itself or due to its inability to effectively manage the effects of the particular event; potential harms include the loss of business continuity, the loss of inventory or business data and damage to infrastructure, warehouses or distribution centers. |
 | after end | ITEM 1B ⏎ UNRESOLVED STAFF COMMENTS |
 
-### 10-K Item 7 — `ok` / `full` · 22,994 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 22,994 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -102,7 +102,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 
 *Why it's golden:* A · pre-iXBRL · 1,295 '&#146;'-style C1 references · [0001193125-19-048926](https://www.sec.gov/Archives/edgar/data/1067983/000119312519048926/d678758d10k.htm)
 
-### 10-K Item 1A — `ok` / `full` · 17,588 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 17,588 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -112,7 +112,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | icant portion of costs of capital improvements are funded through debt issued by BNSF and BHE and their subsidiaries. Disruptions in debt capital markets that restrict access to funding when needed could adversely affect the results of operations, liquidity and capital resources of these businesses. |
 | after end | Item 1B. ⏎ Unresolved Staff Comments |
 
-### 10-K Item 7 — `ok` / `full` · 128,991 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 128,991 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -126,7 +126,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 
 *Why it's golden:* A · straight quotes · January FYE · [0000104169-25-000021](https://www.sec.gov/Archives/edgar/data/104169/000010416925000021/wmt-20250131.htm)
 
-### 10-K Item 1A — `ok` / `full` · 97,539 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 97,539 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -136,7 +136,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | nistrative proceedings or litigation, including as class or mass actions. A failure or perceived failure to meet our goals or to otherwise meet evolving and diverse stakeholder expectations could adversely affect public perception of our business, associate morale or customer or shareholder support. |
 | after end | ITEM 1B. ⏎ UNRESOLVED STAFF COMMENTS |
 
-### 10-K Item 7 — `ok` / `full` · 59,620 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 59,620 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -150,7 +150,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 
 *Why it's golden:* B · pointer stub · running headers · stated pages · [0001628280-26-008131](https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm)
 
-### 10-K Item 1A — `ok` / `full` · 112,554 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 112,554 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -160,7 +160,7 @@ Each section below is the parser's **proposed** boundary. To confirm one, read t
 | last chars | isplacement. This could require JPMorganChase to invest in additional employee training, manage impacts on morale and retention, and compete for employment candidates who possess more advanced technological skills, all of which could have a negative impact on JPMorganChase’s business and operations. |
 | after end | Parts I and II ⏎ Item 1B. Unresolved Staff Comments. |
 
-### 10-K Item 7 — `ok` / `full` · 392,752 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 392,752 chars · status: **confirmed**
 
 Reasons: `followed_pointer, running_header_extent, filtered_by_stated_pages, page_range_verified`
 
@@ -176,7 +176,7 @@ Reasons: `followed_pointer, running_header_extent, filtered_by_stated_pages, pag
 
 *Why it's golden:* B · pointer stub · running headers · no stated pages · [0000034088-26-000045](https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm)
 
-### 10-K Item 1A — `ok` / `full` · 35,710 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 35,710 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -186,7 +186,7 @@ Reasons: `followed_pointer, running_header_extent, filtered_by_stated_pages, pag
 | last chars | C, 2, 5, 7, and 7A of this report are forward-looking statements. Actual future results, including project completion dates, production rates, capital expenditures, costs, and business plans could differ materially due to, among other things, the factors discussed above and elsewhere in this report. |
 | after end | ITEM 1B. UNRESOLVED STAFF COMMENTS ⏎ None. |
 
-### 10-K Item 7 — `ok` / `full` · 117,253 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 117,253 chars · status: **confirmed**
 
 Reasons: `followed_pointer, running_header_extent`
 
@@ -202,7 +202,7 @@ Reasons: `followed_pointer, running_header_extent`
 
 *Why it's golden:* C · cross-reference index · indented TOC · run-in headings · [0000040545-26-000008](https://www.sec.gov/Archives/edgar/data/40545/000004054526000008/ge-20251231.htm)
 
-### 10-K Item 1A — `ok` / `full` · 61,592 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 61,592 chars · status: **confirmed**
 
 Reasons: `anchor_only, single_signal, xref_index, toc_group_end, run_in_heading, page_range_verified`
 
@@ -214,7 +214,7 @@ Reasons: `anchor_only, single_signal, xref_index, toc_group_end, run_in_heading,
 | last chars | and less reliable than those of the U.S. or other more developed markets, and this can create additional uncertainty about the outcome of proceedings before courts or other governmental bodies in those markets. See Note 24 for further information about legal proceedings and other loss contingencies. |
 | after end | LEGAL PROCEEDINGS. Refer to Legal Matters and Environmental, Health and Safety Matters in Note 24 to the consolidated financial statements for further information relating to our legal matters. ⏎ MANAGEMENT AND AUDITOR’S REPORTS |
 
-### 10-K Item 7 — `ok` / `full` · 71,259 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 71,259 chars · status: **confirmed**
 
 Reasons: `anchor_only, single_signal, xref_index, toc_group_end, run_in_heading, page_range_verified`
 
@@ -230,7 +230,7 @@ Reasons: `anchor_only, single_signal, xref_index, toc_group_end, run_in_heading,
 
 *Why it's golden:* C · cross-reference index · flat TOC · [0000040545-19-000014](https://www.sec.gov/Archives/edgar/data/40545/000004054519000014/ge10-k2018.htm)
 
-### 10-K Item 1A — `ok` / `full` · 48,985 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 48,985 chars · status: **confirmed**
 
 Reasons: `anchor_only, single_signal, xref_index, end_from_index_pages, page_range_verified`
 
@@ -242,7 +242,7 @@ Reasons: `anchor_only, single_signal, xref_index, end_from_index_pages, page_ran
 | last chars | and this can create additional uncertainty about the outcome of proceedings before courts or other governmental bodies in such markets. See the Legal Proceedings section and Note 22 to the consolidated financial statements for further information about legal proceedings and other loss contingencies. |
 | after end | LEGAL PROCEEDINGS ⏎ In addition to the legal matters described below, we also incorporate the information reported under "Legal Proceedings" in BHGE's Form 10-K report. |
 
-### 10-K Item 7 — `ok` / `full` · 324,270 chars · status: **proposed**
+### 10-K Item 7 — `ok` / `full` · 324,270 chars · status: **confirmed**
 
 Reasons: `anchor_only, single_signal, xref_index, end_from_index_pages, page_range_verified`
 
@@ -258,7 +258,7 @@ Reasons: `anchor_only, single_signal, xref_index, end_from_index_pages, page_ran
 
 *Why it's golden:* MD&A incorporated from an exhibit (expected failure) · [0000078003-19-000015](https://www.sec.gov/Archives/edgar/data/78003/000007800319000015/pfe-12312018x10kshell.htm)
 
-### 10-K Item 1A — `ok` / `full` · 93,476 chars · status: **proposed**
+### 10-K Item 1A — `ok` / `full` · 93,476 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -268,7 +268,7 @@ Reasons: `anchor_only, single_signal, xref_index, end_from_index_pages, page_ran
 | last chars |  ⏎ TERRORIST ACTIVITY ⏎  ⏎ Our future results could be adversely affected by changes in business, political and economic conditions, including the cost and availability of insurance, due to the threat of terrorist activity in the U.S. and other parts of the world and related U.S. military action overseas. |
 | after end | ITEM 1B. ⏎ UNRESOLVED STAFF COMMENTS |
 
-### 10-K Item 7 — `failed` / `pointer` · 147 chars · status: **proposed**
+### 10-K Item 7 — `failed` / `pointer` · 147 chars · status: **confirmed**
 
 Reasons: `exhibit_incorporation`
 
@@ -284,7 +284,7 @@ Reasons: `exhibit_incorporation`
 
 *Why it's golden:* D · 10-Q pointer out · MD&A from TOC anchor only · [0001628280-26-054343](https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm)
 
-### 10-Q Part I Item 2 — `ok` / `full` · 275,357 chars · status: **proposed**
+### 10-Q Part I Item 2 — `ok` / `full` · 275,357 chars · status: **confirmed**
 
 Reasons: `anchor_only, single_signal, toc_group_end`
 
@@ -296,7 +296,7 @@ Reasons: `anchor_only, single_signal, toc_group_end`
 | last chars | made, and JPMorganChase does not undertake to update any forward-looking statements. The reader should, however, consult any further disclosures of a forward-looking nature the Firm may make in any subsequent Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q or Current Reports on Form 8-K. |
 | after end | Consolidated statements of income (unaudited) ⏎ Three months ended June 30, |
 
-### 10-Q Part II Item 1A — `ok` / `pointer` · 378 chars · status: **proposed**
+### 10-Q Part II Item 1A — `ok` / `pointer` · 378 chars · status: **confirmed**
 
 Reasons: `pointer_out`
 
@@ -312,7 +312,7 @@ Reasons: `pointer_out`
 
 *Why it's golden:* 10-Q · no TOC links · Part II Item 1A omitted · [0001104659-26-092615](https://www.sec.gov/Archives/edgar/data/106532/000110465926092615/weys-20260630x10q.htm)
 
-### 10-Q Part I Item 2 — `ok` / `full` · 25,277 chars · status: **proposed**
+### 10-Q Part I Item 2 — `ok` / `full` · 25,277 chars · status: **confirmed**
 
 Reasons: `single_signal`
 
@@ -324,7 +324,7 @@ Reasons: `single_signal`
 | last chars | g, among other uses, capital expenditures, continued stock repurchases and acquisitions. We believe that available cash, marketable securities, and cash provided by operations will provide adequate support for the cash needs of the business for at least one year, although there can be no assurances. |
 | after end | Item 3. Quantitative and Qualitative Disclosures About Market Risk. ⏎ Not applicable. |
 
-### 10-Q Part II Item 1A — `ok` / `absent` · 0 chars · status: **proposed**
+### 10-Q Part II Item 1A — `ok` / `absent` · 0 chars · status: **confirmed**
 
 Reasons: `item_omitted`
 
@@ -334,7 +334,7 @@ Reasons: `item_omitted`
 
 *Why it's golden:* 10-Q · Item 2 heading repeated as running header · pointer out · [0001193125-26-341032](https://www.sec.gov/Archives/edgar/data/1067983/000119312526341032/brka-20260630.htm)
 
-### 10-Q Part I Item 2 — `ok` / `full` · 77,553 chars · status: **proposed**
+### 10-Q Part I Item 2 — `ok` / `full` · 77,553 chars · status: **confirmed**
 
 | | |
 |---|---|
@@ -344,7 +344,7 @@ Reasons: `item_omitted`
 | last chars | at reasonable rates; changes in laws or regulations affecting our insurance, railroad, utilities and energy and finance subsidiaries; changes in federal income tax laws; and changes in general economic and market factors that affect the prices of securities or the industries in which we do business. |
 | after end | Item 3. Quantitative and Qualitative Disclosures About Market Risk ⏎ Reference is made to Berkshire’s Annual Report on Form 10-K for the year ended December 31, 2025 and the “Market Risk Disclosures” included in “Management’s Discussion and Analysis of Financial Condit |
 
-### 10-Q Part II Item 1A — `ok` / `pointer` · 538 chars · status: **proposed**
+### 10-Q Part II Item 1A — `ok` / `pointer` · 538 chars · status: **confirmed**
 
 Reasons: `pointer_out`
 

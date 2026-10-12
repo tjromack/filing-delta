@@ -194,3 +194,23 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - MD&A isn't credible on its own unless the audited sections back it. Recorded as FD-DEC 016: an explicit
   "unaudited narrative" limit in the README now, plus a proposed M5 option to reconcile MD&A numeric claims
   against audited XBRL facts. A good catch for the case study: it sharpens what "material change" can and can't mean.
+
+---
+
+## 2026-10-12 — M2 closed (golden boundaries confirmed)
+
+### What happened
+- Trevor reviewed the 28 proposed golden boundaries (14 filings, every archetype and era) against the EDGAR filings,
+  using `docs/golden-review-worksheet.md` as the procedure. He confirmed all 28 and reported "no alarming notes
+  overall". The confirmation was given in the session, not written into the worksheet, so the per-entry record is
+  `"status": "confirmed"` plus a dated note in `tests/golden/sections.json`.
+- The golden tests now enforce human-confirmed boundaries, not just the parser's own output: 77 tests pass.
+
+### Learnings
+- Trevor's question afterwards ("what exactly is the purpose at this point?") is worth keeping for the case study.
+  The goldens are the only check in M2 that isn't the parser grading itself. The 99.3% rate comes from the parser's
+  own sanity gates, and the goldens are what make it believable. Next time, explain the *why* of a human-review step
+  before asking for it, not after.
+
+### Open / next
+- M2 is done pending Trevor's approval to start M3: paragraph segmentation and the deterministic diff.
