@@ -63,3 +63,5 @@ policy is followed: a declared User-Agent, a rate ceiling below SEC's limit, and
 ## License
 
 MIT. See `LICENSE`.
+
+[![M8ven Score](https://m8ven.ai/badge/mcp/tjromack-clear-pricer-mcp-7v9m47?v=8a242f1dd1bd8ec6970fc4d7a8896075)](https://m8ven.ai/mcp/tjromack-clear-pricer-mcp-7v9m47?s=readme)
