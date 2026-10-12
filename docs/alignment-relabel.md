@@ -9,7 +9,7 @@ These are the pairs you marked **Y** or **?** in the first pass. The question is
 
 Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, would a reader call it *new information*? If yes, it's **T** (or N). If it's the old information updated, it's **Y**.
 
-## A02 · Apple Inc. · 10K_1A · 2024-09-28 → 2025-09-27 · first pass: Y
+## A02 · Apple Inc. · 10K_1A · 2024-09-28 → 2025-09-27
 
 **OLD:**
 
@@ -23,7 +23,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A04 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31 · first pass: Y
+## A04 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31
 
 **OLD:**
 
@@ -37,7 +37,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A05 · PFIZER INC · 10K_7 · 2021-12-31 → 2022-12-31 · first pass: ?
+## A05 · PFIZER INC · 10K_7 · 2021-12-31 → 2022-12-31
 
 **OLD:**
 
@@ -51,7 +51,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A06 · COCA COLA CO · 10K_7 · 2019-12-31 → 2020-12-31 · first pass: Y
+## A06 · COCA COLA CO · 10K_7 · 2019-12-31 → 2020-12-31
 
 **OLD:**
 
@@ -65,7 +65,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A07 · Walmart Inc. · 10Q_P1_2 · 2025-04-30 → 2026-04-30 · first pass: Y
+## A07 · Walmart Inc. · 10Q_P1_2 · 2025-04-30 → 2026-04-30
 
 **OLD:**
 
@@ -79,7 +79,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A09 · EXXON MOBIL CORP · 10K_7 · 2019-12-31 → 2020-12-31 · first pass: Y
+## A09 · EXXON MOBIL CORP · 10K_7 · 2019-12-31 → 2020-12-31
 
 **OLD:**
 
@@ -93,7 +93,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A10 · COCA COLA CO · 10K_7 · 2021-12-31 → 2022-12-31 · first pass: Y
+## A10 · COCA COLA CO · 10K_7 · 2021-12-31 → 2022-12-31
 
 **OLD:**
 
@@ -107,7 +107,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A11 · FORD MOTOR CO · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: Y
+## A11 · FORD MOTOR CO · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -121,7 +121,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A12 · Walmart Inc. · 10K_7 · 2023-01-31 → 2024-01-31 · first pass: Y
+## A12 · Walmart Inc. · 10K_7 · 2023-01-31 → 2024-01-31
 
 **OLD:**
 
@@ -135,7 +135,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A13 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31 · first pass: Y
+## A13 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31
 
 **OLD:**
 
@@ -149,7 +149,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A14 · JPMORGAN CHASE & CO · 10K_1A · 2024-12-31 → 2025-12-31 · first pass: Y
+## A14 · JPMORGAN CHASE & CO · 10K_1A · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -163,7 +163,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A15 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31 · first pass: Y
+## A15 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31
 
 **OLD:**
 
@@ -177,7 +177,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A16 · BERKSHIRE HATHAWAY INC · 10K_7 · 2018-12-31 → 2019-12-31 · first pass: Y
+## A16 · BERKSHIRE HATHAWAY INC · 10K_7 · 2018-12-31 → 2019-12-31
 
 **OLD:**
 
@@ -191,7 +191,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A17 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31 · first pass: Y
+## A17 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31
 
 **OLD:**
 
@@ -205,7 +205,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A18 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31 · first pass: Y
+## A18 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31
 
 **OLD:**
 
@@ -221,7 +221,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A19 · GENERAL ELECTRIC CO · 10K_7 · 2024-12-31 → 2025-12-31 · first pass: Y
+## A19 · GENERAL ELECTRIC CO · 10K_7 · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -235,7 +235,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A20 · BERKSHIRE HATHAWAY INC · 10K_7 · 2021-12-31 → 2022-12-31 · first pass: ?
+## A20 · BERKSHIRE HATHAWAY INC · 10K_7 · 2021-12-31 → 2022-12-31
 
 **OLD:**
 
@@ -249,7 +249,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A21 · EXXON MOBIL CORP · 10K_7 · 2022-12-31 → 2023-12-31 · first pass: Y
+## A21 · EXXON MOBIL CORP · 10K_7 · 2022-12-31 → 2023-12-31
 
 **OLD:**
 
@@ -267,7 +267,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A22 · COCA COLA CO · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: Y
+## A22 · COCA COLA CO · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -281,7 +281,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A23 · GENERAL ELECTRIC CO · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: Y
+## A23 · GENERAL ELECTRIC CO · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -295,7 +295,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A26 · PFIZER INC · 10K_7 · 2024-12-31 → 2025-12-31 · first pass: Y
+## A26 · PFIZER INC · 10K_7 · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -309,7 +309,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A28 · FORD MOTOR CO · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: Y
+## A28 · FORD MOTOR CO · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -323,7 +323,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A29 · GENERAL ELECTRIC CO · 10K_7 · 2019-12-31 → 2020-12-31 · first pass: Y
+## A29 · GENERAL ELECTRIC CO · 10K_7 · 2019-12-31 → 2020-12-31
 
 **OLD:**
 
@@ -337,7 +337,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A30 · JPMORGAN CHASE & CO · 10K_1A · 2024-12-31 → 2025-12-31 · first pass: Y
+## A30 · JPMORGAN CHASE & CO · 10K_1A · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -351,7 +351,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A32 · COCA COLA CO · 10K_7 · 2022-12-31 → 2023-12-31 · first pass: Y
+## A32 · COCA COLA CO · 10K_7 · 2022-12-31 → 2023-12-31
 
 **OLD:**
 
@@ -365,7 +365,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A33 · JPMORGAN CHASE & CO · 10Q_P1_2 · 2025-03-31 → 2026-03-31 · first pass: Y
+## A33 · JPMORGAN CHASE & CO · 10Q_P1_2 · 2025-03-31 → 2026-03-31
 
 **OLD:**
 
@@ -379,7 +379,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A34 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31 · first pass: Y
+## A34 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31
 
 **OLD:**
 
@@ -393,7 +393,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A35 · EXXON MOBIL CORP · 10K_7 · 2024-12-31 → 2025-12-31 · first pass: Y
+## A35 · EXXON MOBIL CORP · 10K_7 · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -407,7 +407,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A37 · BERKSHIRE HATHAWAY INC · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: Y
+## A37 · BERKSHIRE HATHAWAY INC · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -421,7 +421,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A38 · EXXON MOBIL CORP · 10K_7 · 2021-12-31 → 2022-12-31 · first pass: Y
+## A38 · EXXON MOBIL CORP · 10K_7 · 2021-12-31 → 2022-12-31
 
 **OLD:**
 
@@ -435,7 +435,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A39 · GENERAL ELECTRIC CO · 10K_7 · 2024-12-31 → 2025-12-31 · first pass: Y
+## A39 · GENERAL ELECTRIC CO · 10K_7 · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -449,7 +449,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A40 · JPMORGAN CHASE & CO · 10K_7 · 2019-12-31 → 2020-12-31 · first pass: Y
+## A40 · JPMORGAN CHASE & CO · 10K_7 · 2019-12-31 → 2020-12-31
 
 **OLD:**
 
@@ -463,7 +463,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A41 · JPMORGAN CHASE & CO · 10K_1A · 2020-12-31 → 2021-12-31 · first pass: Y
+## A41 · JPMORGAN CHASE & CO · 10K_1A · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -477,7 +477,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A42 · WEYCO GROUP INC · 10K_7 · 2019-12-31 → 2020-12-31 · first pass: Y
+## A42 · WEYCO GROUP INC · 10K_7 · 2019-12-31 → 2020-12-31
 
 **OLD:**
 
@@ -491,7 +491,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A43 · JPMORGAN CHASE & CO · 10K_7 · 2021-12-31 → 2022-12-31 · first pass: Y
+## A43 · JPMORGAN CHASE & CO · 10K_7 · 2021-12-31 → 2022-12-31
 
 **OLD:**
 
@@ -505,7 +505,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A44 · JPMORGAN CHASE & CO · 10K_7 · 2021-12-31 → 2022-12-31 · first pass: Y
+## A44 · JPMORGAN CHASE & CO · 10K_7 · 2021-12-31 → 2022-12-31
 
 **OLD:**
 
@@ -519,7 +519,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A45 · Apple Inc. · 10K_7 · 2019-09-28 → 2020-09-26 · first pass: Y
+## A45 · Apple Inc. · 10K_7 · 2019-09-28 → 2020-09-26
 
 **OLD:**
 
@@ -533,7 +533,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A46 · JPMORGAN CHASE & CO · 10Q_P1_2 · 2025-06-30 → 2026-06-30 · first pass: Y
+## A46 · JPMORGAN CHASE & CO · 10Q_P1_2 · 2025-06-30 → 2026-06-30
 
 **OLD:**
 
@@ -547,7 +547,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A47 · JPMORGAN CHASE & CO · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: Y
+## A47 · JPMORGAN CHASE & CO · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -561,7 +561,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A49 · Apple Inc. · 10K_1A · 2018-09-29 → 2019-09-28 · first pass: Y
+## A49 · Apple Inc. · 10K_1A · 2018-09-29 → 2019-09-28
 
 **OLD:**
 
@@ -575,7 +575,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A53 · COCA COLA CO · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: ?
+## A53 · COCA COLA CO · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -589,7 +589,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A54 · GENERAL ELECTRIC CO · 10K_7 · 2020-12-31 → 2021-12-31 · first pass: Y
+## A54 · GENERAL ELECTRIC CO · 10K_7 · 2020-12-31 → 2021-12-31
 
 **OLD:**
 
@@ -603,7 +603,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A55 · GENERAL ELECTRIC CO · 10K_7 · 2022-12-31 → 2023-12-31 · first pass: Y
+## A55 · GENERAL ELECTRIC CO · 10K_7 · 2022-12-31 → 2023-12-31
 
 **OLD:**
 
@@ -617,7 +617,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A56 · JPMORGAN CHASE & CO · 10K_7 · 2021-12-31 → 2022-12-31 · first pass: Y
+## A56 · JPMORGAN CHASE & CO · 10K_7 · 2021-12-31 → 2022-12-31
 
 **OLD:**
 
@@ -631,7 +631,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A59 · JPMORGAN CHASE & CO · 10K_7 · 2024-12-31 → 2025-12-31 · first pass: Y
+## A59 · JPMORGAN CHASE & CO · 10K_7 · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -645,7 +645,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A60 · GENERAL ELECTRIC CO · 10K_7 · 2022-12-31 → 2023-12-31 · first pass: Y
+## A60 · GENERAL ELECTRIC CO · 10K_7 · 2022-12-31 → 2023-12-31
 
 **OLD:**
 
@@ -659,7 +659,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A62 · PFIZER INC · 10K_7 · 2024-12-31 → 2025-12-31 · first pass: Y
+## A62 · PFIZER INC · 10K_7 · 2024-12-31 → 2025-12-31
 
 **OLD:**
 
@@ -673,7 +673,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A63 · JPMORGAN CHASE & CO · 10K_7 · 2018-12-31 → 2019-12-31 · first pass: Y
+## A63 · JPMORGAN CHASE & CO · 10K_7 · 2018-12-31 → 2019-12-31
 
 **OLD:**
 
@@ -691,7 +691,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A64 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31 · first pass: Y
+## A64 · JPMORGAN CHASE & CO · 10K_7 · 2023-12-31 → 2024-12-31
 
 **OLD:**
 
@@ -705,7 +705,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A65 · GENERAL ELECTRIC CO · 10K_1A · 2019-12-31 → 2020-12-31 · first pass: Y
+## A65 · GENERAL ELECTRIC CO · 10K_1A · 2019-12-31 → 2020-12-31
 
 **OLD:**
 
@@ -719,7 +719,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A67 · FORD MOTOR CO · 10Q_P1_2 · 2025-03-31 → 2026-03-31 · first pass: Y
+## A67 · FORD MOTOR CO · 10Q_P1_2 · 2025-03-31 → 2026-03-31
 
 **OLD:**
 
@@ -733,7 +733,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A68 · WEYCO GROUP INC · 10Q_P1_2 · 2025-06-30 → 2026-06-30 · first pass: Y
+## A68 · WEYCO GROUP INC · 10Q_P1_2 · 2025-06-30 → 2026-06-30
 
 **OLD:**
 
@@ -747,7 +747,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A69 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31 · first pass: Y
+## A69 · GENERAL ELECTRIC CO · 10K_7 · 2018-12-31 → 2019-12-31
 
 **OLD:**
 
@@ -763,7 +763,7 @@ Rule of thumb: if the NEW text appeared in the filing and the OLD one didn't, wo
 
 **Note (optional):** 
 
-## A70 · EXXON MOBIL CORP · 10K_7 · 2018-12-31 → 2019-12-31 · first pass: Y
+## A70 · EXXON MOBIL CORP · 10K_7 · 2018-12-31 → 2019-12-31
 
 **OLD:**
 

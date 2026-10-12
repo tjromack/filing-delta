@@ -49,8 +49,7 @@ def main() -> None:
         "",
     ]
     for it in todo:
-        out += [f"## {it['id']} · {it['company']} · {it['section']} · {it['old_date']} → {it['new_date']} · first pass:"
-                f" {lab[it['id']]}", "",
+        out += [f"## {it['id']} · {it['company']} · {it['section']} · {it['old_date']} → {it['new_date']}", "",
                 "**OLD:**", "", "> " + cut(it["old_text"]).replace("\n\n", "\n>\n> "), "",
                 "**NEW:**", "", "> " + cut(it["new_text"]).replace("\n\n", "\n>\n> "), "",
                 "**Label:** ", "", "**Note (optional):** ", ""]
