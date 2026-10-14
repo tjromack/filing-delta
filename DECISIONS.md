@@ -212,7 +212,9 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   DuckDB comes in with the read view (M8).
 
 ## FD-DEC 018 — Alignment thresholds come from human labels (2026-10-12)
-**Status:** *Pending Trevor's labels* (`docs/alignment-labeling.md`; scored by `tools/eval_alignment.py`).
+**Status:** Decided 2026-10-14: **REWORD_MIN = 0.40** (global and gap pass), the *instance* criterion, and the
+whole aligner tuned as it runs. Result: precision 0.83 (95% CI 0.74–0.93), recall 0.80 (0.66–0.93) against 70 human
+labels. See the *Resolution* below and `docs/alignment-eval.md`.
 
 - **Context:** the aligner's decision between "reworded" and "removed + added" *is* the product's headline claim
   ("newly disclosed"). The first run used a token-sequence ratio of 0.5 everywhere. Reading the flagged pairs showed
@@ -227,6 +229,24 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   it. The 70 labeled pairs become a regression test for the aligner.
 - **Why not tune by eye:** I picked the examples that exposed the problem, so tuning to them would mean grading my
   own work on my own test set.
+
+**Resolution (2026-10-14).**
+- **Criterion: same instance.** The first labeling pass showed that "same disclosure" could be read as "same type".
+  Several Y labels paired one template about different subjects (North America vs Asia Pacific unit-case volume; India
+  refranchising vs the Odwalla exit). Trevor chose the *instance* criterion: a new event or subject in an old template
+  is new information. He re-judged his 54 Y/? pairs as Y (same instance) / T (same template, different instance) / N:
+  34 Y, 11 T, 9 N. Both passes are kept (`docs/alignment-labeling.md`, `docs/alignment-relabel.md`). T counts as not
+  a match. A40's label was written in its note field ("N") and is recorded as N.
+- **Tune the whole aligner, not a pairwise rule.** Under the instance criterion every pairwise rule is weak (ratio >= 0.35:
+  precision 0.72), because it can't see that a paragraph's best partner is taken by a better match. The aligner's 1:1
+  matching resolves templates (North America pairs with North America), so it was swept as it runs
+  (`tools/sweep_alignment.py`): F1 is about 0.82 from 0.35 to 0.45 and falls to 0.74 at 0.50. 0.40 is the middle of
+  the plateau.
+- **Containment rejected.** Adding "or containment >= c" lowered precision at every c for at most +0.01 recall.
+- **Known error classes** (`docs/alignment-eval.md`): template paragraphs about different subjects still matched as
+  moved or reworded (5 of 8 false positives); split/merge on short boilerplate (2 of 8); heavy rewordings below 0.40 (most
+  of the 8 misses; Walmart FY2025's ESG risk factor is one). Not tuned further against the same 70 labels.
+- **Regression test:** `tests/test_alignment_labels.py` holds 0.83 / 0.80 as a floor.
 
 ## FD-DEC 019 — A pointer's stated page range is exact (2026-10-12)
 **Status:** Decided (M3; a fix to FD-DEC 013, found by the M3 diff's edge flags).

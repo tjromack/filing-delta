@@ -120,6 +120,28 @@ def main() -> None:
         p, rc, f1, raw = score(items, pop, f)
         lines.append(f"| {name} | {p:.2f} | {rc:.2f} | {f1:.2f} | {raw.get('tp', 0)}/{raw.get('fp', 0)}/"
                      f"{raw.get('fn', 0)}/{raw.get('tn', 0)} |")
+    # Bootstrap: resample labeled items within each stratum (fixed seed), recompute the weighted estimates.
+    import random
+    rng = random.Random(20261014)
+    by_s = defaultdict(list)
+    for i in items:
+        by_s[i["stratum"]].append(i)
+    run_rule = rules["**aligner as it runs now**"]
+    ps, rs = [], []
+    for _ in range(2000):
+        boot = [rng.choice(v) for v in by_s.values() for _ in v]
+        p, rc, _, _ = score(boot, pop, run_rule)
+        if p == p and rc == rc:
+            ps.append(p)
+            rs.append(rc)
+    ps.sort()
+    rs.sort()
+    ci = lambda xs: (xs[int(0.025 * len(xs))], xs[int(0.975 * len(xs)) - 1])  # noqa: E731
+    p0, r0, _, _ = score(items, pop, run_rule)
+    lines += ["", "## Headline", "",
+              f"**Aligner as it runs: precision {p0:.2f} (95% CI {ci(ps)[0]:.2f}–{ci(ps)[1]:.2f}), recall {r0:.2f} "
+              f"(95% CI {ci(rs)[0]:.2f}–{ci(rs)[1]:.2f})**, stratum-weighted, against {len(items)} human labels "
+              "(instance criterion). Stratified bootstrap, 2,000 resamples, fixed seed."]
     lines += ["", "## Disagreements with the aligner as it runs now", "",
               "`elsewhere:` means the aligner paired the old paragraph with a *different* new paragraph. That can be a"
               " second valid counterpart, so those are listed separately from outright misses.", ""]

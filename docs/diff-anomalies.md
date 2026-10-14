@@ -45,7 +45,14 @@ as "added at the end" or "removed at the start" in the diff. It found one real b
 
 ## Found by reading a flag, handed to labeling
 
-- **Walmart 10-K Item 1A, FY2024→FY2025:** the ESG reputation risk was reworded heavily enough (similarity 0.36)
-  that the first aligner reported it as removed + added. A gap pass (FD-DEC 018) now matches it, but the same pair
-  showed the gap pass making a wrong match, and the global pass a doubtful one. Thresholds are therefore set from
-  human labels (`docs/alignment-labeling.md`), not from these examples.
+- **Walmart 10-K Item 1A, FY2024→FY2025 (`added_at_end`):** the ESG reputation risk factor was reworded heavily
+  (similarity 0.36 and 0.38 for its two paragraphs). The same pair showed the matcher missing an expanded paragraph
+  and making two doubtful matches, so thresholds were set from 70 human labels (FD-DEC 018), not from this example.
+  At the labeled threshold (0.40) this rewording is still reported as removed + added. **That is a known miss**: one of
+  the ~20% of real rewordings the published recall (0.80) accounts for. It was deliberately not tuned away.
+
+## Re-check after the final threshold (0.40, 2026-10-14)
+
+7 pairs flagged. Coca-Cola FY2018→FY2019 cleared: some of its balance-sheet paragraphs now match as rewordings.
+Every remaining flag is explained above: JPM 2021 (the filer's own stated range, two pairs), Walmart FY2019→FY2020,
+Walmart FY2024→FY2025, Pfizer FY2019→FY2020, GE FY2020→FY2021, and Apple's 10-Q.

@@ -14,6 +14,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M0 · parser design | `0c9f22e` | 18 docs / 11 filers surveyed; 4 layout archetypes | Item 7 is a one-sentence pointer at JPM and Exxon |
 | M1 · EDGAR client | `df70a0d` | 144 filings / 681 MB; warm re-run = 0 requests; 25 tests | 90 of 245 cold requests were paged history (71 JPM) |
 | M2 · section parser | `9338d76` | 270/272 present sections ok (99.3%), 16 absent, 2 failed (exhibit); 28 goldens proposed | lxml reused element ids and merged table rows; two furniture rules deleted real content |
+| M3 · paragraph diff | [TKTK] | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
 
 ---
 
@@ -293,3 +294,47 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - Trevor: the label criterion (type vs instance). Then re-score, finalize the threshold, publish, and add the labels
   as a regression test.
+
+---
+
+## 2026-10-14 — M3 closed (instance labels, whole-aligner threshold, published precision/recall)
+
+### What happened
+- Trevor chose the *instance* criterion (a new event or subject in an old template is new information) and
+  re-judged his 54 Y/? pairs: 34 Y, 11 T (same template, different instance), 9 N. One label was written in a
+  note field ("N") and recorded as N. His first-pass labels are kept.
+- Under instance labels, every single-cutoff rule was weak (ratio ≥ 0.35: precision 0.72). The whole aligner does
+  better because its 1:1 matching resolves templates, so it was swept as it runs (`tools/sweep_alignment.py`, 35
+  filing pairs re-diffed in memory per threshold). F1 is about 0.82 from 0.35 to 0.45, then 0.74 at 0.50. Set
+  **REWORD_MIN = 0.40**, the middle of the plateau.
+- Published: **precision 0.83 (95% CI 0.74–0.93), recall 0.80 (0.66–0.93)**, stratum-weighted, with a stratified
+  bootstrap (2,000 resamples, fixed seed). `tests/test_alignment_labels.py` holds those as a floor. 98 tests pass.
+- Re-checked the flags at 0.40: 7, all explained (`docs/diff-anomalies.md`). Walmart FY2025's ESG rewording (0.36/0.38)
+  stays a reported miss, and is deliberately not tuned away.
+- The capitalised page-break join (part 2) now accounts for 2,934 joins corpus-wide (all join kinds).
+
+### Decisions
+- FD-DEC 018 resolved: the instance criterion, the whole-aligner sweep, 0.40, and containment rejected (it lowered
+  precision at every setting for at most +0.01 recall).
+
+### Learnings
+- **The labeling question decided more than the threshold did.** Under "same type" the best rule scored 0.90/0.90;
+  under "same instance", which is the one the product claims, the same data scored around 0.82. The definition was
+  the real design decision, and only the user could make it.
+- **Pairwise metrics mislead when the system pairs one-to-one.** A pair can be "similar enough" and still correctly
+  unmatched because each paragraph has a better partner. Measure the whole system as it runs.
+- **Error classes, not more tuning.** The 16 remaining disagreements group into template false-matches, split/merge
+  on short boilerplate, and heavy rewordings below 0.40. These go into the README limits, not into another round of
+  fitting the same 70 labels.
+
+### What broke (+ fix)
+- **Backticks in a double-quoted shell string.** A `python -c "..."` used to write DECISIONS text containing
+  `docs/...` paths made bash execute four repo files as shell scripts. Markdown `>` lines became redirections and
+  created one empty stray file (`CONSOLIDATED`), and the paths were replaced with their output. Checked the damage:
+  the stray file was deleted; Trevor's relabel file was verified to contain exactly his labels (its diff is only his 53
+  labels plus the A40 N); four DECISIONS references were restored with the Edit tool; the evaluation and sweep were
+  regenerated (identical numbers). Banked in CLAUDE.md.
+
+### Open / next
+- **Stop:** M3 approval. Then M4: the material/cosmetic classifier. It starts with a labeling guide written before
+  any labeling, and the hand-labeled set is Trevor's.

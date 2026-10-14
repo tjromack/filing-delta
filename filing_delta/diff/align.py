@@ -21,10 +21,10 @@ from difflib import SequenceMatcher
 from .normalize import tokens
 from .segment import Unit
 
-# Set from 67 human labels (FD-DEC 018; docs/alignment-eval.md): at 0.35 the stratum-weighted precision and recall
-# are 0.90 / 0.90. At the first guess of 0.5 they were 0.96 / 0.62, which missed a third of real rewordings. Each
-# miss is a false "newly disclosed".
-REWORD_MIN = 0.35      # token-sequence similarity for "the same paragraph, reworded"
+# Set from 70 human labels under the *instance* criterion (FD-DEC 018; docs/alignment-eval.md). Scored on the
+# whole aligner as it runs, 0.35-0.45 is a plateau (F1 ~0.82) and 0.50 drops recall to 0.66. 0.40 is the middle of
+# the plateau.
+REWORD_MIN = 0.40      # token-sequence similarity for "the same paragraph, reworded"
 GAP_MIN = REWORD_MIN   # the gap pass nominates candidates by position; it doesn't lower the bar
 GAP_MAX_PAIRS = 40_000 # a gap bigger than this (old x new units) is left to the global pass
 COVER_MIN = 0.8        # share of a unit's 3-grams found in one unit on the other side, for split/merge

@@ -45,6 +45,10 @@ This is **BUILD 3** of the portfolio slate: the second regulated vertical, the f
 - **Don't patch regex source through a shell heredoc + Python string.** On M2 this wrote `\b` into the
   file as a literal backspace (0x08) and doubled other backslashes, and the regexes silently stopped matching. Use the
   Edit tool for code edits.
+- **Never put backticks inside a double-quoted shell string.** On M3, `python -c "...`docs/x.md`..."` made bash run
+  the referenced repo files as shell scripts (markdown `>` lines became redirections; one stray file was created) and
+  replaced the references with their output. Write text containing backticks with the Write/Edit tools, or a
+  script file in the scratchpad.
 - **uv through the proxy:** `uv pip install --native-tls …` works.
 - **`spancheck` comes from PyPI** (`pip install spancheck`), pinned in `pyproject.toml`. Do not vendor or fork it.
   If it lacks something, open an issue on spancheck itself.
