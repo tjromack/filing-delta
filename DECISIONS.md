@@ -257,3 +257,20 @@ labels. See the *Resolution* below and `docs/alignment-eval.md`.
 - **What it fixed:** JPM's MD&A lost its last page (the forward-looking statements) in 5 of 8 years. The running
   header that set the end is printed on alternate pages only, and a one-page tolerance hid the shortfall.
 - **Learning:** a tolerance added for one layout masked an error in another. Tolerances are now per-mechanism.
+
+## FD-DEC 020 — M4 scope, labeling guide, and dev/test split (2026-10-14)
+**Status:** Decided (Trevor approved `docs/design/materiality.md` as written).
+
+- **Scope:** Item 1A changes only (10-K and 10-Q Part II): 5,623 changes. MD&A diffs stay published but unclassified.
+  Judging whether a financial number matters is financial analysis, which the README disclaims, and MD&A numbers go to
+  the audited cross-check (FD-DEC 016).
+- **Guide:** material codes `new_risk`, `removed_risk`, `severity`, `realized`, `specifics`, `quantity`,
+  `legal_status`; cosmetic codes `rewording`, `date_rollforward`, `cross_reference`, `formatting`, `restructure`;
+  five tie-break rules; "unsure" allowed. Frozen from the start of labeling.
+- **Sample:** 150 changes, stratified over 10 change-type strata, round-robin across all 11 companies, sampled
+  deterministically (`tools/materiality_sample.py`). Per-stratum rounding gave **28 dev / 122 test** (the plan said
+  30/120). The split is fixed in `tests/golden/materiality_sample.json` before any model output exists.
+- **Sheet design:** inline word diffs, with long unchanged runs collapsed so every change is visible; added/removed
+  items show the closest paragraph on the other side; nothing is cut; no model output shown.
+- **Alternative rejected:** labeling MD&A too. That's 4.5x the items, and the judgment it needs is outside what the
+  tool claims.

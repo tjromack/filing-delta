@@ -64,12 +64,16 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       guard (`filing-delta golden --rederive`)
 - [x] **Gate:** diff over the full corpus with human-set thresholds and published aligner precision/recall. **← stop**
 
-## M4 — material/cosmetic classifier + hand labels + confusion matrix
-- [ ] Labeling guide (what "material" means here, with examples), written **before** labeling
-- [ ] Hand-labeled set, done by Trevor; a model never labels its own eval set; stratified across change types
-- [ ] Classifier stage: separate and separately testable, with model id from `ANTHROPIC_MODEL`, responses recorded (FD-DEC 007)
-- [ ] **Publish the confusion matrix** + error analysis (where it's wrong, and why)
-- [ ] **Gate:** a reproducible, keyless confusion matrix. **← stop**
+## M4 — material/cosmetic classifier + hand labels + confusion matrix (in progress)
+- [x] Labeling guide written and approved before any labeling (`docs/design/materiality.md`, FD-DEC 020)
+- [x] 150-change stratified sample, split 28 dev / 122 test before any model output (`tools/materiality_sample.py`)
+- [ ] Trevor labels the **dev** set (`docs/materiality-labels-dev.md`)
+- [ ] Classifier stage (`filing_delta/classify/`): formatting-only rule + model (`ANTHROPIC_MODEL`, default
+      `claude-sonnet-5-5`), structured output, verified evidence spans, recorded responses (FD-DEC 007); prompt
+      refined on dev only
+- [ ] Trevor labels the **test** set (`docs/materiality-labels-test.md`) before any test-set model output is seen
+- [ ] Confusion matrix + bootstrap CIs + error analysis on test; Haiku 5.5 comparison; full 5,623-change run
+- [ ] **Gate:** a reproducible, keyless confusion matrix. **<- stop**
 
 ## M5 — XBRL company facts join
 - [ ] Company-facts endpoint through the same client; join selected facts to filing periods as context
