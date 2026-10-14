@@ -14,7 +14,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M0 · parser design | `0c9f22e` | 18 docs / 11 filers surveyed; 4 layout archetypes | Item 7 is a one-sentence pointer at JPM and Exxon |
 | M1 · EDGAR client | `df70a0d` | 144 filings / 681 MB; warm re-run = 0 requests; 25 tests | 90 of 245 cold requests were paged history (71 JPM) |
 | M2 · section parser | `9338d76` | 270/272 present sections ok (99.3%), 16 absent, 2 failed (exhibit); 28 goldens proposed | lxml reused element ids and merged table rows; two furniture rules deleted real content |
-| M3 · paragraph diff | [TKTK] | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
+| M3 · paragraph diff | `105e3db` | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
 
 ---
 
