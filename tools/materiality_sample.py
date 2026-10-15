@@ -15,8 +15,11 @@ import re
 from collections import defaultdict
 from difflib import SequenceMatcher
 from pathlib import Path
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from filing_delta.diff.display import inline_diff  # noqa: E402
 SEC = ROOT / "data" / "sections"
 QUOTA = {  # stratum -> items (150 total)
     "formatting_only": 12, "numbers_only": 10,
@@ -48,27 +51,6 @@ def stratum(op: dict) -> str | None:
     return st  # added / removed
 
 
-def inline_diff(a: str, b: str) -> str:
-    """Word-level inline diff on the original words: [-deleted-] {+inserted+}.
-
-    Long unchanged stretches are collapsed ("… 57 unchanged words …") so every change stays visible, however long
-    the paragraph.
-    """
-    wa, wb = a.split(), b.split()
-    out = []
-    for tag, i1, i2, j1, j2 in SequenceMatcher(None, wa, wb, autojunk=False).get_opcodes():
-        if tag == "equal":
-            run = wa[i1:i2]
-            if len(run) > 40:
-                run = run[:15] + [f"… ({len(run) - 30} unchanged words) …"] + run[-15:]
-            out.append(" ".join(run))
-        if tag in ("delete", "replace"):
-            out.append("[-" + " ".join(wa[i1:i2]) + "-]")
-        if tag in ("insert", "replace"):
-            out.append("{+" + " ".join(wb[j1:j2]) + "+}")
-    return " ".join(out)
-
-
 def closest(text: str, candidates: list[str]) -> tuple[float, str]:
     words = text.split()
     best = (0.0, "")
@@ -80,6 +62,12 @@ def closest(text: str, candidates: list[str]) -> tuple[float, str]:
 
 
 def main() -> None:
+    # Never overwrite human work: refuse if either sheet already holds a label (this happened once, on M4).
+    for split in ("dev", "test"):
+        sheet = ROOT / "docs" / f"materiality-labels-{split}.md"
+        if sheet.exists() and re.search(r"\*\*Label:\*\*[ \t]*[MCUmcu]", sheet.read_text(encoding="utf-8")) \
+                and "--force" not in sys.argv:
+            raise SystemExit(f"{sheet.name} already contains labels; refusing to overwrite (use --force).")
     pool: dict[str, list[dict]] = defaultdict(list)
     for f in sorted(glob.glob(str(ROOT / "data" / "diffs" / "*.json"))):
         rec = json.loads(Path(f).read_text(encoding="utf-8"))
