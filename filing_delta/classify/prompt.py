@@ -43,6 +43,15 @@ Reading the change: in a reworded or moved change, [-words-] were deleted and {+
 unchanged words) …" marks an omitted unchanged stretch. Never quote those markers or the omitted text as evidence; \
 quote from the OLD or NEW text as given.
 
+Applying the guide (these notes interpret it; they don't change it):
+- Restatement (tie-break rule 3): when context shows that deleted or inserted text also appears in another paragraph \
+of the section, that part was moved, not removed or added. Judge only what is genuinely new or gone.
+- Headings: a change to a short heading or title line alone is cosmetic (restructure). The substance lives in the \
+paragraphs under it.
+- "specifics" means a new concrete, named detail: an event, country, product, counterparty, regulation or date-bound \
+fact. A generic example, a broader elaboration of the same risk, or restating the consequence with the same hedge \
+("could materially adversely affect...") is cosmetic rewording.
+
 LABELING GUIDE
 """
 
@@ -81,8 +90,13 @@ def user_message(item: dict) -> str:
     if item["status"] in ("reworded", "moved") and item["old_text"] and item["new_text"]:
         parts += ["Inline diff (OLD -> NEW):", inline_diff(item["old_text"], item["new_text"]), ""]
     ctx = item.get("context")
-    if ctx:
+    if ctx and ctx.get("kind", "closest") == "closest":
         side = "OLD" if ctx["side"] == "old" else "NEW"
         parts += [f"Closest {side} paragraph elsewhere in this section (similarity {ctx['similarity']}), for "
                   "context only; do not quote it as evidence:", ctx["text"], ""]
+    elif ctx and ctx.get("kind") == "restated":
+        for p in ctx["passages"]:
+            where = "the NEW section" if p["side"] == "new" else "the OLD section"
+            parts += [f"Context only (do not quote as evidence): text {p['what']} in this change also appears "
+                      f"({p['coverage']:.0%} of its words) in this paragraph of {where}:", p["text"], ""]
     return "\n".join(parts).strip()

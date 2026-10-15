@@ -20,6 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from filing_delta.classify.classify import EFFORT, classify  # noqa: E402
+from filing_delta.classify.context import restatement_context  # noqa: E402
 from filing_delta.classify.model import Recorder, model_id  # noqa: E402
 from filing_delta.classify.prompt import prompt_version  # noqa: E402
 from filing_delta.cli import load_env  # noqa: E402
@@ -40,10 +41,25 @@ def human_labels(split: str) -> dict[str, str]:
     return out
 
 
+_recs: dict[str, tuple] = {}
+
+
 def to_item(m: dict) -> dict:
+    """A labeled sample item -> classifier input, with restatement context computed from its diff record."""
+    if m["file"] not in _recs:
+        rec = json.loads((ROOT / "data" / "diffs" / m["file"]).read_text(encoding="utf-8"))
+        sec = ROOT / "data" / "sections"
+        to = (sec / rec["old"]["accession"] / f"{rec['section']}.txt").read_text(encoding="utf-8")
+        tn = (sec / rec["new"]["accession"] / f"{rec['section']}.txt").read_text(encoding="utf-8")
+        _recs[m["file"]] = (rec, to, tn)
+    rec, to, tn = _recs[m["file"]]
+    op = rec["ops"][m["op"]]
+    # The labeled texts are frozen in the sample; the diff they came from must still say the same thing.
+    assert (op["old"], op["new"]) == (m["old_units"], m["new_units"]), f"{m['id']}: diff changed since sampling"
     return {"id": m["id"], "company": m["company"], "section_label": LABEL_SECTION[m["section"]],
             "old_date": m["old_date"], "new_date": m["new_date"], "status": m["status"],
-            "old_text": m["old_text"], "new_text": m["new_text"], "context": m.get("context"),
+            "old_text": m["old_text"], "new_text": m["new_text"],
+            "context": restatement_context(rec, op, to, tn),
             "formatting_only": m["stratum"] == "formatting_only"}
 
 
@@ -76,6 +92,16 @@ def main() -> None:
     split = sys.argv[1]
     offline = "--offline" in sys.argv
     load_env()
+    frozen = json.loads((ROOT / "tests" / "golden" / "materiality_prompt.json").read_text(encoding="utf-8"))
+    if split == "test" and prompt_version() != frozen["prompt_version"]:
+        raise SystemExit(f"prompt version {prompt_version()} != frozen {frozen['prompt_version']}: the test set may "
+                         "only be scored with the prompt frozen on dev (FD-DEC 022).")
+    if split == "test":
+        missing = [m["id"] for m in json.loads((ROOT / "tests" / "golden" / "materiality_sample.json").read_text(
+            encoding="utf-8"))["items"] if m["split"] == "test" and m["id"] not in human_labels("test")]
+        if missing:
+            raise SystemExit(f"{len(missing)} test items are unlabeled (e.g. {missing[:5]}). Label the test set "
+                             "blind before any model output on it exists.")
     sample = json.loads((ROOT / "tests" / "golden" / "materiality_sample.json").read_text(encoding="utf-8"))
     items = [m for m in sample["items"] if m["split"] == split]
     labels = human_labels(split)

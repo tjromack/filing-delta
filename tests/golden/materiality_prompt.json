@@ -1,0 +1,5 @@
+{
+ "prompt_version": "1fd1c7e5bb42",
+ "frozen": "2026-10-15",
+ "reason": "Tuned on the 28 dev items only (FD-DEC 022). The test set may only be scored with this version."
+}

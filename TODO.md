@@ -67,10 +67,10 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 ## M4 — material/cosmetic classifier + hand labels + confusion matrix (in progress)
 - [x] Labeling guide written and approved before any labeling (`docs/design/materiality.md`, FD-DEC 020)
 - [x] 150-change stratified sample, split 28 dev / 122 test before any model output (`tools/materiality_sample.py`)
-- [ ] Trevor labels the **dev** set (`docs/materiality-labels-dev.md`)
-- [ ] Classifier stage (`filing_delta/classify/`): formatting-only rule + model (`ANTHROPIC_MODEL`, default
-      `claude-sonnet-5-5`), structured output, verified evidence spans, recorded responses (FD-DEC 007); prompt
-      refined on dev only
+- [x] Dev set labeled: Claude-suggested, Trevor reviewed, 0/28 overridden (FD-DEC 021)
+- [x] Classifier stage (`filing_delta/classify/`): formatting-only rule + model (`ANTHROPIC_MODEL`, default
+      `claude-sonnet-5-5`), structured output, verified evidence spans, recorded responses (FD-DEC 007); restatement
+      context; prompt refined on dev only (24 -> 25/28) and frozen at `1fd1c7e5bb42` (FD-DEC 022)
 - [ ] Trevor labels the **test** set (`docs/materiality-labels-test.md`) before any test-set model output is seen
 - [ ] Confusion matrix + bootstrap CIs + error analysis on test; Haiku 5.5 comparison; full 5,623-change run
 - [ ] **Gate:** a reproducible, keyless confusion matrix. **<- stop**

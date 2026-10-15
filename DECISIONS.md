@@ -290,3 +290,22 @@ scored against" to the set that is scored).
   Claude and Trevor-after-seeing-Claude, with two Claude models on both sides, so it would be circular.
 - **Alternative rejected:** keeping both blind. More rigorous on dev, but it costs Trevor time where independence
   buys nothing that's published.
+
+## FD-DEC 022 — Classifier prompt tuned on dev, then frozen (2026-10-15)
+**Status:** Decided. Frozen prompt version `1fd1c7e5bb42` (`tests/golden/materiality_prompt.json`).
+
+- **Setup:** `claude-sonnet-5-5` (the default from `ANTHROPIC_MODEL`), effort `low`, JSON-schema output, and the
+  approved guide (§2) verbatim as the system prompt. No server-side fallbacks: a silent model swap would mix models
+  into numbers published as one model's, and the Batches API rejects the parameter. Refusals are recorded as their own
+  outcome instead.
+- **Dev iterations (28 items; dev labels were Claude-suggested, 0/28 overridden, FD-DEC 021):**
+  1. Guide only: 24/28. All 4 misses were false "material".
+  2. Added restatement context (a deleted or inserted passage found in another paragraph of the section; tie-break
+     rule 3 can't be applied without it) and classifier notes interpreting the guide on restatement, headings and
+     `specifics`: 24/28. M012 fixed; M103 (a split) became "unsure", correctly saying its context wasn't shown.
+  3. Extended the context to split/merged changes: **25/28**, all 28 evidence quotes verified, $0.10 for the run.
+- **Stopped there.** The 3 remaining disagreements (M049 heading broadening, M074, M129) are the borderline items Claude
+  marked low-confidence when suggesting labels. Tuning until they flip would fit the prompt to 28 examples. The blind
+  test set will show whether the prompt generalizes.
+- **Guards:** `tools/run_materiality.py test` refuses to run under any other prompt version, or while any test item
+  is unlabeled. The guide itself was not edited (FD-DEC 020 froze it); the classifier notes are outside the guide.

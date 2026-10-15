@@ -338,3 +338,39 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - **Stop:** M3 approval. Then M4: the material/cosmetic classifier. It starts with a labeling guide written before
   any labeling, and the hand-labeled set is Trevor's.
+
+---
+
+## 2026-10-15 — M4 part 1 (guide, sheets, dev labels, classifier, frozen prompt)
+
+### What happened
+- M4 design approved (FD-DEC 020): Item 1A only (5,623 changes), the guide with 12 codes and 5 tie-break rules, and a
+  150-item stratified sample split 28 dev / 122 test.
+- Trevor asked whether Claude could pre-fill labels. The answer: yes for dev, no for test. Pre-filling the scored set
+  would make the confusion matrix measure Claude against Claude-as-reviewed. Trevor chose "pre-fill dev, test blind"
+  (FD-DEC 021) and agreed with all 28 suggestions.
+- Built `filing_delta/classify/`:
+  - prompt: the guide verbatim, plus a hashed prompt version;
+  - recorder: replays responses by request hash, and offline mode fails loudly;
+  - classify: the formatting rule, JSON output, and exact-substring evidence;
+  - context: restatement context for tie-break rule 3.
+- Dev runs on Sonnet 5.5 at low effort: 24/28, then 24/28, then **25/28**. Every evidence quote verified, $0.09–0.10 per
+  run. Prompt frozen at `1fd1c7e5bb42` (FD-DEC 022). The offline replay reproduced the dev evaluation byte for byte.
+- 113 tests pass (11 classifier + 4 context tests added).
+
+### Learnings
+- **The classifier's errors were missing context, not judgment.** The first misses included a paragraph whose
+  "removed" text had been moved to another paragraph. A human applies "restated elsewhere" from memory of the section,
+  so the classifier had to be given the same view.
+- **The model said so when it lacked context.** On the split item it answered "unsure… it may appear elsewhere, which
+  isn't shown", which pointed straight at the gap.
+- **Where to stop tuning:** after the context fix, the remaining disagreements were exactly the items flagged
+  low-confidence while suggesting labels. Fixing those would be fitting the prompt, not improving it.
+
+### What broke (+ fix)
+- **The sampler overwrote the labeled dev sheet** when it was re-run to check a refactor. It was restored from git (the
+  committed copy held the agreed labels), and the sampler now refuses to overwrite a sheet that contains any label.
+
+### Open / next
+- Trevor labels the 122 test items blind. Then: the test run with the frozen prompt, the confusion matrix and error
+  analysis, the Haiku 5.5 comparison, and the full 5,623-change run.
