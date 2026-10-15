@@ -274,3 +274,19 @@ labels. See the *Resolution* below and `docs/alignment-eval.md`.
   items show the closest paragraph on the other side; nothing is cut; no model output shown.
 - **Alternative rejected:** labeling MD&A too. That's 4.5x the items, and the judgment it needs is outside what the
   tool claims.
+
+## FD-DEC 021 — Dev labels pre-filled by Claude; test labels stay blind (2026-10-15)
+**Status:** Decided (Trevor chose this option; it narrows the CLAUDE.md pin "a model never produces the labels it is
+scored against" to the set that is scored).
+
+- **Decision:** the 28 dev items carry Claude's suggested label, code, confidence and reason. Trevor reviews them
+  and changes any he disagrees with. The 122 test items stay blank and are labeled independently, before any model
+  output on them is shown. The published confusion matrix comes from the test set only.
+- **Why this is safe:** the dev set only steers prompt refinement and is never reported as accuracy. Anchoring there
+  can make the prompt fit Claude's own reading, but the blind test set measures that, so it can't hide.
+- **Disclosure:** the suggestions are saved verbatim (`tests/golden/materiality_dev_suggestions.json`), and the share
+  Trevor overrode is published next to the dev results.
+- **Alternative rejected:** pre-filling the test set too. The confusion matrix would then measure agreement between
+  Claude and Trevor-after-seeing-Claude, with two Claude models on both sides, so it would be circular.
+- **Alternative rejected:** keeping both blind. More rigorous on dev, but it costs Trevor time where independence
+  buys nothing that's published.

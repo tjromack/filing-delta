@@ -1,6 +1,6 @@
 # Materiality labels: dev set (28 changes)
 
-Label each change against `docs/design/materiality.md` §2: **M** (material) · **C** (cosmetic) · **U** (unsure). Optionally add one code after it, e.g. `M severity` or `C rewording`. Write it after **Label:**. The model's output is not shown, and won't be until both sets are labeled.
+Label each change against `docs/design/materiality.md` §2: **M** (material) · **C** (cosmetic) · **U** (unsure). Optionally add one code after it, e.g. `M severity` or `C rewording`. Write it after **Label:**. **Dev set only:** each item is pre-filled with Claude's suggestion (FD-DEC 021). Change the label wherever you disagree, and say why in the note. The test set stays blank and must be labeled independently.
 
 Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
@@ -10,9 +10,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > The principal cost associated with the property and casualty insurance business is claims. In writing … (82 unchanged words) … Our estimated unpaid losses arising under contracts covering property and casualty insurance risks are large [-($115.5-] {+($120.8+} billion at December 31, [-2019),-] {+2020),+} and a small percentage increase to those liabilities can result in materially lower reported earnings.
 
-**Label:** 
+**Label:** C date_rollforward
 
 **Note (optional):** 
+
+*Suggested by Claude (low confidence): Annual update of the reserve size ($115.5B to $120.8B, +4.6%); the risk statement is unchanged. Borderline under the quantity rule: arguably M if you count the exposure growth.*
 
 ## M012 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2020-12-31 → 2021-12-31 · **reworded**
 
@@ -20,9 +22,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Major investment decisions and all major capital allocation decisions are made by Warren E. Buffett, Chairman of the Board of Directors and Chief Executive Officer, age [-90,-] {+91,+} in consultation with Charles T. Munger, Vice Chairman of the Board of Directors, age [-97. If for any reason the services of our key personnel, particularly Mr. Buffett, were to become unavailable, there could be a material adverse effect on our operations. However, Berkshire’s Board of Directors has identified certain current Berkshire managers who, in their judgment, are capable of succeeding Mr. Buffett and has agreed on a replacement for Mr. Buffett should a replacement be needed currently. The Board continually monitors this risk and could alter its current view regarding a replacement for Mr. Buffett in the future. We believe that the Board’s succession plan, together with the outstanding managers running our numerous and highly diversified operating units helps to mitigate this risk.-] {+98.+} In 2018, Berkshire’s Board of Directors appointed Mr. Gregory Abel as Vice Chairman of Berkshire’s non-insurance operations and Mr. Ajit Jain as Vice Chairman of Berkshire’s insurance operations. Mr. Abel and Mr. Jain each report directly to Mr. [-Buffett and-] {+Buffett.+} Mr. Buffett continues to be responsible for major capital allocation and investment decisions.
 
-**Label:** 
+**Label:** C restructure
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): Ages roll forward; the succession sentences removed here reappear (rewritten) in the split paragraph, see M133, which carries the substantive change.*
 
 ## M023 · Apple Inc. · 10-K Item 1A · 2023-09-30 → 2024-09-28 · **reworded**
 
@@ -30,9 +34,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > The Company distributes third-party applications for its products through the App Store. For the vast majority of applications, developers keep all of the revenue they generate on the App Store. [-The-] {+Where applicable, the+} Company retains a commission from sales of applications and sales of digital services or goods initiated within an application. From time to time, the Company has made changes to its [-App Store,-] {+products and services,+} including {+taking+} actions [-taken-] in response to {+litigation,+} competition, market conditions and legal and regulatory [-requirements. The Company-] {+requirements, and+} expects to make further business changes in the [-future, including as a result of legislative initiatives impacting-] {+future. For example, in+} the [-App Store, such as the European Union (“EU”) Digital Markets Act, which-] {+U.S.,+} the Company [-is required to comply with by March 2024. The Company is also subject to litigation and investigations relating to the App Store, which have resulted in-] {+has implemented+} changes to [-the Company’s business practices, and may in the future result in further changes. Changes have included-] how developers communicate with consumers [-outside-] {+within apps on+} the {+U.S. storefront of the iOS and iPadOS+} App Store regarding alternative purchasing mechanisms. [-Future-] {+The Company has also implemented+} changes [-could also affect what the Company charges developers for access-] to [-its platforms, how it manages distribution of apps outside of the App Store, and how and to what extent it allows developers to communicate with consumers inside-] {+iOS, iPadOS,+} the App Store [-regarding-] {+and Safari® in the European Union (“EU”) as it seeks to comply with the Digital Markets Act (the “DMA”), including new business terms and+} alternative [-purchasing mechanisms. This-] {+fee structures for iOS and iPadOS apps, alternative methods of distribution for iOS and iPadOS apps, alternative payment processing for apps across the Company’s operating systems, and additional tools and application programming interfaces (“APIs”) for developers. Changes to the Company’s products and services+} could [-reduce-] {+materially adversely affect+} the [-volume-] {+Company’s business, results+} of {+operations and financial condition, including if such business changes result in reduced App Store or other+} sales, [-and the commission that the Company earns on those sales, would decrease. If-] {+reductions in+} the rate of the commission that the Company retains on such [-sales is reduced,-] {+sales,+} or if [-it-] {+the rate of the commission+} is otherwise narrowed in scope or [-eliminated, the Company’s business, results of operations and financial condition could be materially adversely affected.-] {+eliminated.+}
 
-**Label:** 
+**Label:** M realized
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): App Store changes move from required by March 2024 to implemented: U.S. storefront changes and EU DMA compliance (alternative distribution, payments, fee structures).*
 
 ## M032 · Apple Inc. · 10-K Item 1A · 2024-09-28 → 2025-09-27 · **removed**
 
@@ -44,9 +50,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > The Company’s financial performance is subject to risks associated with changes in the value of the U.S. dollar relative to local currencies.
 
-**Label:** 
+**Label:** M removed_risk
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): The retail-operations risk factor is dropped entirely; no restatement nearby.*
 
 ## M048 · EXXON MOBIL CORP · 10-K Item 1A · 2020-12-31 → 2021-12-31 · **reworded**
 
@@ -54,9 +62,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > •actions by [-regulators-] {+policy-makers, regulators,+} or other [-political-] actors to delay or deny necessary licenses and [-permits-] {+permits, restrict the availability of oil and gas leases+} or [-restrict-] the transportation of our [-products;-] {+products, or otherwise require changes in the company's business or strategy that could result in reduced returns;+}
 
-**Label:** 
+**Label:** M specifics
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): Adds new exposures: restricted availability of oil and gas leases, and policy-driven changes to business or strategy that could reduce returns.*
 
 ## M049 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2021-12-31 → 2022-12-31 · **moved**
 
@@ -64,9 +74,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Climate change {+and the regulation of greenhouse gas (“GHG”) emissions+} may impact our businesses.
 
-**Label:** 
+**Label:** C restructure
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): Heading broadened to name GHG regulation; the substance is in the body paragraph (see M129).*
 
 ## M057 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2018-12-31 → 2019-12-31 · **reworded**
 
@@ -74,9 +86,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Our insurance businesses are subject to regulation in the jurisdictions in which we operate. Such … (45 unchanged words) … may also restrict the timing and amount of dividend payments to Berkshire by these businesses. {+U.S. state insurance regulators and international insurance regulators are also actively developing various regulatory mechanisms to address the regulation of large internationally active insurance groups, including regulations concerning group capital, liquidity, governance and risk management.+} Accordingly, changes in regulations related to these or other matters or regulatory actions imposing restrictions on our insurance [-companies-] {+businesses+} may adversely impact our results of operations and restrict our ability to allocate capital.
 
-**Label:** 
+**Label:** M specifics
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): New sentence: regulators developing rules for large internationally active insurance groups (group capital, liquidity, governance).*
 
 ## M063 · Apple Inc. · 10-K Item 1A · 2022-09-24 → 2023-09-30 · **reworded**
 
@@ -84,9 +98,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Substantially all of the Company’s manufacturing is performed in whole or in part by outsourcing partners located primarily in [-Asia, including-] China mainland, India, Japan, South Korea, Taiwan and Vietnam, and a significant concentration of this … (172 unchanged words) … and can materially adversely affect the Company’s business, reputation, results of operations and financial condition.
 
-**Label:** 
+**Label:** C rewording
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): Drops 'Asia, including'; the same countries are listed.*
 
 ## M069 · Apple Inc. · 10-K Item 1A · 2024-09-28 → 2025-09-27 · **reworded**
 
@@ -94,9 +110,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > [-In addition to an adverse impact on demand for the Company’s products and services, uncertainty-] {+Uncertainty+} about, or a decline in, global or regional economic conditions can {+also+} have a significant impact on the Company’s suppliers, contract manufacturers, logistics providers, distributors, cellular network carriers and other channel partners, and developers. Potential outcomes include financial instability; inability to obtain credit to finance business operations; and insolvency.
 
-**Label:** 
+**Label:** C rewording
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): Drops a lead-in clause and adds 'also'; same claim.*
 
 ## M074 · Apple Inc. · 10-K Item 1A · 2024-09-28 → 2025-09-27 · **reworded**
 
@@ -104,9 +122,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > The Company has invested and will continue to invest in programs to enhance reseller sales, including staffing selected resellers’ stores with Company employees and contractors, [-and-] improving product placement [-displays.-] {+displays, and developing and making digital marketing assets available to resellers.+} These programs can require a substantial investment while not assuring return or incremental sales. [-The-] {+For example, the purchasing preferences and behaviors of consumers may change, the+} financial condition of [-these-] resellers could weaken, [-these-] resellers could stop distributing the Company’s products, or uncertainty regarding demand for some or all of the Company’s products could cause resellers to reduce their ordering and marketing of the Company’s [-products.-] {+products, all of which could materially adversely impact the Company’s business, results of operations, financial condition and stock price.+}
 
-**Label:** 
+**Label:** C rewording
 
 **Note (optional):** 
+
+*Suggested by Claude (low confidence): Adds a program detail (digital marketing assets) and a generic example (consumer preferences may change); same hedge and same risk. Could be read as minor M specifics.*
 
 ## M075 · EXXON MOBIL CORP · 10-K Item 1A · 2020-12-31 → 2021-12-31 · **added**
 
@@ -118,9 +138,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Climate change and greenhouse gas restrictions. Driven by concern over the risks of climate change, a number of countries have adopted, or are considering the adoption of, regulatory frameworks to reduce greenhouse gas emissions or production and use of oil and gas. These include adoption of cap and trade regimes, carbon taxes, trade tariffs, minimum renewable usage requirements, restrictive permitting, increased efficiency standards, and incentives or mandates for renewable energy. Political and other actors and their agents also increasingly seek to advance climate change objectives indirectly, such as by seeking to reduce the availability of or increase the cost for, financing and investment in the oil and gas sector and taking actions intended to promote changes in business strategy for oil and gas companies. Depending on how policies are formulated and applied, they could have the potential to negatively affect investment returns, make our products more expensive or less competitive, lengthen project implementation times, and reduce demand for hydrocarbons, as well as shift hydrocarbon demand toward relatively lower-carbon sources such as natural gas. Current and pending greenhouse gas regulations or policies may also increase our compliance costs, such as for monitoring or sequestering emissions.
 
-**Label:** 
+**Label:** M new_risk
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): New net-zero / energy-transition risk paragraph, including the company's own net-zero ambition; not in the prior filing.*
 
 ## M082 · Apple Inc. · 10-K Item 1A · 2022-09-24 → 2023-09-30 · **reworded**
 
@@ -128,9 +150,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > The Company’s business also requires it to share confidential information with suppliers and other third … (41 unchanged words) … on the Company’s behalf, such measures are not always effective and losses or unauthorized access [-to-] {+to,+} or releases [-of-] {+of,+} confidential information occur. Such incidents and other malicious attacks could materially adversely affect the Company’s business, reputation, results of operations and financial condition.
 
-**Label:** 
+**Label:** C formatting
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): Two commas added.*
 
 ## M086 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2019-12-31 → 2020-12-31 · **moved**
 
@@ -138,9 +162,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Cyber-attacks could further adversely affect our ability to operate facilities, information technology and business [-systems,-] {+systems+} or compromise confidential customer and employee information. Political, economic, social or financial market instability or … (61 unchanged words) … consolidated financial results. Furthermore, instability in the financial markets resulting from terrorism, sustained or significant [-cyber-attacks,-] {+cyber-attacks+} or war could also have a material adverse effect on our ability to raise capital. We share these risks with all businesses.
 
-**Label:** 
+**Label:** C formatting
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): Two commas removed.*
 
 ## M092 · COCA COLA CO · 10-K Item 1A · 2024-12-31 → 2025-12-31 · **reworded**
 
@@ -148,9 +174,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > In December 2021, the OECD issued Pillar Two model [-rules-] {+rules,+} which would establish a global per-country minimum tax of 15%, and the European Union has … (39 unchanged words) … countries have enacted legislation that implemented certain aspects of Pillar Two effective January 1, 2024, [-while many others have indicated their intent to adopt,-] or [-have adopted,-] {+adopted+} legislation {+that became+} effective in [-2025.-] {+2025, while additional jurisdictions may enact similar legislation in the future. In June 2025, the Group of Seven (“G7”) released a statement announcing an understanding of a potential side-by-side system approach to the Pillar Two framework that would exclude U.S.-parented groups from certain Pillar Two provisions in recognition of existing U.S. minimum tax rules. In January 2026, the OECD issued further administrative guidance introducing a side-by-side framework under Pillar Two, largely exempting U.S.-headquartered companies from the application of Pillar Two.+} The OECD and implementing countries are expected to continue to make further revisions to their legislation and release additional [-guidance.-] {+guidance intended to adopt this side-by-side framework into law in each of the member countries.+}
 
-**Label:** 
+**Label:** M specifics
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): New regulatory developments: the June 2025 G7 statement and January 2026 OECD guidance largely exempting U.S.-parented groups from Pillar Two (exposure likely reduced).*
 
 ## M097 · COCA COLA CO · 10-K Item 1A · 2018-12-31 → 2019-12-31 · **added**
 
@@ -162,9 +190,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Public debate and concern about perceived negative health consequences of certain ingredients, such as non-nutritive sweeteners and biotechnology-derived substances, and of other substances present in our beverage products or packaging materials, may reduce demand for our beverage products.
 
-**Label:** 
+**Label:** M new_risk
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): New risk factor on plastic packaging environmental concerns.*
 
 ## M103 · Apple Inc. · 10-K Item 1A · 2023-09-30 → 2024-09-28 · **split**
 
@@ -176,9 +206,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Regulatory changes and other actions that materially adversely affect the Company’s business may be announced with little or no advance notice and the Company may not be able to effectively mitigate all adverse impacts from such measures. For example, the Company is subject to changing regulations relating to the export and import of its products. Although the Company has programs, policies and procedures in place that are designed to satisfy regulatory requirements, there can be no assurance that such policies and procedures will be effective in preventing a violation or a claim of a violation. As a result, the Company’s products could be banned, delayed or prohibited from importation, which could materially adversely affect the Company’s business, reputation, results of operations and financial condition.
 
-**Label:** 
+**Label:** C restructure
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): Split: the NEW paragraph is the second half of the OLD one, unchanged; the first half moved to another paragraph.*
 
 ## M108 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2024-12-31 → 2025-12-31 · **reworded**
 
@@ -186,9 +218,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > We believe risks of adverse effects from geopolitical events are rising, through armed and diplomatic … (22 unchanged words) … other governments to such actions may adversely affect our operating businesses through reduced sales, increased [-costs,-] {+operating costs or sanctions,+} restricted supply chains, physical damage to our properties and loss of life of our employees … (23 unchanged words) … other barriers, could negatively impact our operating results. We share these risks with all businesses.
 
-**Label:** 
+**Label:** M specifics
 
 **Note (optional):** 
+
+*Suggested by Claude (low confidence): Adds 'sanctions' as a named consequence of geopolitical events; small, but a new concrete exposure. Could be read as C rewording.*
 
 ## M114 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2018-12-31 → 2019-12-31 · **removed**
 
@@ -200,9 +234,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Competition and technology may erode our business franchises and result in lower earnings.
 
-**Label:** 
+**Label:** M removed_risk
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): The derivative-contracts risk factor heading is removed; no restatement nearby.*
 
 ## M121 · EXXON MOBIL CORP · 10-K Item 1A · 2020-12-31 → 2021-12-31 · **removed**
 
@@ -214,9 +250,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Technology and low carbon solutions. Achieving societal ambitions to reduce greenhouse gas emissions and ultimately achieve net-zero will require new technologies to reduce the cost and increase the scalability of alternative energy sources, as well as technologies such as carbon capture and storage (CCS). CCS technologies, focused initially on capturing and sequestering CO2 emissions from high-intensity industrial activities, can assist in meeting society’s objective to mitigate atmospheric greenhouse gas levels while also helping ensure the availability of the reliable and affordable energy the world requires. ExxonMobil has established a Low Carbon Solutions (LCS) business unit to advance the development and deployment of these technologies and projects, including CCS, hydrogen and advanced biofuels, breakthrough energy efficiency processes, advanced energy-saving materials, and other technologies. The company’s efforts include both in-house research and development and collaborative efforts with leading universities as well as commercial partners involved in advanced lower-emission energy technologies. Our future results and ability to grow our LCS business and succeed through the energy transition will depend in part on the success of these research and collaboration efforts and on our ability to adapt and apply the strengths of our current business model to providing the energy products of the future in a cost-competitive manner.
 
-**Label:** 
+**Label:** C restructure
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): The 'Alternative energy' paragraph is restated in the new 'Technology and low carbon solutions' paragraph (same research and universities point). The new content belongs to that paragraph, not to this removal.*
 
 ## M124 · COCA COLA CO · 10-K Item 1A · 2019-12-31 → 2020-12-31 · **reworded**
 
@@ -224,9 +262,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > We are subject to income tax in the United States and numerous other jurisdictions in which we generate profits. Our overall effective income tax rate is a function of applicable local tax rates {+in the jurisdictions in which we operate, tax treaties between such jurisdictions,+} and the geographic mix of our income before taxes, which is itself impacted by currency movements. Consequently, the isolated or combined effects of unfavorable movements in tax rates, geographic [-mix,-] {+mix+} or foreign exchange rates could reduce our after-tax income. {+Tax laws, including rates of taxation, are subject to revision by individual taxing jurisdictions which may result from multilateral agreements. Many jurisdictions have enacted legislation and adopted policies resulting from the Organization for Economic Co-operation and Development’s ("OECD") anti-Base Erosion and Profit Shifting project. The OECD is currently considering proposals that could expand the jurisdictional scope and level of taxation of certain cross-border income and potentially impose some form of global minimum tax. It is possible that the adoption of these or other proposals could have a material impact on our after-tax income and cash flows. Significant judgment is required in determining our annual income tax expense and in evaluating our tax positions. Although we believe our tax estimates are reasonable, the final determination of tax audits and any related disputes could be materially different from our historical income tax provisions, estimates and accruals. The results of audits or related disputes could have a material adverse effect on our financial statements for the period or periods for which the applicable final determinations are made and for periods for which the statute of limitations is open.+}
 
-**Label:** 
+**Label:** M specifics
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): Adds the OECD BEPS / global minimum tax proposals and tax-audit exposure.*
 
 ## M127 · Apple Inc. · 10-Q Part II Item 1A · 2025-03-29 → 2026-03-28 · **added**
 
@@ -236,9 +276,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 *No similar OLD paragraph.*
 
-**Label:** 
+**Label:** M new_risk
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): New AI risk factor in the 10-Q.*
 
 ## M128 · COCA COLA CO · 10-K Item 1A · 2018-12-31 → 2019-12-31 · **reworded**
 
@@ -246,9 +288,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Like most major corporations, the Company's information systems are a target of attacks. In addition, … (41 unchanged words) … have not had a material effect on our business, financial condition or results of operations, [-there can be no assurance that-] such incidents [-will not-] {+could+} have a material adverse effect on us in the future. In order to address risks … (65 unchanged words) … prepared and presented to senior management and the Audit Committee of the Board of Directors.
 
-**Label:** 
+**Label:** C rewording
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): 'There can be no assurance that such incidents will not have' to 'such incidents could have': same hedge, reworded.*
 
 ## M129 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2021-12-31 → 2022-12-31 · **added**
 
@@ -260,9 +304,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Climate change could cause increases in hurricanes, floods, wildfires, and other risks that could produce losses affecting our businesses. Also, failure to comply with new or existing regulations or reinterpretations of existing regulations relating to climate change could have a significant adverse effect on our financial results.
 
-**Label:** 
+**Label:** C restructure
 
 **Note (optional):** 
+
+*Suggested by Claude (low confidence): Largely restates the old climate paragraph (hurricanes, floods, wildfires; regulation) with more elaboration; the aligner missed the pairing at 0.22. Could be M specifics for the insurance-pricing angle.*
 
 ## M130 · Apple Inc. · 10-K Item 1A · 2020-09-26 → 2021-09-25 · **moved**
 
@@ -270,9 +316,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Much of the Company’s future success depends on the continued availability and service of key … (28 unchanged words) … is intense, especially in Silicon Valley, where most of the Company’s key personnel are located. {+The Company believes that its distinctive and inclusive culture is a significant driver of its success. If the Company is unable to nurture and maintain its culture, it could adversely affect the Company’s ability to recruit and retain highly skilled employees and materially adversely affect the Company’s business, results of operations and financial condition.+}
 
-**Label:** 
+**Label:** M new_risk
 
 **Note (optional):** 
+
+*Suggested by Claude (medium confidence): Adds a culture risk to the key-personnel risk factor: failing to maintain culture could hurt recruiting and retention.*
 
 ## M133 · BERKSHIRE HATHAWAY INC · 10-K Item 1A · 2020-12-31 → 2021-12-31 · **split**
 
@@ -284,9 +332,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > If for any reason the services of our key personnel, particularly Mr. Buffett, were to become unavailable, there could be a material adverse effect on our operations. Should a replacement for Mr. Buffett be needed currently, Berkshire’s Board of Directors has agreed that Mr. Abel should replace Mr. Buffett. The Board continually monitors this risk and could alter its current view regarding a replacement for Mr. Buffett in the future. We believe that the Board’s succession plan, together with the outstanding managers running our numerous and highly diversified operating units helps to mitigate this risk.
 
-**Label:** 
+**Label:** M specifics
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): The board now names Mr. Abel as Mr. Buffett's replacement; previously unnamed.*
 
 ## M134 · COCA COLA CO · 10-K Item 1A · 2021-12-31 → 2022-12-31 · **reworded**
 
@@ -294,9 +344,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > Consumer product preferences have evolved and continue to evolve as a result of, among other things, health, wellness and nutrition considerations, including concerns regarding caloric intake associated with [-sugar-sweetened-] {+sweetened+} beverages and the perceived undesirability of artificial ingredients; {+concerns regarding the perceived health effects of, or location of origin of, ingredients, raw materials or substances in our products or packaging, including due to the results of third-party studies (whether or not scientifically valid);+} shifting consumer demographics; changes in consumer tastes and needs coupled with a rapid expansion of beverage options and delivery methods; changes in consumer lifestyles; concerns regarding [-location of origin or source of ingredients and raw materials and-] the environmental, social and sustainability impact of ingredient sources and the product manufacturing process; consumer … (118 unchanged words) … initiatives, our share of sales, revenue growth and overall financial results could be negatively affected.
 
-**Label:** 
+**Label:** M specifics
 
 **Note (optional):** 
+
+*Suggested by Claude (low confidence): Adds concerns about perceived health effects of ingredients or packaging substances, including third-party studies. Otherwise rewording ('sugar-sweetened' to 'sweetened').*
 
 ## M143 · Apple Inc. · 10-K Item 1A · 2023-09-30 → 2024-09-28 · **reworded**
 
@@ -304,9 +356,11 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 > The Company distributes its products and certain of its services through third-party cellular network carriers, … (129 unchanged words) … prepayments associated with long-term supply agreements to secure supply of inventory components. As of September [-30, 2023,-] {+28, 2024,+} the Company’s vendor non-trade receivables and prepayments related to long-term supply agreements were concentrated among … (34 unchanged words) … can be no assurance such procedures will effectively limit its credit risk and avoid losses.
 
-**Label:** 
+**Label:** C date_rollforward
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): Only the balance-sheet date changes (September 30, 2023 to September 28, 2024).*
 
 ## M147 · COCA COLA CO · 10-K Item 1A · 2021-12-31 → 2022-12-31 · **removed**
 
@@ -316,6 +370,8 @@ Inline changes: `[-deleted words-]` `{+inserted words+}`.
 
 *No similar NEW paragraph.*
 
-**Label:** 
+**Label:** M removed_risk
 
 **Note (optional):** 
+
+*Suggested by Claude (high confidence): The weather / agricultural commodities (HFCS, citrus) risk paragraph is removed, with no similar new paragraph.*

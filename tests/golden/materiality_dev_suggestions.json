@@ -1,0 +1,170 @@
+{
+ "M007": {
+  "label": "C",
+  "code": "date_rollforward",
+  "confidence": "low",
+  "reason": "Annual update of the reserve size ($115.5B to $120.8B, +4.6%); the risk statement is unchanged. Borderline under the quantity rule: arguably M if you count the exposure growth."
+ },
+ "M012": {
+  "label": "C",
+  "code": "restructure",
+  "confidence": "medium",
+  "reason": "Ages roll forward; the succession sentences removed here reappear (rewritten) in the split paragraph, see M133, which carries the substantive change."
+ },
+ "M023": {
+  "label": "M",
+  "code": "realized",
+  "confidence": "high",
+  "reason": "App Store changes move from required by March 2024 to implemented: U.S. storefront changes and EU DMA compliance (alternative distribution, payments, fee structures)."
+ },
+ "M032": {
+  "label": "M",
+  "code": "removed_risk",
+  "confidence": "high",
+  "reason": "The retail-operations risk factor is dropped entirely; no restatement nearby."
+ },
+ "M048": {
+  "label": "M",
+  "code": "specifics",
+  "confidence": "medium",
+  "reason": "Adds new exposures: restricted availability of oil and gas leases, and policy-driven changes to business or strategy that could reduce returns."
+ },
+ "M049": {
+  "label": "C",
+  "code": "restructure",
+  "confidence": "medium",
+  "reason": "Heading broadened to name GHG regulation; the substance is in the body paragraph (see M129)."
+ },
+ "M057": {
+  "label": "M",
+  "code": "specifics",
+  "confidence": "medium",
+  "reason": "New sentence: regulators developing rules for large internationally active insurance groups (group capital, liquidity, governance)."
+ },
+ "M063": {
+  "label": "C",
+  "code": "rewording",
+  "confidence": "high",
+  "reason": "Drops 'Asia, including'; the same countries are listed."
+ },
+ "M069": {
+  "label": "C",
+  "code": "rewording",
+  "confidence": "high",
+  "reason": "Drops a lead-in clause and adds 'also'; same claim."
+ },
+ "M074": {
+  "label": "C",
+  "code": "rewording",
+  "confidence": "low",
+  "reason": "Adds a program detail (digital marketing assets) and a generic example (consumer preferences may change); same hedge and same risk. Could be read as minor M specifics."
+ },
+ "M075": {
+  "label": "M",
+  "code": "new_risk",
+  "confidence": "high",
+  "reason": "New net-zero / energy-transition risk paragraph, including the company's own net-zero ambition; not in the prior filing."
+ },
+ "M082": {
+  "label": "C",
+  "code": "formatting",
+  "confidence": "high",
+  "reason": "Two commas added."
+ },
+ "M086": {
+  "label": "C",
+  "code": "formatting",
+  "confidence": "high",
+  "reason": "Two commas removed."
+ },
+ "M092": {
+  "label": "M",
+  "code": "specifics",
+  "confidence": "medium",
+  "reason": "New regulatory developments: the June 2025 G7 statement and January 2026 OECD guidance largely exempting U.S.-parented groups from Pillar Two (exposure likely reduced)."
+ },
+ "M097": {
+  "label": "M",
+  "code": "new_risk",
+  "confidence": "high",
+  "reason": "New risk factor on plastic packaging environmental concerns."
+ },
+ "M103": {
+  "label": "C",
+  "code": "restructure",
+  "confidence": "medium",
+  "reason": "Split: the NEW paragraph is the second half of the OLD one, unchanged; the first half moved to another paragraph."
+ },
+ "M108": {
+  "label": "M",
+  "code": "specifics",
+  "confidence": "low",
+  "reason": "Adds 'sanctions' as a named consequence of geopolitical events; small, but a new concrete exposure. Could be read as C rewording."
+ },
+ "M114": {
+  "label": "M",
+  "code": "removed_risk",
+  "confidence": "high",
+  "reason": "The derivative-contracts risk factor heading is removed; no restatement nearby."
+ },
+ "M121": {
+  "label": "C",
+  "code": "restructure",
+  "confidence": "medium",
+  "reason": "The 'Alternative energy' paragraph is restated in the new 'Technology and low carbon solutions' paragraph (same research and universities point). The new content belongs to that paragraph, not to this removal."
+ },
+ "M124": {
+  "label": "M",
+  "code": "specifics",
+  "confidence": "high",
+  "reason": "Adds the OECD BEPS / global minimum tax proposals and tax-audit exposure."
+ },
+ "M127": {
+  "label": "M",
+  "code": "new_risk",
+  "confidence": "high",
+  "reason": "New AI risk factor in the 10-Q."
+ },
+ "M128": {
+  "label": "C",
+  "code": "rewording",
+  "confidence": "high",
+  "reason": "'There can be no assurance that such incidents will not have' to 'such incidents could have': same hedge, reworded."
+ },
+ "M129": {
+  "label": "C",
+  "code": "restructure",
+  "confidence": "low",
+  "reason": "Largely restates the old climate paragraph (hurricanes, floods, wildfires; regulation) with more elaboration; the aligner missed the pairing at 0.22. Could be M specifics for the insurance-pricing angle."
+ },
+ "M130": {
+  "label": "M",
+  "code": "new_risk",
+  "confidence": "medium",
+  "reason": "Adds a culture risk to the key-personnel risk factor: failing to maintain culture could hurt recruiting and retention."
+ },
+ "M133": {
+  "label": "M",
+  "code": "specifics",
+  "confidence": "high",
+  "reason": "The board now names Mr. Abel as Mr. Buffett's replacement; previously unnamed."
+ },
+ "M134": {
+  "label": "M",
+  "code": "specifics",
+  "confidence": "low",
+  "reason": "Adds concerns about perceived health effects of ingredients or packaging substances, including third-party studies. Otherwise rewording ('sugar-sweetened' to 'sweetened')."
+ },
+ "M143": {
+  "label": "C",
+  "code": "date_rollforward",
+  "confidence": "high",
+  "reason": "Only the balance-sheet date changes (September 30, 2023 to September 28, 2024)."
+ },
+ "M147": {
+  "label": "M",
+  "code": "removed_risk",
+  "confidence": "high",
+  "reason": "The weather / agricultural commodities (HFCS, citrus) risk paragraph is removed, with no similar new paragraph."
+ }
+}
