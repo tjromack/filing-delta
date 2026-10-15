@@ -374,3 +374,13 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - Trevor labels the 122 test items blind. Then: the test run with the frozen prompt, the confusion matrix and error
   analysis, the Haiku 5.5 comparison, and the full 5,623-change run.
+
+### 2026-10-15 — test labeling sped up (keyboard labeling page)
+- Trevor found the markdown labeling slow. Options offered: a keyboard page (no rigor cost), a smaller test set
+  (wider CIs), or pre-filling (rejected: it would make the published accuracy measure agreement with Claude). He
+  chose the keyboard page and kept all 122 items.
+- `tools/build_label_app.py` builds the page from the same frozen sample and the same inline diff the sheet uses,
+  with no model output. Published as a private artifact. Labels save one document per item to its `db`, owner-only
+  (verified: a probe write was read back and was invisible at a lower access level, then deleted).
+  `tools/import_app_labels.py` copies them into `docs/materiality-labels-test.md`, refusing to overwrite a differing
+  label, so the committed sheet stays the record.

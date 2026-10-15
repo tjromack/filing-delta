@@ -1,0 +1,298 @@
+<title>Risk Factor Labeler</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: a blackline reading column with a fixed keyboard bar; filing text in serif, controls in sans. */
+:root {
+  --paper: #f7f6f2; --sheet: #ffffff; --ink: #1d2128; --muted: #5d6470; --rule: #dcdad3;
+  --del: #a3322a; --del-bg: #f6e3e0; --ins: #1f4fa3; --ins-bg: #e2eaf8; --gap: #8a8f98;
+  --mat: #a3322a; --cos: #2f6b4f; --uns: #8a6a1f; --focus: #1f4fa3;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #15171b; --sheet: #1d2025; --ink: #e6e4de; --muted: #a2a7b0; --rule: #33373e;
+  --del: #ec8f86; --del-bg: #3a2220; --ins: #8fb2ee; --ins-bg: #1f2a3d; --gap: #8a8f98;
+  --mat: #ec8f86; --cos: #7fc6a2; --uns: #d9b75e; --focus: #8fb2ee; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #15171b; --sheet: #1d2025; --ink: #e6e4de; --muted: #a2a7b0; --rule: #33373e;
+  --del: #ec8f86; --del-bg: #3a2220; --ins: #8fb2ee; --ins-bg: #1f2a3d; --gap: #8a8f98;
+  --mat: #ec8f86; --cos: #7fc6a2; --uns: #d9b75e; --focus: #8fb2ee; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 140px }
+.wrap { max-width: 860px; margin: 0 auto; display: grid; gap: 18px }
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--paper);
+  padding-block: 14px 10px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px }
+.toprow { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between }
+h1 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin: 0; text-wrap: balance }
+.counts { font-family: var(--mono); font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums;
+  display: flex; gap: 12px; flex-wrap: wrap }
+.counts b { font-weight: 500 } .cM { color: var(--mat) } .cC { color: var(--cos) } .cU { color: var(--uns) }
+.bar { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden }
+.bar > i { display: block; height: 100%; background: var(--ink); width: 0; transition: width .2s }
+.status { font-size: .8rem; color: var(--muted); min-height: 1.2em }
+.status.warn { color: var(--del) }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: .85rem; color: var(--muted) }
+.meta .id { font-family: var(--mono); color: var(--ink); font-weight: 500 }
+.chip { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px;
+  border: 1px solid var(--rule); border-radius: 999px; color: var(--ink) }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 24px;
+  font-family: var(--serif); font-size: 1.04rem; line-height: 1.65; min-width: 0; overflow-wrap: anywhere }
+.sheet h3 { font-family: var(--mono); font-weight: 500; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 6px }
+.sheet p { margin: 0 0 14px; max-width: 70ch }
+.sheet p:last-child { margin-bottom: 0 }
+del { color: var(--del); background: var(--del-bg); text-decoration: line-through; text-decoration-thickness: 1.5px }
+ins { color: var(--ins); background: var(--ins-bg); text-decoration: underline double; text-underline-offset: 3px }
+.gap { font-family: var(--mono); font-size: .75rem; color: var(--gap); white-space: nowrap }
+.context { border-top: 1px dashed var(--rule); margin-top: 16px; padding-top: 12px; color: var(--muted); font-size: .95rem }
+.split { display: grid; gap: 18px }
+.keys { position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; background: var(--sheet); border-top: 1px solid var(--rule);
+  padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)) }
+.keys .in { max-width: 860px; margin: 0 auto; display: grid; gap: 8px }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+button { font-family: var(--sans); font-size: .9rem; border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+  border-radius: 6px; padding: 7px 12px; cursor: pointer }
+button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px }
+button kbd { font-family: var(--mono); font-size: .75rem; color: var(--muted); margin-right: 6px }
+.lab { font-weight: 600; min-width: 128px; text-align: left }
+.lab.on.M { background: var(--mat); border-color: var(--mat); color: var(--sheet) }
+.lab.on.C { background: var(--cos); border-color: var(--cos); color: var(--sheet) }
+.lab.on.U { background: var(--uns); border-color: var(--uns); color: var(--sheet) }
+.lab.on kbd { color: inherit }
+.code { font-size: .8rem; padding: 4px 9px } .code.on { border-color: var(--ink); background: var(--ink); color: var(--sheet) }
+.code.on kbd { color: inherit }
+.nav { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap }
+label.tog { font-size: .8rem; color: var(--muted); display: flex; gap: 6px; align-items: center }
+textarea { width: 100%; min-height: 56px; font-family: var(--sans); font-size: .9rem; color: var(--ink); background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 8px }
+.map { display: grid; grid-template-columns: repeat(auto-fill, minmax(22px, 1fr)); gap: 4px }
+.map button { padding: 0; height: 22px; font-size: 0; border-radius: 3px; background: var(--sheet) }
+.map button.M { background: var(--mat); border-color: var(--mat) } .map button.C { background: var(--cos); border-color: var(--cos) }
+.map button.U { background: var(--uns); border-color: var(--uns) }
+.map button.cur { outline: 2px solid var(--ink); outline-offset: 1px }
+details { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; font-size: .88rem }
+summary { cursor: pointer; font-weight: 500 }
+.guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 10px }
+.guide dt { font-family: var(--mono); font-size: .8rem } .guide dd { margin: 0 0 8px; color: var(--muted) }
+.done { border: 1px solid var(--cos); color: var(--cos); border-radius: 6px; padding: 10px 14px; font-weight: 500 }
+@media (prefers-reduced-motion: reduce) { .bar > i { transition: none } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="toprow">
+      <h1>Risk Factor Labeler <span style="font-family:var(--sans);font-weight:400;font-size:.9rem;color:var(--muted)">· test set</span></h1>
+      <div class="counts" id="counts"></div>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="status" id="status">Connecting…</div>
+  </header>
+
+  <div id="donebox" class="done" hidden>All items are labeled. Tell Claude you're done; your labels are already saved.</div>
+
+  <div class="meta" id="meta"></div>
+  <article class="sheet" id="sheet"></article>
+
+  <div>
+    <label for="note" style="font-size:.8rem;color:var(--muted)">Note (optional, press <kbd>/</kbd>; saved when you leave the box)</label>
+    <textarea id="note" placeholder="Why, if it's a close call"></textarea>
+  </div>
+
+  <div class="map" id="map" aria-label="All items; click one to jump to it"></div>
+
+  <details id="guidebox">
+    <summary>Labeling guide (press ?)</summary>
+    <p style="color:var(--muted);margin:.6em 0 0">Would you want this change flagged if you were tracking this company's risk disclosures? Judge only the text shown.</p>
+    <div class="guide">
+      <dl><dt style="color:var(--mat)">MATERIAL</dt><dd>The change alters what the company tells you about its risks.</dd>
+        <dt>new_risk</dt><dd>A risk, exposure or event not disclosed before</dd>
+        <dt>removed_risk</dt><dd>A disclosed risk or event no longer mentioned</dd>
+        <dt>severity</dt><dd>Likelihood or severity strengthened or weakened ("may" to "has")</dd>
+        <dt>realized</dt><dd>A hypothetical risk is now described as having happened</dd>
+        <dt>specifics</dt><dd>A new named event, country, product, counterparty or regulation</dd>
+        <dt>quantity</dt><dd>A number describing the exposure changed meaningfully</dd>
+        <dt>legal_status</dt><dd>An investigation or lawsuit opened, settled, decided or closed</dd></dl>
+      <dl><dt style="color:var(--cos)">COSMETIC</dt><dd>The same message, presented differently.</dd>
+        <dt>rewording</dt><dd>Same meaning, different words; sentences split, merged or reordered</dd>
+        <dt>date_rollforward</dt><dd>Only a year or period label changed</dd>
+        <dt>cross_reference</dt><dd>Page or note references; renamed defined terms</dd>
+        <dt>formatting</dt><dd>Typography, capitalisation, punctuation</dd>
+        <dt>restructure</dt><dd>Moved, split or merged with no change in content</dd>
+        <dt>Tie-breaks</dt><dd>"may" to "could" is cosmetic; "may" to "has" is material. A number is material if it describes the risk itself. Added or removed text is material unless it is boilerplate, a heading, or clearly restated elsewhere. Unsure is a valid answer.</dd></dl>
+    </div>
+  </details>
+</div>
+
+<div class="keys"><div class="in">
+  <div class="row">
+    <button class="lab M" id="bM"><kbd>M</kbd>Material</button>
+    <button class="lab C" id="bC"><kbd>C</kbd>Cosmetic</button>
+    <button class="lab U" id="bU"><kbd>U</kbd>Unsure</button>
+    <div class="nav">
+      <button id="prev"><kbd>←</kbd>Back</button>
+      <button id="next"><kbd>→</kbd>Next</button>
+      <button id="nextOpen"><kbd>N</kbd>Next unlabeled</button>
+    </div>
+  </div>
+  <div class="row" id="codes"></div>
+  <div class="row">
+    <label class="tog"><input type="checkbox" id="advance" checked> Move to the next item after M / C / U</label>
+  </div>
+</div></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const items = DATA.items;
+const CODES = { M: DATA.material, C: DATA.cosmetic, U: [] };
+const NAME = { M: "material", C: "cosmetic", U: "unsure" };
+const labels = {};            // id -> {label, code, note}
+let idx = 0, db = null, coll = null;
+const pending = {};           // id -> Promise chain (one write at a time per document)
+const $ = (id) => document.getElementById(id);
+const LS = "rfl-labels-v1";
+
+function lsLoad() { try { return JSON.parse(localStorage.getItem(LS) || "{}") } catch { return {} } }
+function lsSave() { try { localStorage.setItem(LS, JSON.stringify(labels)) } catch {} }
+Object.assign(labels, lsLoad());
+
+function setStatus(text, warn) { const s = $("status"); s.textContent = text; s.classList.toggle("warn", !!warn) }
+
+function save(id) {
+  lsSave();
+  if (!coll) return;
+  const body = { label: labels[id]?.label || "", code: labels[id]?.code || "", note: labels[id]?.note || "",
+                 at: new Date().toISOString() };
+  pending[id] = (pending[id] || Promise.resolve()).then(() => coll.doc(id).set(body)).then(
+    () => setStatus("Saved " + id + ". Labels save as you go."),
+    (e) => setStatus("Couldn't save " + id + " (" + (e && e.code || "error") + "). It's kept in this browser; try again in a moment.", true));
+}
+
+function render() {
+  const it = items[idx], L = labels[it.id] || {};
+  const meta = $("meta"); meta.textContent = "";
+  const mk = (cls, t) => { const s = document.createElement("span"); if (cls) s.className = cls; s.textContent = t; return s };
+  meta.append(mk("id", it.id), mk("", it.company), mk("", it.section), mk("", it.old + " → " + it.new),
+              mk("chip", it.status), mk("", (idx + 1) + " of " + items.length));
+  const sh = $("sheet"); sh.textContent = "";
+  const para = (t) => { const p = document.createElement("p"); p.textContent = t; return p };
+  const head = (t) => { const h = document.createElement("h3"); h.textContent = t; return h };
+  if (it.diff) {
+    sh.append(head("Change, old to new"));
+    const p = document.createElement("p");
+    it.diff.forEach(([k, t], i) => {
+      if (i) p.append(" ");
+      if (k === "eq") p.append(t);
+      else if (k === "gap") p.append(mk("gap", "… " + t + " …"));
+      else { const e = document.createElement(k === "del" ? "del" : "ins"); e.textContent = t; p.append(e) }
+    });
+    sh.append(p);
+  } else if (it.text !== undefined) {
+    sh.append(head(it.status === "added" ? "Added (new filing only)" : "Removed (old filing only)"));
+    it.text.split("\n\n").forEach(t => sh.append(para(t)));
+    const c = document.createElement("div"); c.className = "context";
+    if (it.context) {
+      c.append(head("Closest " + (it.context.side === "old" ? "old" : "new") + " paragraph (similarity " + it.context.sim + "), for context"));
+      it.context.text.split("\n\n").forEach(t => c.append(para(t)));
+    } else c.append(para("No similar paragraph on the other side."));
+    sh.append(c);
+  } else {
+    const g = document.createElement("div"); g.className = "split";
+    const a = document.createElement("div"), b = document.createElement("div");
+    a.append(head("Old")); it.oldText.split("\n\n").forEach(t => a.append(para(t)));
+    b.append(head("New")); it.newText.split("\n\n").forEach(t => b.append(para(t)));
+    g.append(a, b); sh.append(g);
+  }
+  ["M", "C", "U"].forEach(k => $("b" + k).classList.toggle("on", L.label === k));
+  const codes = $("codes"); codes.textContent = "";
+  (CODES[L.label] || []).forEach((c, i) => {
+    const b = document.createElement("button"); b.className = "code" + (L.code === c ? " on" : "");
+    const kb = document.createElement("kbd"); kb.textContent = String(i + 1); b.append(kb, c);
+    b.addEventListener("click", () => setCode(c)); codes.append(b);
+  });
+  if (!L.label) codes.append(mk("", "Pick M, C or U. A code is optional; number keys pick one after a label."));
+  $("note").value = L.note || "";
+  renderProgress();
+}
+
+function renderProgress() {
+  const n = items.filter(i => labels[i.id]?.label).length;
+  const c = { M: 0, C: 0, U: 0 }; items.forEach(i => { const l = labels[i.id]?.label; if (l) c[l]++ });
+  const counts = $("counts"); counts.textContent = "";
+  const add = (cls, t) => { const b = document.createElement("b"); b.className = cls; b.textContent = t; counts.append(b) };
+  add("", n + " / " + items.length + " labeled"); add("cM", "M " + c.M); add("cC", "C " + c.C); add("cU", "U " + c.U);
+  $("bar").style.width = (100 * n / items.length) + "%";
+  $("donebox").hidden = n !== items.length;
+  const map = $("map");
+  if (!map.children.length) items.forEach((it, i) => {
+    const b = document.createElement("button"); b.title = it.id; b.setAttribute("aria-label", it.id);
+    b.addEventListener("click", () => { idx = i; render(); window.scrollTo(0, 0) }); map.append(b);
+  });
+  [...map.children].forEach((b, i) => { b.className = (labels[items[i].id]?.label || "") + (i === idx ? " cur" : "") });
+}
+
+function setLabel(k) {
+  const id = items[idx].id, prev = labels[id] || {};
+  labels[id] = { ...prev, label: k, code: prev.label === k ? prev.code || "" : "" };
+  save(id);
+  if ($("advance").checked) go(1); else render();
+}
+function setCode(c) {
+  const id = items[idx].id; if (!labels[id]?.label) return;
+  labels[id] = { ...labels[id], code: labels[id].code === c ? "" : c }; save(id); render();
+}
+function go(d) { idx = Math.min(items.length - 1, Math.max(0, idx + d)); render(); window.scrollTo(0, 0) }
+function nextOpen() {
+  for (let s = 1; s <= items.length; s++) { const j = (idx + s) % items.length; if (!labels[items[j].id]?.label) { idx = j; render(); window.scrollTo(0, 0); return } }
+}
+
+$("bM").addEventListener("click", () => setLabel("M"));
+$("bC").addEventListener("click", () => setLabel("C"));
+$("bU").addEventListener("click", () => setLabel("U"));
+$("prev").addEventListener("click", () => go(-1));
+$("next").addEventListener("click", () => go(1));
+$("nextOpen").addEventListener("click", nextOpen);
+$("note").addEventListener("change", () => {
+  const id = items[idx].id; labels[id] = { ...(labels[id] || {}), note: $("note").value.trim() }; save(id);
+});
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT") { if (e.key === "Escape") e.target.blur(); return }
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if (k === "m" || k === "c" || k === "u") { e.preventDefault(); setLabel(k.toUpperCase()) }
+  else if (/^[1-9]$/.test(k)) { const L = labels[items[idx].id]; const c = (CODES[L?.label] || [])[+k - 1]; if (c) setCode(c) }
+  else if (k === "arrowright" || k === "enter" || k === "l") { e.preventDefault(); go(1) }
+  else if (k === "arrowleft" || k === "h") { e.preventDefault(); go(-1) }
+  else if (k === "n") nextOpen();
+  else if (k === "/") { e.preventDefault(); $("note").focus() }
+  else if (k === "?") $("guidebox").open = !$("guidebox").open;
+});
+
+const firstOpen = items.findIndex(i => !labels[i.id]?.label);
+idx = firstOpen < 0 ? 0 : firstOpen;
+render();
+
+(async () => {
+  db = window.claude ? await window.claude.use("db") : null;
+  if (!db) { setStatus("Labels can't reach Claude from this view, so they're kept in this browser only. Open the page from claude.ai to save them.", true); return }
+  coll = db.collection("labels");
+  let first = true;
+  coll.onSnapshot((snap) => {
+    snap.docs.forEach(d => { const v = d.data(); if (v && !(d.id in pending)) labels[d.id] = { label: v.label || "", code: v.code || "", note: v.note || "" } });
+    lsSave();
+    if (first) {
+      first = false;
+      // Anything labeled in this browser but missing from the store gets saved now.
+      const stored = new Set(snap.docs.map(d => d.id));
+      items.forEach(i => { if (labels[i.id]?.label && !stored.has(i.id)) save(i.id) });
+      const o = items.findIndex(i => !labels[i.id]?.label); if (o >= 0) idx = o;
+      setStatus("Connected. Labels save as you go.");
+    }
+    render();
+  }, (e) => setStatus("Lost the connection to saved labels (" + e.code + "). Keep going; they're kept in this browser. Reload to reconnect.", true));
+})();
+</script>
