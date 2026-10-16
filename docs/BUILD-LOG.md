@@ -384,3 +384,34 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   (verified: a probe write was read back and was invisible at a lower access level, then deleted).
   `tools/import_app_labels.py` copies them into `docs/materiality-labels-test.md`, refusing to overwrite a differing
   label, so the committed sheet stays the record.
+
+---
+
+## 2026-10-16 — M4 part 2 (blind test scored once; Haiku comparison)
+
+### What happened
+- Trevor labeled all 122 test items in the keyboard page (about 79 active minutes, median 16 s per item): 68 M,
+  50 C, 4 U, no codes or notes. Imported into the sheet and committed (`fa12731`) **before** any test-set model
+  output existed.
+- His stated rule of thumb: wholly new or wholly removed text is material, including long or much longer paragraphs
+  on a related disclosure. That's the guide's default for added/removed text (tie-break 3), applied broadly.
+- **One scored run, frozen prompt `1fd1c7e5bb42`, Sonnet 5.5:** agreement 89/115 (77%). "Material": precision
+  **0.89** (95% CI 0.81–0.96), recall **0.80** (0.68–0.89), stratum-weighted. 3 answers not scored (2 unverified
+  evidence, 1 code mismatch). $0.41.
+- **Haiku 5.5, same prompt and set:** 84/114 (74%), precision 0.84 (0.74–0.94), recall 0.77 (0.65–0.87), 4
+  unverified, **$0.02**. The confidence intervals overlap almost entirely.
+
+### Learnings
+- **Dev and test erred in opposite directions.** On dev (labels suggested by Claude) the classifier over-called
+  "material". On the blind test it under-called it: 17 misses against 9 false alarms. Claude-suggested dev labels
+  and an independent human differ systematically, which is exactly why FD-DEC 021 kept the test set blind.
+- **The misses concentrate where the labeler and the classifier saw different things.** Split/merged changes
+  scored 3/9, and 11 of the 17 misses are coded `restructure`. The classifier was given restatement context (where
+  else in the section the text appears), while the labeling sheet showed only the OLD and NEW paragraph. A merged
+  paragraph that grew from 136 to 1,484 characters looks like new disclosure without that context and a restatement
+  with it. Labels, like predictions, depend on what the labeler is shown.
+- Formatting-only (the rule path, no model) was 10/10. Near-identical rewordings (0.95–1.00) were 11/11.
+
+### Open / next
+- Decisions for Trevor: (1) an optional adjudication pass on the disagreements, with the context the classifier saw,
+  published *beside* the blind numbers and never replacing them; (2) the model and cost for the full 5,623-change run.
