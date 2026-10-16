@@ -1,6 +1,7 @@
 """Build the keyboard labeling page for the materiality TEST set (published as a private artifact).
 
-    python tools/build_label_app.py      # writes data/labeling/risk-factor-labeler.html
+    python tools/build_label_app.py            # blind test set -> data/labeling/risk-factor-labeler.html
+    python tools/build_label_app.py recheck    # disagreements, with the classifier's context -> label-recheck.html
 
 The page embeds the 122 test items exactly as docs/materiality-labels-test.md shows them (same inline diff, same
 closest-paragraph context, no model output). Labels are saved one document per item in the artifact's `db`
@@ -41,13 +42,33 @@ def diff_segments(a: str, b: str) -> list[list[str]]:
 
 
 def main() -> None:
+    mode = sys.argv[1] if len(sys.argv) > 1 else "test"
     sample = json.loads((ROOT / "tests" / "golden" / "materiality_sample.json").read_text(encoding="utf-8"))
     sheet = (ROOT / "docs" / "materiality-labels-test.md").read_text(encoding="utf-8")
     sheet_ids = re.findall(r"(?m)^## (M\d{3}) ", sheet)
     items = {m["id"]: m for m in sample["items"] if m["split"] == "test"}
     assert sheet_ids and set(sheet_ids) == set(items), "sheet and sample disagree"
+    blind = {}
+    for block in re.split(r"(?m)^## ", sheet)[1:]:
+        mm = re.search(r"\*\*Label:\*\*[ \t]*([MCU])", block)
+        if mm:
+            blind[block.split(" ", 1)[0]] = mm.group(1)
+    ids, restated = sheet_ids, {}
+    if mode == "recheck":
+        # The scored disagreements of the Sonnet test run (the published headline run), in the blind sheet's order.
+        sys.path.insert(0, str(ROOT / "tools"))
+        import run_materiality as rm
+        res = {json.loads(l)["id"]: json.loads(l) for l in
+               (ROOT / "data" / "classify" / "test-claude-sonnet-5-5.jsonl").read_text(encoding="utf-8").splitlines()}
+        conv = {"M": "material", "C": "cosmetic"}
+        ids = [i for i in sheet_ids if blind.get(i) in conv and res[i]["outcome"] == "ok"
+               and res[i]["label"] in ("material", "cosmetic") and res[i]["label"] != conv[blind[i]]]
+        for i in ids:
+            ctx = rm.to_item(items[i])["context"]
+            if ctx and ctx.get("kind") == "restated":
+                restated[i] = ctx["passages"]
     out = []
-    for i in sheet_ids:                       # the sheet's (blind) order
+    for i in ids:                       # the sheet's (blind) order
         m = items[i]
         rec = {"id": i, "company": m["company"].title() if m["company"].isupper() else m["company"],
                "section": LABEL[m["section"]], "old": m["old_date"], "new": m["new_date"], "status": m["status"]}
@@ -59,15 +80,22 @@ def main() -> None:
             rec["context"] = {"side": c["side"], "sim": c["similarity"], "text": c["text"]} if c else None
         else:
             rec["oldText"], rec["newText"] = m["old_text"], m["new_text"]
+        if mode == "recheck":
+            rec["blind"] = blind[i]
+            if i in restated:
+                rec["restated"] = restated[i]
         out.append(rec)
-    payload = json.dumps({"items": out, "material": MATERIAL_CODES, "cosmetic": COSMETIC_CODES},
+    coll = "labels" if mode == "test" else "recheck"
+    payload = json.dumps({"items": out, "material": MATERIAL_CODES, "cosmetic": COSMETIC_CODES, "collection": coll},
                          ensure_ascii=False).replace("</", "<\\/")
     template = (ROOT / "tools" / "label_app_template.html").read_text(encoding="utf-8")
-    html = template.replace("/*__DATA__*/null", payload)
-    dest = ROOT / "data" / "labeling" / "risk-factor-labeler.html"
+    title, sub = ("Risk Factor Labeler", "test set") if mode == "test" else ("Label Recheck", "disagreements, with context")
+    html = template.replace("/*__DATA__*/null", payload).replace("/*__TITLE__*/", title).replace("/*__SUBTITLE__*/", sub)
+    dest = ROOT / "data" / "labeling" / ("risk-factor-labeler.html" if mode == "test" else "label-recheck.html")
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(html, encoding="utf-8", newline="\n")
-    print(f"{len(out)} items -> {dest.relative_to(ROOT)} ({len(html) / 1024:.0f} KB)")
+    print(f"{mode}: {len(out)} items ({len(restated)} with restatement context) -> {dest.relative_to(ROOT)} "
+          f"({len(html) / 1024:.0f} KB)")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-<title>Risk Factor Labeler</title>
+<title>/*__TITLE__*/</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
@@ -86,7 +86,7 @@ summary { cursor: pointer; font-weight: 500 }
 <div class="wrap">
   <header>
     <div class="toprow">
-      <h1>Risk Factor Labeler <span style="font-family:var(--sans);font-weight:400;font-size:.9rem;color:var(--muted)">· test set</span></h1>
+      <h1>Risk Factor Labeler <span style="font-family:var(--sans);font-weight:400;font-size:.9rem;color:var(--muted)">· /*__SUBTITLE__*/</span></h1>
       <div class="counts" id="counts"></div>
     </div>
     <div class="bar"><i id="bar"></i></div>
@@ -154,7 +154,7 @@ const labels = {};            // id -> {label, code, note}
 let idx = 0, db = null, coll = null;
 const pending = {};           // id -> Promise chain (one write at a time per document)
 const $ = (id) => document.getElementById(id);
-const LS = "rfl-labels-v1";
+const LS = "rfl-" + DATA.collection + "-v1";
 
 function lsLoad() { try { return JSON.parse(localStorage.getItem(LS) || "{}") } catch { return {} } }
 function lsSave() { try { localStorage.setItem(LS, JSON.stringify(labels)) } catch {} }
@@ -207,6 +207,15 @@ function render() {
     b.append(head("New")); it.newText.split("\n\n").forEach(t => b.append(para(t)));
     g.append(a, b); sh.append(g);
   }
+  // Re-check mode: the restatement context the classifier was given, and the labeler's own blind label.
+  (it.restated || []).forEach(r => {
+    const c = document.createElement("div"); c.className = "context";
+    c.append(head("Text " + r.what + " here also appears (" + Math.round(r.coverage * 100) + "% of its words) in this " +
+                  (r.side === "old" ? "old" : "new") + " paragraph"));
+    r.text.split("\n\n").forEach(t => c.append(para(t)));
+    sh.append(c);
+  });
+  if (it.blind) meta.append(mk("chip", "your blind label: " + it.blind));
   ["M", "C", "U"].forEach(k => $("b" + k).classList.toggle("on", L.label === k));
   const codes = $("codes"); codes.textContent = "";
   (CODES[L.label] || []).forEach((c, i) => {
@@ -279,7 +288,7 @@ render();
 (async () => {
   db = window.claude ? await window.claude.use("db") : null;
   if (!db) { setStatus("Labels can't reach Claude from this view, so they're kept in this browser only. Open the page from claude.ai to save them.", true); return }
-  coll = db.collection("labels");
+  coll = db.collection(DATA.collection);
   let first = true;
   coll.onSnapshot((snap) => {
     snap.docs.forEach(d => { const v = d.data(); if (v && !(d.id in pending)) labels[d.id] = { label: v.label || "", code: v.code || "", note: v.note || "" } });
