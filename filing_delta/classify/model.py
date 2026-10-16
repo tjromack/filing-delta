@@ -31,23 +31,31 @@ class Provider(Protocol):
     def complete(self, request: dict) -> dict: ...
 
 
+def message_record(r) -> dict:
+    """An SDK Message (from messages.create or a batch result) -> the plain, JSON-serialisable recorded response."""
+    text = "".join(b.text for b in r.content if b.type == "text")
+    usage = r.usage.to_dict() if hasattr(r.usage, "to_dict") else dict(r.usage)
+    return {"id": r.id, "model": r.model, "stop_reason": r.stop_reason, "text": text, "usage": usage,
+            "stop_details": r.stop_details.to_dict() if getattr(r, "stop_details", None) else None}
+
+
+def anthropic_client():
+    import truststore  # TLS-inspecting proxy on this machine (CLAUDE.md gotcha)
+
+    truststore.inject_into_ssl()
+    import anthropic
+
+    return anthropic.Anthropic()
+
+
 class AnthropicProvider:
     """messages.create with the request as given. Returns a plain, JSON-serialisable record."""
 
     def __init__(self) -> None:
-        import truststore  # TLS-inspecting proxy on this machine (CLAUDE.md gotcha)
-
-        truststore.inject_into_ssl()
-        import anthropic
-
-        self._client = anthropic.Anthropic()
+        self._client = anthropic_client()
 
     def complete(self, request: dict) -> dict:
-        r = self._client.messages.create(**request)
-        text = "".join(b.text for b in r.content if b.type == "text")
-        usage = r.usage.to_dict() if hasattr(r.usage, "to_dict") else dict(r.usage)
-        return {"id": r.id, "model": r.model, "stop_reason": r.stop_reason, "text": text, "usage": usage,
-                "stop_details": r.stop_details.to_dict() if getattr(r, "stop_details", None) else None}
+        return message_record(self._client.messages.create(**request))
 
 
 @dataclass
@@ -63,6 +71,9 @@ class Recorder:
     def _path(self, key: str) -> Path:
         return self.cache_dir / key[:2] / f"{key}.json"
 
+    def has(self, request: dict) -> bool:
+        return self._path(request_key(request)).exists()
+
     def complete(self, request: dict) -> tuple[dict, str]:
         key = request_key(request)
         p = self._path(key)
@@ -75,9 +86,14 @@ class Recorder:
             self.provider = AnthropicProvider()
         response = self.provider.complete(request)
         self.calls += 1
+        self.record(request, response)
+        return response, key
+
+    def record(self, request: dict, response: dict) -> None:
+        """Store a response obtained elsewhere (a Message Batches result) exactly as the sync path would."""
+        p = self._path(request_key(request))
         p.parent.mkdir(parents=True, exist_ok=True)
         tmp = p.with_suffix(".part")
         tmp.write_text(json.dumps({"request": request, "response": response}, sort_keys=True, ensure_ascii=False,
                                   indent=1), encoding="utf-8")
         os.replace(tmp, p)
-        return response, key

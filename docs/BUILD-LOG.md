@@ -415,3 +415,35 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - Decisions for Trevor: (1) an optional adjudication pass on the disagreements, with the context the classifier saw,
   published *beside* the blind numbers and never replacing them; (2) the model and cost for the full 5,623-change run.
+
+### 2026-10-16 — full-corpus run (Sonnet 5.5 + Haiku 5.5, Message Batches)
+- Trevor's decisions: (1) adjudicate the 26 disagreements with the classifier's context, published as a secondary
+  number beside the blind one (re-check page built, labels pending); (2) classify the whole corpus with both models.
+- `tools/classify_corpus.py` builds every in-frame change (5,623, which matches the sampling frame), skips anything
+  already recorded, and submits the rest in 2,000-request batches. `collect --wait` polls, then writes each result
+  into `data/model-cache` under the same request hash the synchronous path uses (`Recorder.record`, unit-tested
+  to replay identically). All 9,708 batch requests succeeded, with no errors or expirations.
+- `report` runs with no key (replay only) and writes `docs/materiality-corpus.md`. Sonnet: 2,512 material /
+  2,964 cosmetic / 74 unsure; 73 changes not answered (67 unverified evidence, 6 code mismatch). Haiku: 2,412 /
+  2,665 / 437; 109 not answered. Agreement on the 4,840 model-path changes both answered: **77.0%, kappa 0.58**.
+  Cost **$7.50 + $0.45**.
+
+### Learnings
+- **Agreement is lowest exactly where the blind test was weakest.** Removed text: 59% agreement, and Haiku answers
+  "unsure" on 244 of 848 removed changes against Sonnet's 32. Added text: 75%. Near-identical rewordings and
+  numbers-only changes: 82–97%. Wholly new or removed text is where the label depends most on judgment, and it is
+  also where Trevor's labels and Sonnet's diverged.
+- Haiku calls more rewordings material than Sonnet (666 vs 527 at similarity 0.80–0.95). The largest off-diagonal
+  cell is Sonnet cosmetic / Haiku material (425).
+- Coverage note: 5,585 of the 5,623 changes are 10-K Item 1A. Only 38 come from 10-Q Part II Item 1A, because most
+  10-Qs refer back to the 10-K rather than restating risk factors.
+
+### What broke and the fix
+- The first report counted 26 byte-identical changes twice in the cost ($7.52 for "4,867" responses, but only 4,841
+  were submitted). Cost now counts each distinct request once.
+- `python` on PATH lacks lxml. Tests and the keyless report run under `.venv/Scripts/python`.
+
+### Open / next
+- Trevor labels the re-check page, then the adjudicated agreement goes beside the blind numbers.
+- M4 gate: error analysis write-up (the information-gap finding goes in the README limits), TODO and README
+  verification rows, commit, stop.

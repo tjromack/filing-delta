@@ -71,8 +71,12 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] Classifier stage (`filing_delta/classify/`): formatting-only rule + model (`ANTHROPIC_MODEL`, default
       `claude-sonnet-5-5`), structured output, verified evidence spans, recorded responses (FD-DEC 007); restatement
       context; prompt refined on dev only (24 -> 25/28) and frozen at `1fd1c7e5bb42` (FD-DEC 022)
-- [ ] Trevor labels the **test** set (`docs/materiality-labels-test.md`) before any test-set model output is seen
-- [ ] Confusion matrix + bootstrap CIs + error analysis on test; Haiku 5.5 comparison; full 5,623-change run
+- [x] Trevor labels the **test** set (`docs/materiality-labels-test.md`) before any test-set model output is seen
+- [x] Confusion matrix + bootstrap CIs on test, scored once (`docs/materiality-eval-test.md`); Haiku 5.5 comparison
+- [x] Full 5,623-change run, Sonnet + Haiku via Message Batches, keyless replay (`docs/materiality-corpus.md`,
+      FD-DEC 023)
+- [ ] Adjudication re-check of the 26 disagreements (Trevor), published beside the blind numbers
+- [ ] Error analysis write-up; README limits + verification rows
 - [ ] **Gate:** a reproducible, keyless confusion matrix. **<- stop**
 
 ## M5 — XBRL company facts join

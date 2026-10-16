@@ -70,6 +70,18 @@ def test_recorded_response_is_replayed_without_calling_the_provider(tmp_path):
     assert (first["label"], first["code"], first["outcome"]) == (second["label"], second["code"], "ok")
 
 
+def test_batch_result_replays_like_a_live_call(tmp_path):
+    # A Message Batches result is stored under the same request hash, so offline replay can't tell the paths apart.
+    live = classify(ITEM, Recorder(tmp_path / "live", provider=FakeProvider(answer())))
+    batch = Recorder(tmp_path / "batch")
+    req = build_request(ITEM)
+    assert not batch.has(req)
+    batch.record(req, {**FakeProvider(answer()).complete(req), "via": "batch"})
+    assert batch.has(req)
+    replay = classify(ITEM, Recorder(tmp_path / "batch", offline=True))
+    assert {k: v for k, v in replay.items()} == live
+
+
 def test_offline_miss_fails_loudly(tmp_path):
     with pytest.raises(OfflineMiss):
         classify(ITEM, Recorder(tmp_path, offline=True))

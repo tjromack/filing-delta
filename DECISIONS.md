@@ -309,3 +309,18 @@ scored against" to the set that is scored).
   test set will show whether the prompt generalizes.
 - **Guards:** `tools/run_materiality.py test` refuses to run under any other prompt version, or while any test item
   is unlabeled. The guide itself was not edited (FD-DEC 020 froze it); the classifier notes are outside the guide.
+
+## FD-DEC 023 — Full corpus classified by two models via the Message Batches API (2026-10-16)
+**Status:** Decided (Trevor chose "both" when offered Sonnet-only or Haiku-only). Report: `docs/materiality-corpus.md`.
+
+- **Scope:** all 5,623 changes in the M4 frame (every changed unit of every full -> full 10-K Item 1A and 10-Q Part
+  II Item 1A pair), frozen prompt `1fd1c7e5bb42`, with `claude-sonnet-5-5` and `claude-haiku-5-5`. The 618
+  formatting-only changes take the rule path; the 5,005 others need 4,979 distinct requests.
+- **Batches, not synchronous calls:** half price, and the requests are byte-identical to the synchronous path, so each
+  result is stored under the same request hash and replays the same way with no key (unit-tested). Batch ids are
+  persisted, so an interrupted run resumes instead of paying twice. Measured: $7.50 (Sonnet) + $0.45 (Haiku).
+- **What it is published as:** label distributions and model-to-model agreement (77.0%, kappa 0.58). That is a
+  consistency figure, not accuracy; the only accuracy figures are the blind test set's. Corpus labels are never used
+  to tune the prompt.
+- **Alternative rejected:** one model only. Cheaper by $0.45 or $7.50, but the comparison shows where the label is
+  stable across models and where it is fragile (removed text: 59% agreement), which a single run can't.
