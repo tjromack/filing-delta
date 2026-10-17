@@ -362,3 +362,18 @@ scored against" to the set that is scored).
   scoped by the M5 survey.
 - **Storage:** derived facts are JSON per accession (`data/facts/`), like `data/diffs/`. DuckDB stays planned for
   the read view rather than being introduced mid-pipeline.
+
+## FD-DEC 026 — Claim labels are suggestion-assisted, not blind (2026-10-17)
+**Status:** Decided (Trevor chose "show it before you answer" over two blind options). Applies to the M5 claim
+sample only.
+
+- **What:** the labeling page shows the matcher's answer as "most likely", with its reason, before Trevor answers.
+  He accepts it (A) or overrides it. Each saved label records what was suggested.
+- **Consequence, stated in `docs/claims-eval.md`:** agreement is anchored on the matcher's answer, so it is not an
+  independent estimate of the matcher's precision. The headline figure is the override count, as on the M4 dev set
+  (FD-DEC 021). C001 was already discussed as a worked example and is not scored.
+- **Why accept it here:** most of the matcher's outcome rests on checkable mechanics (the amount against the table,
+  a named subject, a year), and Trevor said he wasn't confident judging scope cold. A reader who sees the reason can
+  catch a wrong one. Rubber-stamping is the risk, and the guide asks him to run the four checks before accepting.
+- **Alternatives rejected (offered):** reveal after a locked blind answer (it keeps an independent number, at the
+  cost of a second look per item); fully blind with an end review (the plan before this decision).

@@ -87,6 +87,11 @@ details { background: var(--sheet); border: 1px solid var(--rule); border-radius
 summary { cursor: pointer; font-weight: 500 }
 .guide { display: grid; gap: 6px; margin: 10px 0 0; max-width: 72ch }
 .guide dt { font-weight: 600 } .guide dd { margin: 0 0 6px; color: var(--muted) }
+.suggest { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; padding: 10px 14px; border: 1px solid var(--rule);
+  border-radius: 6px; background: var(--sheet); font-size: .9rem }
+.suggest .k { font-family: var(--mono); font-weight: 500; padding: 1px 8px; border-radius: 999px; color: var(--sheet) }
+.suggest .why { color: var(--muted); flex: 1 1 320px; min-width: 0 }
+.suggest .agree { font-family: var(--mono); font-size: .75rem; color: var(--muted) }
 .done { border: 1px solid var(--kM); color: var(--kM); border-radius: 6px; padding: 10px 14px; font-weight: 500 }
 @media (prefers-reduced-motion: reduce) { .bar > i { transition: none } }
 </style>
@@ -105,7 +110,7 @@ summary { cursor: pointer; font-weight: 500 }
 
   <details id="guidebox" open>
     <summary>How to label (press ?)</summary>
-    <p style="color:var(--muted);margin:.6em 0 0">Each item is one highlighted clause from the filing's MD&amp;A. The table under it is the audited (10-K) or interim (10-Q) statement figure for the same metric and period. Judge only the highlighted words, checking in order: (1) Is it the whole company, not a segment, product or region? (2) Is it this filing's own period? (3) Is it a plain GAAP figure? (4) Does the amount fit a table value at the precision written ("$383.3 billion" covers 383.25 to 383.35)? All four yes: M. Fails only 4: N. Fails 3: G. Fails 1 or 2, or it states a change rather than a total: X.</p>
+    <p style="color:var(--muted);margin:.6em 0 0">Each item is one highlighted clause from the filing's MD&amp;A. The table under it is the audited (10-K) or interim (10-Q) statement figure for the same metric and period. Judge only the highlighted words, checking in order: (1) Is it the whole company, not a segment, product or region? (2) Is it this filing's own period? (3) Is it a plain GAAP figure? (4) Does the amount fit a table value at the precision written ("$383.3 billion" covers 383.25 to 383.35)? All four yes: M. Fails only 4: N. Fails 3: G. Fails 1 or 2, or it states a change rather than a total: X. The bar above each claim shows the matcher's answer as "most likely"; press A to accept it, or any label key to override it. Overrides are the most useful thing you can give, so check the four steps before accepting.</p>
     <dl class="guide">
       <dt style="color:var(--kM)">M · Matches</dt><dd>It states the company's consolidated total for this filing's own period, as a GAAP figure, and the amount equals a tagged value at the precision stated ("$6.9 billion" covers 6.85 to 6.95 billion).</dd>
       <dt style="color:var(--kN)">N · No matching tagged value</dt><dd>Consolidated, this period, GAAP, but the amount isn't any tagged value at the stated precision.</dd>
@@ -116,6 +121,7 @@ summary { cursor: pointer; font-weight: 500 }
   </details>
 
   <div class="meta" id="meta"></div>
+  <div class="suggest" id="suggest"></div>
   <article class="sheet" id="sheet"></article>
 
   <div>
@@ -133,6 +139,7 @@ summary { cursor: pointer; font-weight: 500 }
     <button class="lab G" id="bG"><kbd>G</kbd>Non-GAAP</button>
     <button class="lab X" id="bX"><kbd>X</kbd>Not checkable</button>
     <button class="lab U" id="bU"><kbd>U</kbd>Unsure</button>
+    <button id="bA"><kbd>A</kbd>Accept suggestion</button>
     <div class="nav">
       <button id="prev"><kbd>←</kbd>Back</button>
       <button id="next"><kbd>→</kbd>Next</button>
@@ -149,6 +156,7 @@ summary { cursor: pointer; font-weight: 500 }
 const DATA = /*__DATA__*/null;
 const items = DATA.items;
 const KEYS = ["M", "N", "G", "X", "U"];
+const NAME = { M: "Matches", N: "No match", G: "Non-GAAP", X: "Not checkable", U: "Unsure" };
 const CODES = { X: ["segment", "other_period", "change_not_level", "other_metric"] };
 const METRIC = { revenue: "Revenue", net_income: "Net income", operating_income: "Operating income",
                  operating_cash_flow: "Operating cash flow", eps_diluted: "Diluted EPS" };
@@ -166,8 +174,9 @@ function setStatus(text, warn) { const s = $("status"); s.textContent = text; s.
 function save(id) {
   lsSave();
   if (!coll) return;
+  const sg = items.find(i => i.id === id).suggest;
   const body = { label: labels[id]?.label || "", code: labels[id]?.code || "", note: labels[id]?.note || "",
-                 at: new Date().toISOString() };
+                 suggested: sg.label + (sg.code ? " " + sg.code : ""), at: new Date().toISOString() };
   pending[id] = (pending[id] || Promise.resolve()).then(() => coll.doc(id).set(body)).then(
     () => setStatus("Saved " + id + ". Labels save as you go."),
     (e) => setStatus("Couldn't save " + id + " (" + (e && e.code || "error") + "). It's kept in this browser; try again in a moment.", true));
@@ -189,6 +198,11 @@ function render() {
     : (it.fiscal_period || "quarter") + " of fiscal " + it.fiscal_year + ", ended " + it.period_end;
   meta.append(mk("span", "id", it.id), mk("span", "", it.company), mk("span", "", it.form + " · " + per),
               mk("span", "chip", METRIC[it.metric] || it.metric), mk("span", "", (idx + 1) + " of " + items.length));
+  const sg = it.suggest, sb = $("suggest"); sb.textContent = "";
+  const kc = mk("span", "k", sg.label + " · " + NAME[sg.label] + (sg.code ? " (" + sg.code.replaceAll("_", " ") + ")" : ""));
+  kc.style.background = "var(--k" + sg.label + ")";
+  sb.append(mk("span", "", "Most likely"), kc, mk("span", "why", sg.why),
+            mk("span", "agree", L.label ? (L.label === sg.label ? "you agreed" : "you overrode it") : "press A to accept"));
   const sh = $("sheet"); sh.textContent = "";
   sh.append(mk("h3", "", "MD&A, with the claim highlighted"));
   if (it.heading) sh.append(mk("p", "heading", it.heading));
@@ -232,6 +246,7 @@ function renderProgress() {
   const counts = $("counts"); counts.textContent = "";
   const add = (t, color) => { const b = document.createElement("b"); b.textContent = t; if (color) b.style.color = "var(" + color + ")"; counts.append(b) };
   add(n + " / " + items.length + " labeled"); KEYS.forEach(k => add(k + " " + c[k], "--k" + k));
+  add("overrode " + items.filter(i => labels[i.id]?.label && labels[i.id].label !== i.suggest.label).length);
   $("bar").style.width = (100 * n / items.length) + "%";
   $("donebox").hidden = n !== items.length;
   const map = $("map");
@@ -253,12 +268,19 @@ function setCode(c) {
   labels[id] = { ...labels[id], code: labels[id].code === c ? "" : c }; save(id);
   if ($("advance").checked) go(1); else render();
 }
+function acceptSuggestion() {
+  const it = items[idx], sg = it.suggest;
+  labels[it.id] = { ...(labels[it.id] || {}), label: sg.label, code: sg.code || "" };
+  save(it.id);
+  if ($("advance").checked) go(1); else render();
+}
 function go(d) { idx = Math.min(items.length - 1, Math.max(0, idx + d)); render(); window.scrollTo(0, 0) }
 function nextOpen() {
   for (let s = 1; s <= items.length; s++) { const j = (idx + s) % items.length; if (!labels[items[j].id]?.label) { idx = j; render(); window.scrollTo(0, 0); return } }
 }
 
 KEYS.forEach(k => $("b" + k).addEventListener("click", () => setLabel(k)));
+$("bA").addEventListener("click", acceptSuggestion);
 $("prev").addEventListener("click", () => go(-1));
 $("next").addEventListener("click", () => go(1));
 $("nextOpen").addEventListener("click", nextOpen);
@@ -270,6 +292,7 @@ document.addEventListener("keydown", (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   const k = e.key.toLowerCase();
   if (["m", "n", "g", "x", "u"].includes(k)) { e.preventDefault(); setLabel(k.toUpperCase()) }
+  else if (k === "a") { e.preventDefault(); acceptSuggestion() }
   else if (/^[1-9]$/.test(k)) { const L = labels[items[idx].id]; const c = (CODES[L?.label] || [])[+k - 1]; if (c) setCode(c) }
   else if (k === "arrowright" || k === "enter" || k === "l") { e.preventDefault(); go(1) }
   else if (k === "arrowleft" || k === "h") { e.preventDefault(); go(-1) }
