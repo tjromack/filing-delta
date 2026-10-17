@@ -447,3 +447,25 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - Trevor labels the re-check page, then the adjudicated agreement goes beside the blind numbers.
 - M4 gate: error analysis write-up (the information-gap finding goes in the README limits), TODO and README
   verification rows, commit, stop.
+
+### 2026-10-16 — adjudication re-check scored; M4 error analysis
+- Trevor relabeled the 26 disagreements with the classifier's restatement context: 17 held, 7 moved to the
+  classifier's label, 2 unsure. `tools/score_recheck.py` imports the labels once (it refuses to overwrite) and
+  publishes the adjudicated figures (85% · P 0.94 · R 0.90) as secondary, under the blind headline (FD-DEC 024).
+- Wrote `docs/materiality-error-analysis.md` and the README verification row and limits.
+
+### Learnings (and a correction)
+- **Correction to the M4 part 2 entry.** I attributed the blind misses to an information gap: the classifier saw
+  restatement context and the labeling sheet didn't. The re-check tested that and it mostly failed. Shown the
+  context, Trevor held 7 of the 9 items that had it, including all 6 split/merged ones. The restructure misses are
+  a real difference in reading the guide: the classifier's notes treat restated text as cosmetic, while Trevor
+  treats a restructure that adds or drops disclosure as material. A plausible explanation needed a test, and the
+  test disagreed with it.
+- The remaining false alarms include 3 numbers-only updates the classifier coded `quantity`, which Trevor reads as
+  routine updates. Both patterns are guide-boundary disagreements, not random noise.
+- The re-check ran at a median of 4 s between labels (blind pass: 16 s). The items were already familiar, but it is
+  recorded as a fact on the report.
+- No prompt re-tuning on these findings: the test set has been used once.
+
+### Open / next
+- M4 gate: stop for Trevor's approval. Next is M5 (XBRL join; decide FD-DEC 016).

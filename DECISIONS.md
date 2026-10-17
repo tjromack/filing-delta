@@ -324,3 +324,19 @@ scored against" to the set that is scored).
   to tune the prompt.
 - **Alternative rejected:** one model only. Cheaper by $0.45 or $7.50, but the comparison shows where the label is
   stable across models and where it is fragile (removed text: 59% agreement), which a single run can't.
+
+## FD-DEC 024 — Adjudication re-check: a secondary number, never the headline (2026-10-16)
+**Status:** Decided (Trevor chose "secondary number"). Report: `docs/materiality-eval-test-adjudicated.md`.
+
+- **Setup:** the 26 blind-test disagreements, relabeled by Trevor on a separate page (db collection `recheck`) that
+  showed the restatement context the classifier saw, but not the classifier's label or rationale. The labels are
+  committed verbatim with their timestamps (`tests/golden/materiality_recheck.json`); the blind sheet is untouched.
+- **Result:** 17 held, 7 moved to the classifier's label, 2 unsure. Adjudicated: 85% agreement, precision 0.94,
+  recall 0.90, published under the blind 77% / 0.89 / 0.80 and labeled secondary.
+- **Why secondary:** only disagreements were revisited, and the labeler knew they were disagreements. Both push
+  agreement up.
+- **What it settled:** the information-gap hypothesis from the blind error analysis. 7 of the 9 items with
+  restatement context held, so the restructure misses are a difference in reading the guide, not missing context
+  (`docs/materiality-error-analysis.md`). The prompt is not re-tuned on the test set.
+- **Alternative rejected:** replacing the blind labels with adjudicated ones. That is the usual way a reported
+  accuracy drifts upward.

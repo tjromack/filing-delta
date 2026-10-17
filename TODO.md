@@ -64,7 +64,7 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       guard (`filing-delta golden --rederive`)
 - [x] **Gate:** diff over the full corpus with human-set thresholds and published aligner precision/recall. **← stop**
 
-## M4 — material/cosmetic classifier + hand labels + confusion matrix (in progress)
+## M4 — material/cosmetic classifier + hand labels + confusion matrix (done; awaiting approval)
 - [x] Labeling guide written and approved before any labeling (`docs/design/materiality.md`, FD-DEC 020)
 - [x] 150-change stratified sample, split 28 dev / 122 test before any model output (`tools/materiality_sample.py`)
 - [x] Dev set labeled: Claude-suggested, Trevor reviewed, 0/28 overridden (FD-DEC 021)
@@ -75,9 +75,10 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] Confusion matrix + bootstrap CIs on test, scored once (`docs/materiality-eval-test.md`); Haiku 5.5 comparison
 - [x] Full 5,623-change run, Sonnet + Haiku via Message Batches, keyless replay (`docs/materiality-corpus.md`,
       FD-DEC 023)
-- [ ] Adjudication re-check of the 26 disagreements (Trevor), published beside the blind numbers
-- [ ] Error analysis write-up; README limits + verification rows
-- [ ] **Gate:** a reproducible, keyless confusion matrix. **<- stop**
+- [x] Adjudication re-check of the 26 disagreements (Trevor), published beside the blind numbers
+      (`docs/materiality-eval-test-adjudicated.md`, FD-DEC 024)
+- [x] Error analysis write-up (`docs/materiality-error-analysis.md`); README limits + verification rows
+- [x] **Gate:** a reproducible, keyless confusion matrix. **<- stop for approval**
 
 ## M5 — XBRL company facts join
 - [ ] Company-facts endpoint through the same client; join selected facts to filing periods as context

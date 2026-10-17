@@ -3,8 +3,8 @@
 **See what a company newly disclosed, quietly dropped, or materially reworded between filings — with every claim
 traceable to the exact span it came from.**
 
-> **Status: under construction.** Ingestion and section parsing are done and verified (see *How it's verified*).
-> The diff, classifier, grounded QA and quickstart are in progress (`TODO.md`). Results not yet measured are marked
+> **Status: under construction.** Ingestion, section parsing, the diff and the material/cosmetic classifier are done
+> and verified (see *How it's verified*). Grounded QA and the quickstart are in progress (`TODO.md`). Results not yet measured are marked
 > `[TKTK]`.
 
 ## What it does
@@ -34,7 +34,8 @@ deterministic processing from model judgment, and scoring the model half.
   and MD&A figures are often non-GAAP. The tool shows what the text says and how it changed, not whether it is
   accurate. Only the audited financial statements carry that weight.
 - **It doesn't claim financial-analysis expertise.** "Material" here is a labeled text-change category, not a legal
-  or accounting materiality determination.
+  or accounting materiality determination. The classifier's weakest calls are "cosmetic" on restructured passages
+  and "material" on figure-only updates (`docs/materiality-error-analysis.md`).
 - **It doesn't cover anything outside its ingested corpus.** Coverage: **10-K** with a period of report from 2018-01-01 to
   2025-12-31, and **10-Q** filed 2025-01-01 to 2026-09-30, for **11 companies** (`corpus.toml`; every accession in
   `corpus/manifest.csv`). Amendments are excluded. Questions outside that range get an abstention.
@@ -52,7 +53,7 @@ deterministic processing from model judgment, and scoring the model half.
 | Golden-file parser tests | Section boundaries are found correctly across filers and HTML eras | 28 sections / 14 filings, every archetype and HTML era, each boundary confirmed by hand against the filing (`docs/golden-review.md`) |
 | Published parse-success rate + failure log | Parse failures are surfaced, not hidden | 270 of 272 present sections `ok` (99.3%), 16 verified-absent, 2 failed (exhibit incorporation): `docs/parse-report.md` |
 | Diff tests + human-labeled alignment | The diff is deterministic, and "reworded" vs "removed + added" matches human judgment | 17 mutation-checked unit tests; re-diffs byte-identical. Against 70 blind, stratified human labels: precision 0.83 (95% CI 0.74–0.93), recall 0.80 (0.66–0.93): `docs/alignment-eval.md` |
-| Material/cosmetic confusion matrix vs. hand labels | How good the model judgment is, and where it's wrong | [TKTK] |
+| Material/cosmetic confusion matrix vs. hand labels | How good the model judgment is, and where it's wrong | 122 blind, stratified human labels, scored once with a frozen prompt: agreement 77%, "material" precision 0.89 (95% CI 0.81–0.96), recall 0.80 (0.68–0.89): `docs/materiality-eval-test.md`. Error analysis: `docs/materiality-error-analysis.md`. All 5,623 corpus changes classified by two models (77.0% agreement): `docs/materiality-corpus.md` |
 | `spancheck` citation + abstention report | Answers cite real spans and abstain when they should | [TKTK] |
 | Simulated 429 storm | The EDGAR client backs off and recovers without breaking fair access | Passing (`tests/test_edgar_client.py`); warm re-run of the full corpus = 0 requests |
 

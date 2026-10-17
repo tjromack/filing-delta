@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from filing_delta.classify.classify import EFFORT, classify  # noqa: E402
 from filing_delta.classify.context import restatement_context  # noqa: E402
-from filing_delta.classify.model import Recorder, model_id  # noqa: E402
+from filing_delta.classify.model import DEFAULT_MODEL, Recorder, model_id  # noqa: E402
 from filing_delta.classify.prompt import prompt_version  # noqa: E402
 from filing_delta.cli import load_env  # noqa: E402
 
@@ -178,10 +178,11 @@ def main() -> None:
             r = x["r"]
             lines.append(f"- **{x['id']}** ({x['stratum']}) human **{x['human']}** · classifier **{x['model']}** "
                          f"`{r.get('code')}`: {r.get('rationale')}")
-    (ROOT / "docs" / f"materiality-eval-{split}.md").write_text("\n".join(lines) + "\n", encoding="utf-8",
-                                                               newline="\n")
+    # The default model's report is the headline; any other model gets its own file instead of overwriting it.
+    doc = f"materiality-eval-{split}" + ("" if model == DEFAULT_MODEL else f"-{model.split('-')[1]}") + ".md"
+    (ROOT / "docs" / doc).write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     print(f"\n{agree}/{len(scored)} agree · outcomes {dict(outcomes)} · ${usd:.2f} · recorded {rec.calls} new, "
-          f"{rec.hits} replayed -> docs/materiality-eval-{split}.md")
+          f"{rec.hits} replayed -> docs/{doc}")
 
 
 if __name__ == "__main__":
