@@ -64,7 +64,7 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       guard (`filing-delta golden --rederive`)
 - [x] **Gate:** diff over the full corpus with human-set thresholds and published aligner precision/recall. **← stop**
 
-## M4 — material/cosmetic classifier + hand labels + confusion matrix (done; awaiting approval)
+## M4 — material/cosmetic classifier + hand labels + confusion matrix (done; approved 2026-10-17)
 - [x] Labeling guide written and approved before any labeling (`docs/design/materiality.md`, FD-DEC 020)
 - [x] 150-change stratified sample, split 28 dev / 122 test before any model output (`tools/materiality_sample.py`)
 - [x] Dev set labeled: Claude-suggested, Trevor reviewed, 0/28 overridden (FD-DEC 021)
@@ -80,7 +80,7 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] Error analysis write-up (`docs/materiality-error-analysis.md`); README limits + verification rows
 - [x] **Gate:** a reproducible, keyless confusion matrix. **<- stop for approval**
 
-## M5 — XBRL company facts join
+## M5 — XBRL company facts join (in progress)
 - [ ] Company-facts endpoint through the same client; join selected facts to filing periods as context
 - [ ] **Tests:** period alignment (fiscal vs. calendar, amendments); facts never presented as narrative
 - [ ] **Decide FD-DEC 016:** reconcile MD&A numeric claims against audited XBRL facts (*reconciles* / *differs*

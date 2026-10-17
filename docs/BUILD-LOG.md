@@ -15,7 +15,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M1 · EDGAR client | `df70a0d` | 144 filings / 681 MB; warm re-run = 0 requests; 25 tests | 90 of 245 cold requests were paged history (71 JPM) |
 | M2 · section parser | `9338d76` | 270/272 present sections ok (99.3%), 16 absent, 2 failed (exhibit); 28 goldens proposed | lxml reused element ids and merged table rows; two furniture rules deleted real content |
 | M3 · paragraph diff | `105e3db` | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
-| M4 · materiality classifier | `8df0811` (awaiting approval) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
+| M4 · materiality classifier | `8df0811` (approved) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
 
 ---
 
@@ -477,3 +477,33 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   local `data/model-cache` (gitignored). A clean clone gets it when the cache ships as a release artifact (M8).
 - Run project tools with `.venv/Scripts/python`. The system `python` lacks lxml.
 - Next session: on approval, start M5 (XBRL company facts through the same EDGAR client; decide FD-DEC 016).
+
+---
+
+## 2026-10-17 — M4 approved; M5 survey and design
+
+### What happened
+- Trevor approved M4 ("Fine to proceed. M4 Approved"). That covers the blind result as the headline, the two weak
+  spots left as documented limits rather than fixed by re-tuning, and the docs' description of his labels.
+- M5 started the way M0 did: survey real data before designing. The company-facts API was fetched for all 11
+  companies (11 requests, cached), and three probes were committed so every figure in the design reproduces:
+  `tools/xbrl_probe_values.py`, `tools/xbrl_probe_claims.py`, `tools/xbrl_probe_inline.py`.
+- Wrote `docs/design/xbrl-join.md`: the join (in scope regardless) and three options for FD-DEC 016, recommending
+  B (consolidated headline claims, no model).
+
+### Learnings
+- **The company-facts API lags.** Coca-Cola, Exxon and Ford have nothing filed after 2026-05-04, so their July 10-Qs
+  have no facts there. The inline XBRL already in the cached documents covers 132 of 144 filings, exactly by
+  accession, and the July filings are among them.
+- **The company-facts API drops dimensional facts.** 85% of JPMorgan FY2019's numeric facts carry a segment or
+  geography dimension, and most MD&A claims are about segments.
+- **Value-only matching is noise.** Half of all MD&A dollar amounts "match" some fact from the same filing, because a
+  rounded "$6.9 billion" spans $100M. Concept-aware matching narrows the 1,056 headline claims to 198 consolidated
+  matches; segment claims need judgment.
+- **10-Q statements are unaudited interim statements**, a correction to FD-DEC 016's "audited XBRL" wording. Labels
+  must say which kind a fact came from.
+
+### Open / next
+- Trevor chooses the FD-DEC 016 option (A context only / B consolidated, no model / C model-extracted).
+- Then: the extractor and period alignment with golden fixtures, the two-source cross-check report, and (if B) the
+  claim matcher and the labeled sample.
