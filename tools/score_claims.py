@@ -12,8 +12,10 @@ from __future__ import annotations
 import json
 import math
 import re
+import statistics
 import sys
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,7 +76,12 @@ def main() -> None:
     cm = Counter((i["matcher"]["outcome"], h) for i, h in rows)
     decided = [(i, h) for i, h in rows if h != "unsure"]
     overrides = [(i, h) for i, h in decided if h != i["matcher"]["outcome"]]
-    lines = ["# Claim matcher evaluation (blind hand labels)", "",
+    times = sorted(datetime.fromisoformat(labels[i["id"]]["at"].replace("Z", "+00:00")) for i, _ in rows
+                   if labels[i["id"]].get("at"))
+    gaps = [(b - a).total_seconds() for a, b in zip(times, times[1:]) if (b - a).total_seconds() < 600]
+    pace = (f"Labeling pace: median {statistics.median(gaps):.0f} s between labels, about {sum(gaps) / 60:.0f} "
+            "active minutes." if gaps else "")
+    lines = ["# Claim matcher evaluation (suggestion-assisted labels)", "",
              f"Matcher version `{frozen}` (frozen before sampling), 10-K Item 7 and 10-Q Part I Item 2 of the locked "
              f"corpus. {len(rows)} claims sampled from {sum(pop.values()):,}, stratified by the matcher's outcome and "
              "reason; labeled by Trevor **with the matcher's answer shown as a suggestion** (FD-DEC 026, "
@@ -90,7 +97,15 @@ def main() -> None:
              f"Not scored: {', '.join(sorted(WORKED_EXAMPLES))}, explained to the labeler as a worked example during "
              f"labeling. Scored: {len(rows)}.", "",
              f"**Suggestions overridden: {len(overrides)} of {len(decided)}** (unsure: {len(rows) - len(decided)}). "
-             "Each override is listed under Disagreements.", "",
+             f"Each override is listed under Disagreements. {pace}", ""]
+    if not overrides:
+        lines += ["**Reading this result:** with no overrides, the labels cannot separate \"the matcher was right\" "
+                  "from \"the suggestion was accepted\". The agreement figures below are an upper bound set by "
+                  "anchoring and carry little evidential weight on their own. The matcher's verification rests on "
+                  "its mechanics: concept, period and amount are deterministic, each rule is unit-tested and "
+                  "mutation-checked, and every `matches` requires the stated amount to fall within its own rounding "
+                  "of the filing's whole-company value.", ""]
+    lines += [
              "## Agreement by matcher outcome", "",
              "| matcher outcome | stratum | population | sampled | human agrees | agreement (95% CI) |",
              "|---|---|---|---|---|---|"]

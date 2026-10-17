@@ -1,0 +1,702 @@
+{
+ "C001": {
+  "at": "2026-10-17T19:04:33.559Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": null
+ },
+ "C002": {
+  "at": "2026-10-17T20:01:23.240Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C003": {
+  "at": "2026-10-17T20:01:36.232Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C004": {
+  "at": "2026-10-17T20:01:40.960Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C005": {
+  "at": "2026-10-17T20:01:49.617Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C006": {
+  "at": "2026-10-17T20:01:54.897Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C007": {
+  "at": "2026-10-17T20:02:49.855Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C008": {
+  "at": "2026-10-17T20:03:04.351Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C009": {
+  "at": "2026-10-17T20:03:15.884Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C010": {
+  "at": "2026-10-17T20:04:24.265Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C011": {
+  "at": "2026-10-17T20:04:33.473Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C012": {
+  "at": "2026-10-17T20:04:49.890Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_metric"
+ },
+ "C013": {
+  "at": "2026-10-17T20:05:00.418Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C014": {
+  "at": "2026-10-17T20:05:07.162Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C015": {
+  "at": "2026-10-17T20:05:09.914Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C016": {
+  "at": "2026-10-17T20:05:23.107Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C017": {
+  "at": "2026-10-17T20:05:39.119Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C018": {
+  "at": "2026-10-17T20:05:43.079Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C019": {
+  "at": "2026-10-17T20:07:12.654Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C020": {
+  "at": "2026-10-17T20:07:19.135Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C021": {
+  "at": "2026-10-17T20:07:27.603Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C022": {
+  "at": "2026-10-17T20:07:44.771Z",
+  "code": null,
+  "label": "N",
+  "note": null,
+  "suggested": "N"
+ },
+ "C023": {
+  "at": "2026-10-17T20:07:47.115Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C024": {
+  "at": "2026-10-17T20:07:51.179Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C025": {
+  "at": "2026-10-17T20:07:54.459Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C026": {
+  "at": "2026-10-17T20:07:57.123Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C027": {
+  "at": "2026-10-17T20:08:08.364Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_metric"
+ },
+ "C028": {
+  "at": "2026-10-17T20:08:18.812Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C029": {
+  "at": "2026-10-17T20:08:25.564Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C030": {
+  "at": "2026-10-17T20:08:28.248Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C031": {
+  "at": "2026-10-17T20:42:06.888Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C032": {
+  "at": "2026-10-17T20:42:17.104Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C033": {
+  "at": "2026-10-17T20:44:36.265Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C034": {
+  "at": "2026-10-17T20:44:39.913Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C035": {
+  "at": "2026-10-17T20:44:42.985Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C036": {
+  "at": "2026-10-17T20:44:46.017Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C037": {
+  "at": "2026-10-17T20:44:54.455Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C038": {
+  "at": "2026-10-17T20:45:01.231Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C039": {
+  "at": "2026-10-17T20:45:06.712Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C040": {
+  "at": "2026-10-17T20:45:11.383Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C041": {
+  "at": "2026-10-17T20:45:17.720Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C042": {
+  "at": "2026-10-17T20:45:55.487Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C043": {
+  "at": "2026-10-17T20:46:09.823Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C044": {
+  "at": "2026-10-17T20:46:13.559Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C045": {
+  "at": "2026-10-17T20:46:20.592Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C046": {
+  "at": "2026-10-17T20:46:30.264Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C047": {
+  "at": "2026-10-17T20:46:38.368Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C048": {
+  "at": "2026-10-17T20:46:49.304Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C049": {
+  "at": "2026-10-17T20:46:54.713Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C050": {
+  "at": "2026-10-17T20:46:58.607Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C051": {
+  "at": "2026-10-17T20:47:52.200Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C052": {
+  "at": "2026-10-17T20:47:55.608Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C053": {
+  "at": "2026-10-17T20:47:58.766Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C054": {
+  "at": "2026-10-17T20:48:02.119Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C055": {
+  "at": "2026-10-17T20:48:05.071Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C056": {
+  "at": "2026-10-17T20:48:29.351Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C057": {
+  "at": "2026-10-17T20:48:31.599Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C058": {
+  "at": "2026-10-17T20:48:35.527Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C059": {
+  "at": "2026-10-17T20:48:38.104Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C060": {
+  "at": "2026-10-17T20:48:40.696Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C061": {
+  "at": "2026-10-17T21:35:37.236Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C062": {
+  "at": "2026-10-17T21:36:42.261Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C063": {
+  "at": "2026-10-17T21:36:54.238Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C064": {
+  "at": "2026-10-17T21:40:57.297Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C065": {
+  "at": "2026-10-17T21:41:01.849Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C066": {
+  "at": "2026-10-17T21:41:05.401Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C067": {
+  "at": "2026-10-17T21:41:11.042Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C068": {
+  "at": "2026-10-17T21:41:17.858Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C069": {
+  "at": "2026-10-17T21:41:20.546Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C070": {
+  "at": "2026-10-17T21:41:26.681Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C071": {
+  "at": "2026-10-17T21:41:29.561Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_metric"
+ },
+ "C072": {
+  "at": "2026-10-17T21:41:33.242Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C073": {
+  "at": "2026-10-17T21:41:35.218Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C074": {
+  "at": "2026-10-17T21:41:37.962Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C075": {
+  "at": "2026-10-17T21:41:43.538Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_period"
+ },
+ "C076": {
+  "at": "2026-10-17T21:41:50.522Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C077": {
+  "at": "2026-10-17T21:41:53.274Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C078": {
+  "at": "2026-10-17T21:42:01.074Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C079": {
+  "at": "2026-10-17T21:42:03.786Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C080": {
+  "at": "2026-10-17T21:42:05.410Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X other_metric"
+ },
+ "C081": {
+  "at": "2026-10-17T21:42:07.666Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C082": {
+  "at": "2026-10-17T21:42:09.715Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C083": {
+  "at": "2026-10-17T21:42:10.843Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C084": {
+  "at": "2026-10-17T21:48:17.754Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C085": {
+  "at": "2026-10-17T21:48:22.090Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C086": {
+  "at": "2026-10-17T21:48:25.250Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C087": {
+  "at": "2026-10-17T21:48:29.682Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C088": {
+  "at": "2026-10-17T21:48:54.331Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C089": {
+  "at": "2026-10-17T21:48:57.411Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C090": {
+  "at": "2026-10-17T21:49:14.059Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C091": {
+  "at": "2026-10-17T21:49:15.619Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C092": {
+  "at": "2026-10-17T21:49:17.939Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C093": {
+  "at": "2026-10-17T21:49:20.603Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C094": {
+  "at": "2026-10-17T21:49:22.219Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C095": {
+  "at": "2026-10-17T21:49:23.627Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C096": {
+  "at": "2026-10-17T21:49:25.563Z",
+  "code": null,
+  "label": "M",
+  "note": null,
+  "suggested": "M"
+ },
+ "C097": {
+  "at": "2026-10-17T21:49:34.275Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C098": {
+  "at": "2026-10-17T21:49:36.851Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ },
+ "C099": {
+  "at": "2026-10-17T21:49:38.331Z",
+  "code": null,
+  "label": "G",
+  "note": null,
+  "suggested": "G"
+ },
+ "C100": {
+  "at": "2026-10-17T21:49:46.588Z",
+  "code": null,
+  "label": "X",
+  "note": null,
+  "suggested": "X segment"
+ }
+}
