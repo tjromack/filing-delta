@@ -15,6 +15,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M1 · EDGAR client | `df70a0d` | 144 filings / 681 MB; warm re-run = 0 requests; 25 tests | 90 of 245 cold requests were paged history (71 JPM) |
 | M2 · section parser | `9338d76` | 270/272 present sections ok (99.3%), 16 absent, 2 failed (exhibit); 28 goldens proposed | lxml reused element ids and merged table rows; two furniture rules deleted real content |
 | M3 · paragraph diff | `105e3db` | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
+| M4 · materiality classifier | `8df0811` (awaiting approval) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
 
 ---
 
@@ -469,3 +470,10 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 ### Open / next
 - M4 gate: stop for Trevor's approval. Next is M5 (XBRL join; decide FD-DEC 016).
+
+### End of day 2026-10-16 — handoff
+- State: M4 complete and committed; **waiting for Trevor's approval** before M5. Working tree clean, pushed.
+- Reproducibility caveat for the gate: every M4 report replays byte-identically with no key, but only from the
+  local `data/model-cache` (gitignored). A clean clone gets it when the cache ships as a release artifact (M8).
+- Run project tools with `.venv/Scripts/python`. The system `python` lacks lxml.
+- Next session: on approval, start M5 (XBRL company facts through the same EDGAR client; decide FD-DEC 016).
