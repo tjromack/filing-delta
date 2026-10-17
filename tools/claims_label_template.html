@@ -105,7 +105,7 @@ summary { cursor: pointer; font-weight: 500 }
 
   <details id="guidebox" open>
     <summary>How to label (press ?)</summary>
-    <p style="color:var(--muted);margin:.6em 0 0">Each item is one highlighted clause from the filing's MD&amp;A, with the consolidated values the same filing tags for its own period. Pick the one answer that describes the highlighted claim.</p>
+    <p style="color:var(--muted);margin:.6em 0 0">Each item is one highlighted clause from the filing's MD&amp;A. The table under it is the audited (10-K) or interim (10-Q) statement figure for the same metric and period. Judge only the highlighted words, checking in order: (1) Is it the whole company, not a segment, product or region? (2) Is it this filing's own period? (3) Is it a plain GAAP figure? (4) Does the amount fit a table value at the precision written ("$383.3 billion" covers 383.25 to 383.35)? All four yes: M. Fails only 4: N. Fails 3: G. Fails 1 or 2, or it states a change rather than a total: X.</p>
     <dl class="guide">
       <dt style="color:var(--kM)">M · Matches</dt><dd>It states the company's consolidated total for this filing's own period, as a GAAP figure, and the amount equals a tagged value at the precision stated ("$6.9 billion" covers 6.85 to 6.95 billion).</dd>
       <dt style="color:var(--kN)">N · No matching tagged value</dt><dd>Consolidated, this period, GAAP, but the amount isn't any tagged value at the stated precision.</dd>
@@ -193,7 +193,7 @@ function render() {
   sh.append(mk("h3", "", "MD&A, with the claim highlighted"));
   if (it.heading) sh.append(mk("p", "heading", it.heading));
   const before = it.before.split(/\n\n+/), after = it.after.split(/\n\n+/);
-  before.slice(0, -1).slice(-2).forEach(t => t.trim() && sh.append(mk("p", "dim", t)));
+  before.slice(0, -1).slice(-2).forEach(t => t.trim() && t.trim() !== it.heading && sh.append(mk("p", "dim", t)));
   const p = mk("p");
   p.append(before[before.length - 1], mk("mark", "", it.claim), after[0]);
   sh.append(p);
