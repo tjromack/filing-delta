@@ -507,3 +507,41 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - Trevor chooses the FD-DEC 016 option (A context only / B consolidated, no model / C model-extracted).
 - Then: the extractor and period alignment with golden fixtures, the two-source cross-check report, and (if B) the
   claim matcher and the labeled sample.
+
+### 2026-10-17 — M5 part 1: the facts join
+- Trevor chose option B for FD-DEC 016 (recorded as FD-DEC 025, with the source decision).
+- `filing_delta/xbrl/`:
+  - `inline.py` is a pure extractor, with transforms for every format the corpus uses (scanned first: seven
+    formats, filer-specific unit ids).
+  - `periods.py` covers duration classes and the headline set. `companyfacts.py` is the fallback. `facts.py`
+    holds the Fact type and its provenance rendering.
+  - `filing-delta facts` writes `data/facts/` and `docs/xbrl-report.md`. The run makes 0 network requests and
+    is byte-identical across runs.
+- **Result:** 296,557 distinct facts from 144 filings, 0 extraction issues, and 132/132 document period ends
+  matching EDGAR. The two independent sources agree on **65,243 of 65,243** values.
+
+### What broke and the fix
+- **First cross-check: 99.83%, not 100%.** The 113 differences were all one pattern: a fact tagged twice in the
+  same filing, rounded in prose ("$4.9 billion", decimals -8) and exact in a table (4,861 million). The extractor
+  kept whichever came first and logged 602 "conflicts". XBRL treats those as consistent duplicates, so the
+  precise one now wins. Issues fell to 0 and agreement to 100%.
+- **Pfizer FY2019 had 77 facts**, only the cover page: its statements are in Exhibit 13, outside the primary
+  document. Rule: when most of a filing's company-facts values are missing inline, use company-facts for that
+  filing and record why. It is the only such filing.
+- **10-Q operating cash flow "not tagged" in 31 filings** was wrong: cash-flow statements are year-to-date only.
+  10-Q flows now fall back to year-to-date, labeled as such.
+- JPMorgan's 10-Qs tag total net revenue as `RevenuesNetOfInterestExpense`, and Ford FY2018 tags cash flow only as
+  the continuing-operations variant. Both were added as later-preference concepts, and the concept used is
+  recorded per filing.
+- **A mutation check caught two weak tests.** The fixture listed the precise value first, so plain equality
+  passed. And the company-facts accession filter survived because the right row came first. Both fixtures were
+  reordered; all 9 mutations are now caught.
+
+### Learnings
+- The genuine "not tagged" gaps are structural: banks, insurers, Exxon, GE and Pfizer don't tag operating income,
+  and Berkshire doesn't tag diluted EPS. They show as "not tagged", never as zero.
+- 2,257 consolidated values were restated between filings (127 headline). The report surfaces them without
+  choosing a winner.
+
+### Open / next
+- The claim matcher (option B), its sample, Trevor's labels, and the published precision and coverage. Then the gate.

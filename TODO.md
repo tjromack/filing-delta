@@ -81,10 +81,14 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] **Gate:** a reproducible, keyless confusion matrix. **<- stop for approval**
 
 ## M5 — XBRL company facts join (in progress)
-- [ ] Company-facts endpoint through the same client; join selected facts to filing periods as context
-- [ ] **Tests:** period alignment (fiscal vs. calendar, amendments); facts never presented as narrative
-- [ ] **Decide FD-DEC 016:** reconcile MD&A numeric claims against audited XBRL facts (*reconciles* / *differs*
-      / *non-GAAP or untagged*), with a published reconciliation rate scored on a hand-labeled sample
+- [x] Survey + design (`docs/design/xbrl-join.md`); inline XBRL first, company-facts fallback (FD-DEC 025)
+- [x] Company-facts endpoint through the same client; facts joined to filing periods as context
+      (`filing-delta facts` -> `data/facts/`, `docs/xbrl-report.md`): two-source cross-check 65,243/65,243 equal
+- [x] **Tests:** period alignment (52/53-week, January FYE, YTD-only cash flow, amendments dropped by accession);
+      facts never narrative (provenance on every rendering; parse/diff/classify never import XBRL); mutation-checked
+- [x] **Decide FD-DEC 016:** option B, consolidated headline claims with no model (FD-DEC 025)
+- [ ] Claim matcher (`matches` / `no matching tagged value` / `non-GAAP wording` / `not checked`), sample,
+      Trevor's labels, published precision + coverage
 - [ ] **Gate:** join verified on the corpus. **← stop**
 
 ## M6 — retrieval + grounded QA (cite or abstain)

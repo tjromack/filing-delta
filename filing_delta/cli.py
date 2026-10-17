@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 from .edgar import CorpusSpec, EdgarClient, all_filings, select
+from .xbrl.companyfacts import companyfacts_url
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE_DIR = ROOT / "data" / "edgar-cache"
@@ -37,6 +38,7 @@ def cmd_fetch(args: argparse.Namespace) -> int:
             chosen = select(all_filings(client, cik, spec.earliest_filing_date), spec)
             k = sum(f.form == "10-K" for f in chosen)
             q = sum(f.form == "10-Q" for f in chosen)
+            client.get(companyfacts_url(cik))   # XBRL company facts (M5 fallback + cross-check), cached like the rest
             name = chosen[0].company if chosen else str(cik)
             print(f"{name[:28]:28} 10-K={k:2} 10-Q={q:2}", flush=True)
             for f in chosen:
@@ -97,6 +99,16 @@ def cmd_diff(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_facts(args: argparse.Namespace) -> int:
+    from .xbrl.run import run
+
+    with EdgarClient(os.environ.get("EDGAR_USER_AGENT"), CACHE_DIR, offline=args.offline) as client:
+        recs = run(ROOT, client, ROOT / "data" / "facts", ROOT / "docs")
+        s = client.stats
+    print(f"{len(recs)} filings -> data/facts/, docs/xbrl-report.md (network requests: {s.network_requests})")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     load_env()
     p = argparse.ArgumentParser(prog="filing-delta")
@@ -112,6 +124,9 @@ def main(argv: list[str] | None = None) -> int:
     g.set_defaults(func=cmd_golden)
     d = sub.add_parser("diff", help="diff each section against the prior period; write docs/diff-report.md")
     d.set_defaults(func=cmd_diff)
+    fa = sub.add_parser("facts", help="extract XBRL facts (inline first, company-facts fallback); docs/xbrl-report.md")
+    fa.add_argument("--offline", action="store_true", help="never touch the network; fail on any cache miss")
+    fa.set_defaults(func=cmd_facts)
     args = p.parse_args(argv)
     return args.func(args)
 

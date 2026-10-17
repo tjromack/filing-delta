@@ -179,7 +179,7 @@ citation/abstention report. If the check isn't written, the milestone isn't done
   1–3 digit block" rule deleted numeric cells from MD&A tables (Weyco's MD&A regained 64 characters of numbers).
 
 ## FD-DEC 016 — Narrative sections are unaudited; say so, and consider an audited cross-check at M5 (2026-10-08)
-**Status:** The limit is decided. The cross-check is *proposed* and will be decided at M5.
+**Status:** The limit is decided. The cross-check was decided at M5: option B (FD-DEC 025).
 
 - **Context (Trevor, M2 review):** Item 7 (MD&A) and Item 1A are management's unaudited narrative. MD&A figures are
   often non-GAAP, and they're only as credible as their reconciliation to the audited financial statements (Item 8).
@@ -340,3 +340,25 @@ scored against" to the set that is scored).
   (`docs/materiality-error-analysis.md`). The prompt is not re-tuned on the test set.
 - **Alternative rejected:** replacing the blind labels with adjudicated ones. That is the usual way a reported
   accuracy drifts upward.
+
+## FD-DEC 025 — XBRL facts: inline first, company-facts fallback; consolidated headline claims checked with no model (2026-10-17)
+**Status:** Decided (Trevor chose option B from `docs/design/xbrl-join.md` §3). Resolves FD-DEC 016.
+
+- **Source:** facts are read from the inline XBRL inside each cached primary document (132 of 144 filings: exact
+  accession, segment dimensions included, no new requests). The company-facts API covers the 12 older non-inline
+  10-Ks, with non-dimensional facts only. Every fact records its source, and the two are cross-checked wherever both
+  exist.
+- **Why not company-facts alone:** it was stale for 3 of 11 companies on 2026-10-17 (nothing after 2026-05-04), and
+  it drops dimensional facts.
+- **Audited vs. interim:** a 10-K's statements are audited; a 10-Q's are unaudited interim statements. Facts carry
+  that label. This corrects the "audited XBRL" wording in FD-DEC 016.
+- **Claim checking (option B):** only sentences stating a consolidated headline metric for the filing's own period,
+  matched by a written lexicon with no model. Outcomes: `matches`, `no matching tagged value`, `non-GAAP wording`,
+  `not checked`. It never says "differs" or "incorrect", because a false mismatch would read as an accusation.
+  Precision of `matches` and of `no matching tagged value` is scored against Trevor's hand labels on a sample, and
+  coverage is published.
+- **Alternatives rejected:** A (context only) leaves FD-DEC 016's concern unmeasured. C (model-extracted claims
+  including segments) adds a model stage, more labeling, and segment-mapping judgment; it goes to the backlog,
+  scoped by the M5 survey.
+- **Storage:** derived facts are JSON per accession (`data/facts/`), like `data/diffs/`. DuckDB stays planned for
+  the read view rather than being introduced mid-pipeline.
