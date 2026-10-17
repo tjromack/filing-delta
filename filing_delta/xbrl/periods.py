@@ -18,7 +18,9 @@ CLASSES = (("quarter", 84, 98), ("half", 175, 189), ("nine_months", 266, 280), (
 HEADLINE = {
     "revenue": ("us-gaap:Revenues", "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
                 "us-gaap:SalesRevenueNet", "us-gaap:RevenuesNetOfInterestExpense"),   # the last: banks' net revenue
-    "net_income": ("us-gaap:NetIncomeLoss", "us-gaap:ProfitLoss"),
+    # attributable to the parent first; ProfitLoss (which includes noncontrolling interests) last
+    "net_income": ("us-gaap:NetIncomeLoss", "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic",
+                   "us-gaap:ProfitLoss"),
     "operating_income": ("us-gaap:OperatingIncomeLoss",),
     "eps_diluted": ("us-gaap:EarningsPerShareDiluted",),
     "total_assets": ("us-gaap:Assets",),

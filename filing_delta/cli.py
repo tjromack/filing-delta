@@ -109,6 +109,15 @@ def cmd_facts(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_claims(args: argparse.Namespace) -> int:
+    from .xbrl.claims_run import matcher_version, run
+
+    recs = run(ROOT / "data" / "sections", ROOT / "data" / "facts", ROOT / "data" / "claims", ROOT / "docs")
+    print(f"{sum(len(r['claims']) for r in recs)} claims in {len(recs)} filings (matcher {matcher_version()}) -> "
+          "data/claims/, docs/claims-report.md")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     load_env()
     p = argparse.ArgumentParser(prog="filing-delta")
@@ -127,6 +136,8 @@ def main(argv: list[str] | None = None) -> int:
     fa = sub.add_parser("facts", help="extract XBRL facts (inline first, company-facts fallback); docs/xbrl-report.md")
     fa.add_argument("--offline", action="store_true", help="never touch the network; fail on any cache miss")
     fa.set_defaults(func=cmd_facts)
+    cl = sub.add_parser("claims", help="match MD&A headline claims to tagged values; docs/claims-report.md")
+    cl.set_defaults(func=cmd_claims)
     args = p.parse_args(argv)
     return args.func(args)
 

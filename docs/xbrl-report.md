@@ -31,7 +31,7 @@ Every corpus filing: **144** (88 10-K with period of report 2018-01-31 to 2025-1
 
 ## Restated comparatives
 
-The same consolidated concept and period with different values in different filings: **2,300** keys, 141 of them headline concepts. Surfaced, not resolved.
+The same consolidated concept and period with different values in different filings: **2,300** keys, 146 of them headline concepts. Surfaced, not resolved.
 
 | company (CIK) | concept | period | values (accessions) |
 |---|---|---|---|

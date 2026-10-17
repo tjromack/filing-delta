@@ -545,3 +545,43 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 ### Open / next
 - The claim matcher (option B), its sample, Trevor's labels, and the published precision and coverage. Then the gate.
+
+### 2026-10-17 — M5 part 2: the claim matcher, frozen; sample ready for blind labels
+- `filing_delta/xbrl/claims.py` is the option-B matcher: pure and deterministic, with an exact span for every
+  claim. `filing-delta claims` writes `data/claims/` and `docs/claims-report.md`.
+- I developed the rules by reading samples of each outcome myself, with no labels involved. Each round found a
+  real failure mode:
+  1. **Implicit segment subjects.** JPMorgan's business-line sections open with "Net income was $3.0 billion",
+     and the subject is in a heading pages earlier. 154 false "no matching" results. Fix: an amount nowhere near
+     (more than 25% from) the consolidated value goes to `not checked`, as another scope.
+  2. **Period cues in headings.** "Year-to-date results", "Quarterly results", and Exxon's bare-year headings
+     ("2023") over prior-year paragraphs. The nearest short heading now feeds the period decision. A unit test
+     then caught that `\bquarter\b` never matched "Quarterly".
+  3. **The wrong net-income concept.** "Attributable to Ford" was compared with `ProfitLoss`, which includes
+     noncontrolling interests. Ford tags the attributable figure as
+     `NetIncomeLossAvailableToCommonStockholdersBasic`. Concepts now follow the phrase's own qualifier, and all 7
+     Ford "mismatches" disappeared.
+  4. **Fiscal year.** Walmart's quarter ended April 30, 2025 is fiscal 2026, and Weyco's FY2021 10-K cover tags
+     `DocumentFiscalYearFocus` as 2020, a filer error. The fiscal year is now derived from the period end and the
+     fiscal-year-end date, which covers wherever the cover shows it ("--12-31", "1/31", "December 31").
+- Frozen at matcher `eb36301dae5d` (`tests/golden/claims_matcher.json`) before sampling. Unit tests: 21, all
+  16 mutations caught.
+- **Corpus result under the frozen rules:** 1,085 headline claims. 194 `matches`, 1 `no matching tagged value`,
+  12 `non-GAAP wording`, 878 `not checked` (572 segment or other subject, 224 far from consolidated, 71 another
+  period, 11 no tagged value).
+- **Sample:** 100 claims stratified by outcome and reason (`tests/golden/claims_sample.json`). The labeling page
+  shows the claim, its context and the tagged values, never the matcher's answer. Published privately, with the
+  db store owner-only (probe write read back, invisible at `interact`, then deleted). `tools/score_claims.py`
+  is written before any labels exist.
+
+### Learnings
+- On this corpus, consolidated headline figures in MD&A agree with the tagged statements wherever the matcher
+  can be sure of scope and period. The interesting number is how much it *can't* check: 81% of headline claims
+  are about segments, other periods, or a scope the sentence doesn't name. Option C (segments) is where coverage
+  would come from.
+- The rounding window ("$6.9 billion" covers ±$50M) is what makes a match meaningful *after* concept and period
+  are fixed. Before that, it matched noise (the §1 probe).
+
+### Open / next
+- Trevor labels the 100 claims. Then score once, write it up, update README/TODO/DECISIONS, commit, stop at the
+  M5 gate.
