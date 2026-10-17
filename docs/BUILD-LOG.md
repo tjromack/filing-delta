@@ -16,6 +16,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M2 · section parser | `9338d76` | 270/272 present sections ok (99.3%), 16 absent, 2 failed (exhibit); 28 goldens proposed | lxml reused element ids and merged table rows; two furniture rules deleted real content |
 | M3 · paragraph diff | `105e3db` | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
 | M4 · materiality classifier | `8df0811` (approved) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
+| M5 · XBRL facts join | (this commit, awaiting approval) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
 
 ---
 
@@ -585,3 +586,27 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - Trevor labels the 100 claims. Then score once, write it up, update README/TODO/DECISIONS, commit, stop at the
   M5 gate.
+
+### 2026-10-17 — M5 part 3: labels, and the gate
+- Trevor didn't feel confident judging scope cold. He first asked whether his own labels were being treated as
+  ground truth (they aren't: the report says "agreement with one labeler"), then asked to see a "most likely" answer
+  while labeling. I offered reveal-after-a-locked-answer as the option that keeps an independent number, and he
+  chose to see suggestions first (FD-DEC 026). C001 had already been explained as a worked example, so it is not
+  scored.
+- **Result:** 0 of 99 suggestions overridden, median 5 s per label, about 28 active minutes. That is the
+  rubber-stamp outcome the decision warned about. The report states it plainly: an anchored upper bound, not an
+  estimate of precision. Offered a 20-claim blind spot check; Trevor chose to close as is (FD-DEC 027).
+- Gate checks: `filing-delta facts`, `filing-delta claims` and `tools/score_claims.py` regenerate every output
+  byte-identically offline; 178 tests pass. README gains two verification rows and a narrowed "doesn't verify
+  management" limit.
+
+### Learnings
+- **Showing the answer first turned labeling into confirmation.** A third of the time per item of the blind M4 (5 s vs. 16 s)
+  pass, and no disagreements at all. Assistance helps a labeler who will push back; it can't create the pushback.
+  For a later milestone that needs a number (M6's QA set), labels stay blind by default, with explanation offered
+  up front instead of mid-labeling.
+- **Explaining one item mid-labeling costs that item.** Worked examples should come from outside the sample.
+
+### Open / next
+- M5 gate: stop for Trevor's approval. Next is M6 (retrieval + grounded QA, cite or abstain), where Trevor labels
+  the answerable/unanswerable QA set.

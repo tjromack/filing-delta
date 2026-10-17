@@ -377,3 +377,14 @@ sample only.
   catch a wrong one. Rubber-stamping is the risk, and the guide asks him to run the four checks before accepting.
 - **Alternatives rejected (offered):** reveal after a locked blind answer (it keeps an independent number, at the
   cost of a second look per item); fully blind with an end review (the plan before this decision).
+
+## FD-DEC 027 — M5 closed on the join's verification; the claim check is reported as unvalidated beyond its mechanics (2026-10-17)
+**Status:** Decided (Trevor chose "close M5 as is" over a 20-claim blind spot check and a blind re-label of all 100).
+
+- **Result behind it:** the suggestion-assisted labels (FD-DEC 026) accepted 99 of 99 suggestions at a median 5 s
+  each. With no overrides they can't separate a correct matcher from an accepted suggestion.
+- **What carries M5:** the join is verified by two independent sources agreeing on 65,243 of 65,243 values, plus
+  mutation-checked tests. The claim matcher is verified by its mechanics only (deterministic rules, 21 tests,
+  16/16 mutations caught, a stated-precision window), and the README says so.
+- **Consequence:** no precision figure for the claim matcher is presented as measured. If M7/M10 need one, the
+  blind spot check is the cheapest route (about 20 claims, about 10 minutes).

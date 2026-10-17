@@ -3,8 +3,8 @@
 **See what a company newly disclosed, quietly dropped, or materially reworded between filings — with every claim
 traceable to the exact span it came from.**
 
-> **Status: under construction.** Ingestion, section parsing, the diff and the material/cosmetic classifier are done
-> and verified (see *How it's verified*). Grounded QA and the quickstart are in progress (`TODO.md`). Results not yet measured are marked
+> **Status: under construction.** Ingestion, section parsing, the diff, the material/cosmetic classifier and the XBRL
+> facts join are done and verified (see *How it's verified*). Grounded QA and the quickstart are in progress (`TODO.md`). Results not yet measured are marked
 > `[TKTK]`.
 
 ## What it does
@@ -32,15 +32,18 @@ deterministic processing from model judgment, and scoring the model half.
   what that means for a security, and nothing it outputs is forward-looking.
 - **It doesn't verify what management says.** Item 1A and Item 7 (MD&A) are unaudited management narrative,
   and MD&A figures are often non-GAAP. The tool shows what the text says and how it changed, not whether it is
-  accurate. Only the audited financial statements carry that weight.
+  accurate. Only the audited financial statements carry that weight. The one exception is narrow: MD&A sentences
+  stating a whole-company headline figure (revenue, net income, operating income, operating cash flow, diluted EPS)
+  for the filing's own period are compared with the same filing's tagged statement value. About 18% of such
+  claims can be checked this way; the rest are about segments or other periods (`docs/claims-report.md`).
 - **It doesn't claim financial-analysis expertise.** "Material" here is a labeled text-change category, not a legal
   or accounting materiality determination. The classifier's weakest calls are "cosmetic" on restructured passages
   and "material" on figure-only updates (`docs/materiality-error-analysis.md`).
 - **It doesn't cover anything outside its ingested corpus.** Coverage: **10-K** with a period of report from 2018-01-01 to
   2025-12-31, and **10-Q** filed 2025-01-01 to 2026-09-30, for **11 companies** (`corpus.toml`; every accession in
   `corpus/manifest.csv`). Amendments are excluded. Questions outside that range get an abstention.
-- It doesn't parse exhibits, financial statements or XBRL tables as narrative. XBRL company facts are joined as
-  context only.
+- It doesn't parse exhibits, financial statements or XBRL tables as narrative. XBRL facts are joined as context
+  only, always labeled as coming from the 10-K's audited statements or the 10-Q's unaudited interim statements.
 
 ## Quickstart
 
@@ -54,6 +57,8 @@ deterministic processing from model judgment, and scoring the model half.
 | Published parse-success rate + failure log | Parse failures are surfaced, not hidden | 270 of 272 present sections `ok` (99.3%), 16 verified-absent, 2 failed (exhibit incorporation): `docs/parse-report.md` |
 | Diff tests + human-labeled alignment | The diff is deterministic, and "reworded" vs "removed + added" matches human judgment | 17 mutation-checked unit tests; re-diffs byte-identical. Against 70 blind, stratified human labels: precision 0.83 (95% CI 0.74–0.93), recall 0.80 (0.66–0.93): `docs/alignment-eval.md` |
 | Material/cosmetic confusion matrix vs. hand labels | How good the model judgment is, and where it's wrong | 122 blind, stratified human labels, scored once with a frozen prompt: agreement 77%, "material" precision 0.89 (95% CI 0.81–0.96), recall 0.80 (0.68–0.89): `docs/materiality-eval-test.md`. Error analysis: `docs/materiality-error-analysis.md`. All 5,623 corpus changes classified by two models (77.0% agreement): `docs/materiality-corpus.md` |
+| XBRL facts join, two independent sources | Financial-statement values are extracted and tied to the right filing and period | Inline XBRL read from each filing vs. the SEC company-facts API: 65,243 of 65,243 values equal; 0 extraction issues; 132/132 document period ends match EDGAR. 44 mutation-checked tests (52/53-week years, January fiscal year ends, year-to-date-only cash flow): `docs/xbrl-report.md` |
+| MD&A headline claims vs. tagged values | Whole-company figures stated in MD&A agree with the filing's own statements | No model. Of 1,085 headline claims, 194 match, 1 has no matching tagged value, 12 use non-GAAP wording, 878 can't be checked (segments, other periods). 21 mutation-checked rule tests. Hand check: 100 claims labeled with the matcher's answer shown, 0 of 99 overridden at ~5 s each, so it is not independent evidence (FD-DEC 026): `docs/claims-eval.md` |
 | `spancheck` citation + abstention report | Answers cite real spans and abstain when they should | [TKTK] |
 | Simulated 429 storm | The EDGAR client backs off and recovers without breaking fair access | Passing (`tests/test_edgar_client.py`); warm re-run of the full corpus = 0 requests |
 

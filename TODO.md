@@ -80,16 +80,17 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] Error analysis write-up (`docs/materiality-error-analysis.md`); README limits + verification rows
 - [x] **Gate:** a reproducible, keyless confusion matrix. **<- stop for approval**
 
-## M5 — XBRL company facts join (in progress)
+## M5 — XBRL company facts join (done; awaiting approval)
 - [x] Survey + design (`docs/design/xbrl-join.md`); inline XBRL first, company-facts fallback (FD-DEC 025)
 - [x] Company-facts endpoint through the same client; facts joined to filing periods as context
       (`filing-delta facts` -> `data/facts/`, `docs/xbrl-report.md`): two-source cross-check 65,243/65,243 equal
 - [x] **Tests:** period alignment (52/53-week, January FYE, YTD-only cash flow, amendments dropped by accession);
       facts never narrative (provenance on every rendering; parse/diff/classify never import XBRL); mutation-checked
 - [x] **Decide FD-DEC 016:** option B, consolidated headline claims with no model (FD-DEC 025)
-- [ ] Claim matcher (`matches` / `no matching tagged value` / `non-GAAP wording` / `not checked`), sample,
-      Trevor's labels, published precision + coverage
-- [ ] **Gate:** join verified on the corpus. **← stop**
+- [x] Claim matcher (`matches` / `no matching tagged value` / `non-GAAP wording` / `not checked`), frozen at
+      `eb36301dae5d`; coverage published (`docs/claims-report.md`). Trevor's labels were suggestion-assisted
+      (FD-DEC 026): 0/99 overrides, reported as not independent (`docs/claims-eval.md`); he chose to close as is
+- [x] **Gate:** join verified on the corpus (two-source cross-check; outputs byte-identical offline). **← stop for approval**
 
 ## M6 — retrieval + grounded QA (cite or abstain)
 - [ ] Index over parsed sections, keeping offsets
