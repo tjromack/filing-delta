@@ -9,7 +9,7 @@ companies.
 | | figure |
 |---|---|
 | Indexable sections (full text, parse `ok`) | 238 (88 10-K Item 1A, 86 10-K Item 7, 56 10-Q Part I Item 2, 8 10-Q Part II Item 1A) |
-| Units (the M3 segmenter's paragraphs, headings and data tables, each an exact span) | 38,664 paragraphs, 11,205 headings, 3,652 tables |
+| Units (the M3 segmenter's paragraphs, headings and data tables, each an exact span) | 39,158 paragraphs, 11,205 headings, 3,652 tables |
 | Paragraph length | median 46 words, 95th percentile 185, longest 962; 2.6 million words in all |
 
 The design problem is **repetition across years**. A risk factor often appears nearly verbatim in eight consecutive

@@ -620,7 +620,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   60 questions, 40 answerable and 20 unanswerable (FD-DEC 028).
 - `spancheck` 0.3.1 installed from PyPI and pinned (Trevor's B1 package; its `Case` takes `meta.answerable`, and
   outputs carry `contexts`, `citations` and a `sources` map for source-scoped provenance).
-- Survey: 238 indexable sections, 38,664 paragraphs, 2.6 million words. Design: `docs/design/qa.md`.
+- Survey: 238 indexable sections, 39,158 paragraphs, 2.6 million words. Design: `docs/design/qa.md`.
 
 ### What broke
 - `git push` failed with "Repository not found": the GitHub CLI's active account had switched to another login
