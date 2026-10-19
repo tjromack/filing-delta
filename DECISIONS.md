@@ -426,3 +426,15 @@ sample only.
   iterations: $0.30 (35 calls).
 - **Alternative rejected:** loosening citation matching (folding quotes or whitespace). Not needed on dev evidence,
   and it would weaken pin 5.
+
+## FD-DEC 030 — The labeling page shows the system's scope, so labels can say "wrong filing shown" (2026-10-19)
+**Status:** Decided (a fix found while merging Trevor's questions).
+
+- **Problem:** the page embeds the sections the pipeline's deterministic scoping selects. One of Trevor's
+  questions (QA54) compares Pfizer's Q1 2026 10-Q with its 2025 10-K, and scoping reads it as two Q1 10-Qs. If the
+  labeler could only label from what scoping picked, a scoping miss would yield gold "not answerable", the system
+  would abstain, and the run would score that as correct: circular, like proposing candidates with the retriever.
+- **Fix:** a fifth label, **W ("wrong filing shown")**: the answer should be in the corpus, in a filing or section
+  the page didn't show. Scoring counts every W as a pipeline miss, never as a correct abstention.
+- **Alternative rejected:** embedding every section of every named company (several MB per company, past the page
+  limit across 60 items).

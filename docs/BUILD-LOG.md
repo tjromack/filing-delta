@@ -700,3 +700,11 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   - The practice page (3 worked items outside the set) is published privately with an owner-only store, checked
     with a probe write.
   - `tools/qa_add_trevor.py` appends Trevor's questions and assigns blind ids, mixing authors.
+- 2026-10-19 (later): Trevor wrote his 12 questions. A mix of lookups, risk-presence, change questions (including
+  non-consecutive years), a 10-Q vs. 10-K comparison, and two he expects to be unanswerable.
+  `tools/qa_add_trevor.py` merged them: 60 questions with shuffled ids QA01–QA60.
+- Merging exposed a circularity in the labeling page (FD-DEC 030). It shows only what scoping selected, and QA54
+  (Pfizer Q1 2026 10-Q vs. its 2025 10-K) scopes to two Q1 10-Qs with no parsed risk text. A "wrong filing shown"
+  label now records such misses so they score as failures.
+- The labeling page (6.0 MB, 69 sections) is published privately with an owner-only store, probe-checked. The
+  practice page was republished with W.
