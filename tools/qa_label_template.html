@@ -371,6 +371,22 @@ idx = firstOpen < 0 ? 0 : firstOpen;
 render();
 
 (async () => {
+  // Opened from tools/qa_label_server.py on this computer: save to it (data/qa/labels-<collection>.json).
+  if (location.protocol.startsWith("http") && ["127.0.0.1", "localhost"].includes(location.hostname)) {
+    const url = (id) => "/labels/" + DATA.collection + (id ? "/" + id : "");
+    coll = { doc: (id) => ({ set: (body) => fetch(url(id), { method: "POST", headers: { "Content-Type": "application/json" },
+                                                            body: JSON.stringify(body) })
+                                            .then(r => { if (!r.ok) throw { code: "HTTP " + r.status } }) }) };
+    try {
+      const saved = await (await fetch(url())).json();
+      Object.entries(saved).forEach(([id, v]) => { labels[id] = { state: v.state || "", spans: v.spans || [], answer: v.answer || "", note: v.note || "" } });
+      lsSave();
+      const o = items.findIndex(i => !labels[i.id]?.state); if (o >= 0) idx = o;
+      render();
+      setStatus("Saving to your computer (data/qa/labels-" + DATA.collection + ".json). Labels save as you go.");
+    } catch (e) { setStatus("Can't reach the label server. Is tools/qa_label_server.py still running?", true) }
+    return;
+  }
   const db = window.claude ? await window.claude.use("db") : null;
   if (!db) { setStatus("Labels can't reach Claude from this view, so they're kept in this browser only. Open the page from claude.ai to save them.", true); return }
   coll = db.collection(DATA.collection);

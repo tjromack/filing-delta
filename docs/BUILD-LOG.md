@@ -720,3 +720,11 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   in 0.3 s and switches items in at most 0.19 s. A build stamp in the header shows which version the labeler sees.
 - **Lesson:** test interactive pages by driving them before shipping, not just by parsing the script. Gold spans are
   now whole sentences, which suits retrieval-recall scoring (overlap) and citation checking (exact text).
+- **Labeling moved out of the claude.ai viewer.** Even with sentence clicks and a Pick button, Trevor couldn't set a
+  label in the viewer, while the same page works in Chrome standalone and in a sandboxed iframe. Rather than keep
+  guessing at an environment I can't test, `tools/qa_label_server.py` (stdlib, 127.0.0.1 only) serves the same page
+  locally and saves each label to `data/qa/labels-<collection>.json` with an atomic write. It was verified by
+  driving Chrome against the running server: labels saved to disk and survived a reload. The labels get copied into
+  a committed golden file before any run, as in M4 and M5.
+- **Lesson for M8's read view:** pages meant for real use need testing in the environment they'll run in. An
+  artifact viewer is a different environment from a browser tab.
