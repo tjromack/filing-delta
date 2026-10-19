@@ -708,3 +708,15 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   label now records such misses so they score as failures.
 - The labeling page (6.0 MB, 69 sections) is published privately with an owner-only store, probe-checked. The
   practice page was republished with W.
+- **The labeling page failed inside claude.ai's viewer.** Trevor couldn't pick an answer: drag-selecting text did
+  nothing usable there, while the same page worked standalone. Three blind fixes (Enter in the answer box, a
+  remembered selection, moving the buttons) didn't help, because I couldn't run the page myself. I then installed
+  Playwright (local only, not a project dependency) and drove the page in Chrome with real mouse input, standalone
+  and inside a sandboxed iframe. Drag-selection works in a plain browser, so the viewer's own selection handling is
+  the likely cause; that can't be confirmed from outside claude.ai.
+- **Fix:** picking an answer no longer uses text selection. Each section is split into sentences with exact offsets,
+  and clicking a sentence toggles it as part of the gold answer. Verified with real clicks in both settings: pick a
+  sentence, Enter to save, the N button, Back, a refused A with a visible message. The full 60-question page loads
+  in 0.3 s and switches items in at most 0.19 s. A build stamp in the header shows which version the labeler sees.
+- **Lesson:** test interactive pages by driving them before shipping, not just by parsing the script. Gold spans are
+  now whole sentences, which suits retrieval-recall scoring (overlap) and citation checking (exact text).

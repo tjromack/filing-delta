@@ -87,7 +87,9 @@ def main() -> None:
         assert all("id" in q for q in qs), "assign ids first (tools/qa_add_trevor.py)"
         items, extra = build_items(sorted(qs, key=lambda q: q["id"]))
         coll, dest, practice = "qa", "qa-labeler.html", False
-    payload = json.dumps({"items": items, **extra, "collection": coll, "practice": practice},
+    tpl = (ROOT / "tools" / "qa_label_template.html").read_bytes()
+    built = hashlib.sha256(tpl).hexdigest()[:6]          # which page version the labeler is looking at
+    payload = json.dumps({"items": items, **extra, "collection": coll, "practice": practice, "built": built},
                          ensure_ascii=False).replace("</", "<\\/")
     html = (ROOT / "tools" / "qa_label_template.html").read_text(encoding="utf-8").replace("/*__DATA__*/null", payload)
     if practice:
