@@ -692,3 +692,11 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   circular: gold spans could only come from what the retriever already found. So the labeling page embeds the
   **full scoped section text** with an in-page search, and Trevor selects gold spans anywhere in it. Drafted
   questions open at their source passage, but any span can be chosen.
+- Labeling tools built:
+  - `tools/qa_label_template.html` + `tools/build_qa_label_app.py`. The page shows the full scoped section
+    text, an in-page search, mouse selection mapped to exact offsets (S adds a span), a short answer, and A / N /
+    U / R. Snapshots refresh only the counts, so saving never resets the reader's scroll. About 7 MB with every
+    section embedded.
+  - The practice page (3 worked items outside the set) is published privately with an owner-only store, checked
+    with a probe write.
+  - `tools/qa_add_trevor.py` appends Trevor's questions and assigns blind ids, mixing authors.

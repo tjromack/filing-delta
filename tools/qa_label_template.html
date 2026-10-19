@@ -1,0 +1,341 @@
+<title>Filing QA Labeler</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: the earlier labelers' reading column; a question card over the filing's full section text (serif), with
+   in-page search; a fixed keyboard bar. */
+:root {
+  --paper: #f7f6f2; --sheet: #ffffff; --ink: #1d2128; --muted: #5d6470; --rule: #dcdad3;
+  --gold: #fbeeb8; --gold-ink: #1d2128; --hit: #dbe7fb; --start: #2f6b4f; --focus: #1f4fa3;
+  --kA: #2f6b4f; --kN: #a3322a; --kU: #8a6a1f; --kR: #4b5563;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #15171b; --sheet: #1d2025; --ink: #e6e4de; --muted: #a2a7b0; --rule: #33373e;
+  --gold: #5a4a12; --gold-ink: #f4ecd0; --hit: #22324c; --start: #7fc6a2; --focus: #8fb2ee;
+  --kA: #7fc6a2; --kN: #ec8f86; --kU: #d9b75e; --kR: #a7b0bd; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #15171b; --sheet: #1d2025; --ink: #e6e4de; --muted: #a2a7b0; --rule: #33373e;
+  --gold: #5a4a12; --gold-ink: #f4ecd0; --hit: #22324c; --start: #7fc6a2; --focus: #8fb2ee;
+  --kA: #7fc6a2; --kN: #ec8f86; --kU: #d9b75e; --kR: #a7b0bd; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 190px }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper) }
+.wrap { max-width: 920px; margin: 0 auto; display: grid; gap: 14px }
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--paper);
+  padding-block: 14px 10px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px }
+.toprow { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between }
+h1 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin: 0; text-wrap: balance }
+h1 small { font-family: var(--sans); font-weight: 400; font-size: .9rem; color: var(--muted) }
+.counts { font-family: var(--mono); font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; display: flex; gap: 12px; flex-wrap: wrap }
+.bar { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden }
+.bar > i { display: block; height: 100%; background: var(--ink); width: 0; transition: width .2s }
+.status { font-size: .8rem; color: var(--muted); min-height: 1.2em } .status.warn { color: var(--kN) }
+.qcard { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 16px 18px; display: grid; gap: 8px }
+.qcard .q { font-family: var(--serif); font-size: 1.2rem; line-height: 1.45; font-weight: 600 }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .85rem; color: var(--muted) }
+.meta .id { font-family: var(--mono); color: var(--ink); font-weight: 500 }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px }
+.tabs button.on { background: var(--ink); color: var(--sheet); border-color: var(--ink) }
+.find { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+.find input { flex: 1 1 220px; min-width: 0; font-family: var(--sans); font-size: .9rem; padding: 7px 10px; border: 1px solid var(--rule);
+  border-radius: 6px; background: var(--sheet); color: var(--ink) }
+.find .n { font-family: var(--mono); font-size: .8rem; color: var(--muted) }
+.doc { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 20px; height: 52vh; overflow-y: auto;
+  font-family: var(--serif); font-size: 1rem; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0 }
+.doc mark.gold { background: var(--gold); color: var(--gold-ink); border-radius: 2px }
+.doc mark.hit { background: var(--hit); color: inherit }
+.doc mark.start { background: transparent; color: inherit; border-bottom: 2px dashed var(--start) }
+.none { color: var(--muted); font-style: italic; font-family: var(--sans) }
+.spans { display: grid; gap: 6px; font-size: .88rem }
+.spans .s { display: flex; gap: 8px; align-items: baseline; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 10px }
+.spans .s span { flex: 1; min-width: 0; overflow-wrap: anywhere; font-family: var(--serif) }
+label.l { font-size: .8rem; color: var(--muted) }
+textarea, .answer { width: 100%; font-family: var(--sans); font-size: .92rem; color: var(--ink); background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 8px }
+textarea { min-height: 52px }
+.keys { position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; background: var(--sheet); border-top: 1px solid var(--rule);
+  padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)) }
+.keys .in { max-width: 920px; margin: 0 auto; display: grid; gap: 8px }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+button { font-family: var(--sans); font-size: .9rem; border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
+  border-radius: 6px; padding: 7px 12px; cursor: pointer }
+button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px }
+button kbd { font-family: var(--mono); font-size: .75rem; color: var(--muted); margin-right: 6px }
+.lab { font-weight: 600 } .lab.on { color: var(--sheet) } .lab.on kbd { color: inherit }
+.lab.on.A { background: var(--kA); border-color: var(--kA) } .lab.on.N { background: var(--kN); border-color: var(--kN) }
+.lab.on.U { background: var(--kU); border-color: var(--kU) } .lab.on.R { background: var(--kR); border-color: var(--kR) }
+.nav { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap }
+.map { display: grid; grid-template-columns: repeat(auto-fill, minmax(22px, 1fr)); gap: 4px }
+.map button { padding: 0; height: 22px; font-size: 0; border-radius: 3px; background: var(--sheet) }
+.map button.A { background: var(--kA); border-color: var(--kA) } .map button.N { background: var(--kN); border-color: var(--kN) }
+.map button.U { background: var(--kU); border-color: var(--kU) } .map button.R { background: var(--kR); border-color: var(--kR) }
+.map button.cur { outline: 2px solid var(--ink); outline-offset: 1px }
+details { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 14px; font-size: .88rem }
+summary { cursor: pointer; font-weight: 500 }
+.guide { display: grid; gap: 6px; margin: 10px 0 0; max-width: 74ch } .guide dt { font-weight: 600 } .guide dd { margin: 0 0 6px; color: var(--muted) }
+.worked { border: 1px dashed var(--start); border-radius: 6px; padding: 10px 14px; font-size: .9rem; display: grid; gap: 6px }
+.done { border: 1px solid var(--kA); color: var(--kA); border-radius: 6px; padding: 10px 14px; font-weight: 500 }
+@media (prefers-reduced-motion: reduce) { .bar > i { transition: none } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="toprow">
+      <h1>Filing QA Labeler <small id="sub"></small></h1>
+      <div class="counts" id="counts"></div>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="status" id="status">Connecting…</div>
+  </header>
+
+  <div id="donebox" class="done" hidden>All questions are labeled. Tell Claude you're done; your labels are already saved.</div>
+
+  <details id="guidebox">
+    <summary>How to label (press ?)</summary>
+    <dl class="guide">
+      <dt>Read the question, then look for its answer in the filing text below.</dt>
+      <dd>The text is the full section(s) the question is about. Use the search box (or press F) to jump to words; a dashed underline marks where a drafted question started, but the answer can be anywhere.</dd>
+      <dt style="color:var(--kA)">Answerable</dt><dd>Select the smallest stretch of text that answers it, press S (or "Add selection"), repeat if the answer needs two places, then type a short answer in your own words and press A.</dd>
+      <dt style="color:var(--kN)">N · Not answerable</dt><dd>The filing text shown doesn't answer it, or it asks for advice or a prediction, or it's about a company or period that isn't here.</dd>
+      <dt style="color:var(--kU)">U · Unsure</dt><dd>You can't tell. Add a note if you can say why.</dd>
+      <dt style="color:var(--kR)">R · Reject question</dt><dd>The question is badly worded or ambiguous. It is replaced, not scored.</dd>
+    </dl>
+  </details>
+
+  <section class="qcard">
+    <div class="meta" id="meta"></div>
+    <div class="q" id="q"></div>
+    <div class="meta" id="scope"></div>
+  </section>
+
+  <div id="worked" class="worked" hidden></div>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="find" id="findrow">
+    <label for="find" class="l">Search this section</label>
+    <input id="find" placeholder="Type words, Enter for next match">
+    <button id="findPrev">Prev</button><button id="findNext">Next</button>
+    <span class="n" id="findN"></span>
+  </div>
+  <div class="doc" id="doc" tabindex="0" aria-label="Section text"></div>
+
+  <div class="spans" id="spans"></div>
+  <div>
+    <label class="l" for="answer">Short answer in your own words (for Answerable)</label>
+    <input class="answer" id="answer" placeholder="e.g. Growth in paying memberships and price increases">
+  </div>
+  <div>
+    <label class="l" for="note">Note (optional)</label>
+    <textarea id="note" placeholder="Anything that made this a close call"></textarea>
+  </div>
+  <div class="map" id="map" aria-label="All questions; click one to jump to it"></div>
+</div>
+
+<div class="keys"><div class="in">
+  <div class="row">
+    <button id="addSpan"><kbd>S</kbd>Add selection</button>
+    <button class="lab A" id="bA"><kbd>A</kbd>Answerable</button>
+    <button class="lab N" id="bN"><kbd>N</kbd>Not answerable</button>
+    <button class="lab U" id="bU"><kbd>U</kbd>Unsure</button>
+    <button class="lab R" id="bR"><kbd>R</kbd>Reject question</button>
+    <div class="nav">
+      <button id="prev"><kbd>←</kbd>Back</button>
+      <button id="next"><kbd>→</kbd>Next</button>
+      <button id="nextOpen"><kbd>.</kbd>Next unlabeled</button>
+    </div>
+  </div>
+</div></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const items = DATA.items, SECT = DATA.sections, SLABEL = DATA.section_labels;
+const NAMES = { A: "Answerable", N: "Not answerable", U: "Unsure", R: "Rejected" };
+const labels = {};            // id -> {state, spans:[{key,start,end}], answer, note}
+let idx = 0, coll = null, tab = 0, hits = [], hitI = -1;
+const pending = {};
+const $ = (id) => document.getElementById(id);
+const LS = "qal-" + DATA.collection + "-v1";
+function lsLoad() { try { return JSON.parse(localStorage.getItem(LS) || "{}") } catch { return {} } }
+function lsSave() { try { localStorage.setItem(LS, JSON.stringify(labels)) } catch {} }
+Object.assign(labels, lsLoad());
+function setStatus(t, warn) { const s = $("status"); s.textContent = t; s.classList.toggle("warn", !!warn) }
+const L = () => labels[items[idx].id] || (labels[items[idx].id] = { state: "", spans: [], answer: "", note: "" });
+
+function save(id) {
+  lsSave();
+  if (!coll) return;
+  const v = labels[id];
+  const body = { state: v.state || "", spans: v.spans || [], answer: v.answer || "", note: v.note || "", at: new Date().toISOString() };
+  pending[id] = (pending[id] || Promise.resolve()).then(() => coll.doc(id).set(body)).then(
+    () => setStatus("Saved " + id + ". Labels save as you go."),
+    (e) => setStatus("Couldn't save " + id + " (" + (e && e.code || "error") + "). It's kept in this browser; try again in a moment.", true));
+}
+
+function mk(tag, cls, t) { const e = document.createElement(tag); if (cls) e.className = cls; if (t !== undefined) e.textContent = t; return e }
+
+// Render one section as text nodes and <mark>s. Every text node's position in the section is recorded, so a
+// selection maps back to exact character offsets.
+function renderDoc() {
+  const it = items[idx], doc = $("doc"); doc.textContent = "";
+  const key = it.sections[tab];
+  if (!key) { doc.append(mk("p", "none", "No filing text applies to this question. Judge it from the question itself.")); return }
+  const text = SECT[key];
+  const marks = [];
+  L().spans.filter(s => s.key === key).forEach(s => marks.push([s.start, s.end, "gold"]));
+  if (it.start && it.start.key === key) marks.push([it.start.start, it.start.end, "start"]);
+  hits.forEach(([a, b], i) => marks.push([a, b, "hit"]));
+  const cuts = new Set([0, text.length]); marks.forEach(([a, b]) => { cuts.add(a); cuts.add(b) });
+  const pts = [...cuts].sort((x, y) => x - y);
+  for (let i = 0; i + 1 < pts.length; i++) {
+    const a = pts[i], b = pts[i + 1]; if (a === b) continue;
+    const cls = ["gold", "hit", "start"].find(c => marks.some(([s, e, k]) => k === c && s <= a && b <= e));
+    const node = document.createTextNode(text.slice(a, b));
+    if (cls) { const m = mk("mark", cls); m.dataset.start = a; m.append(node); doc.append(m) }
+    else { const sp = mk("span"); sp.dataset.start = a; sp.append(node); doc.append(sp) }
+  }
+}
+function offsetOf(node, off) {
+  let el = node.nodeType === 3 ? node.parentElement : node;
+  if (!el || el.dataset.start === undefined) return null;
+  return +el.dataset.start + (node.nodeType === 3 ? off : 0);
+}
+function addSelection() {
+  const sel = window.getSelection(); if (!sel.rangeCount) return;
+  const r = sel.getRangeAt(0), doc = $("doc");
+  if (!doc.contains(r.startContainer) || !doc.contains(r.endContainer)) { setStatus("Select text inside the filing box first.", true); return }
+  let a = offsetOf(r.startContainer, r.startOffset), b = offsetOf(r.endContainer, r.endOffset);
+  if (a === null || b === null || b <= a) { setStatus("Select some text inside the filing box first.", true); return }
+  const key = items[idx].sections[tab], text = SECT[key];
+  while (a < b && /\s/.test(text[a])) a++;
+  while (b > a && /\s/.test(text[b - 1])) b--;
+  L().spans.push({ key, start: a, end: b }); sel.removeAllRanges();
+  save(items[idx].id); renderDoc(); renderSpans(); renderProgress();
+}
+function renderSpans() {
+  const box = $("spans"); box.textContent = "";
+  L().spans.forEach((s, i) => {
+    const row = mk("div", "s"), t = SECT[s.key].slice(s.start, s.end);
+    row.append(mk("span", "", "“" + (t.length > 220 ? t.slice(0, 220) + "…" : t) + "”"));
+    const rm = mk("button", "", "Remove"); rm.addEventListener("click", () => { L().spans.splice(i, 1); save(items[idx].id); renderDoc(); renderSpans() });
+    const go = mk("button", "", "Show"); go.addEventListener("click", () => { tab = items[idx].sections.indexOf(s.key); renderTabs(); renderDoc(); scrollToChar(s.start) });
+    row.append(go, rm); box.append(row);
+  });
+  if (!L().spans.length) box.append(mk("span", "none", "No answer span selected yet."));
+}
+function scrollToChar(c) {
+  const els = [...$("doc").children].filter(e => e.dataset.start !== undefined);
+  const el = els.reverse().find(e => +e.dataset.start <= c); if (el) el.scrollIntoView({ block: "center" });
+}
+function runFind() {
+  const q = $("find").value.trim().toLowerCase(), key = items[idx].sections[tab];
+  hits = []; hitI = -1;
+  if (q.length >= 2 && key) {
+    const t = SECT[key].toLowerCase(); let i = t.indexOf(q);
+    while (i >= 0 && hits.length < 500) { hits.push([i, i + q.length]); i = t.indexOf(q, i + q.length) }
+  }
+  renderDoc(); stepFind(1);
+}
+function stepFind(d) {
+  if (!hits.length) { $("findN").textContent = $("find").value.trim().length >= 2 ? "no matches" : ""; return }
+  hitI = (hitI + d + hits.length) % hits.length; $("findN").textContent = (hitI + 1) + " of " + hits.length;
+  scrollToChar(hits[hitI][0]);
+}
+function renderTabs() {
+  const it = items[idx], box = $("tabs"); box.textContent = "";
+  it.sections.forEach((k, i) => { const b = mk("button", i === tab ? "on" : "", SLABEL[k]); b.addEventListener("click", () => { tab = i; hits = []; renderTabs(); renderDoc() }); box.append(b) });
+  $("findrow").hidden = !it.sections.length;
+}
+function render() {
+  const it = items[idx], v = L();
+  const meta = $("meta"); meta.textContent = "";
+  meta.append(mk("span", "id", it.id), mk("span", "", (idx + 1) + " of " + items.length), mk("span", "", v.state ? NAMES[v.state] : "not labeled yet"));
+  $("q").textContent = it.question;
+  $("scope").textContent = it.scope_label || "";
+  $("sub").textContent = DATA.practice ? "· practice (not scored)" : "· " + items.length + " questions";
+  const w = $("worked"); w.textContent = ""; w.hidden = !it.worked;
+  if (it.worked) {
+    const b = mk("button", "", "Show the worked answer"); b.addEventListener("click", () => { w.textContent = ""; it.worked.split("\n").forEach(p => w.append(mk("div", "", p))) });
+    w.append(b);
+  }
+  hits = []; $("find").value = ""; $("findN").textContent = "";
+  tab = it.start ? Math.max(0, it.sections.indexOf(it.start.key)) : 0;
+  renderTabs(); renderDoc(); renderSpans();
+  if (it.start) scrollToChar(it.start.start); else $("doc").scrollTop = 0;
+  ["A", "N", "U", "R"].forEach(k => $("b" + k).classList.toggle("on", v.state === k));
+  $("answer").value = v.answer || ""; $("note").value = v.note || "";
+  renderProgress();
+}
+function renderProgress() {
+  const n = items.filter(i => labels[i.id]?.state).length;
+  const c = { A: 0, N: 0, U: 0, R: 0 }; items.forEach(i => { const s = labels[i.id]?.state; if (s) c[s]++ });
+  const counts = $("counts"); counts.textContent = "";
+  [n + " / " + items.length + " labeled", "A " + c.A, "N " + c.N, "U " + c.U, "R " + c.R].forEach(t => counts.append(mk("b", "", t)));
+  $("bar").style.width = (100 * n / items.length) + "%";
+  $("donebox").hidden = n !== items.length;
+  const map = $("map");
+  if (!map.children.length) items.forEach((it, i) => { const b = mk("button"); b.title = it.id; b.setAttribute("aria-label", it.id); b.addEventListener("click", () => { idx = i; render(); window.scrollTo(0, 0) }); map.append(b) });
+  [...map.children].forEach((b, i) => { b.className = (labels[items[i].id]?.state || "") + (i === idx ? " cur" : "") });
+}
+function setState(k) {
+  const v = L();
+  v.answer = $("answer").value.trim(); v.note = $("note").value.trim();
+  if (k === "A" && (!v.spans.length || !v.answer)) { setStatus("For Answerable, add at least one span (S) and a short answer first.", true); return }
+  v.state = k; save(items[idx].id); go(1);
+}
+function go(d) { idx = Math.min(items.length - 1, Math.max(0, idx + d)); render(); window.scrollTo(0, 0) }
+function nextOpen() { for (let s = 1; s <= items.length; s++) { const j = (idx + s) % items.length; if (!labels[items[j].id]?.state) { idx = j; render(); window.scrollTo(0, 0); return } } }
+
+$("addSpan").addEventListener("click", addSelection);
+["A", "N", "U", "R"].forEach(k => $("b" + k).addEventListener("click", () => setState(k)));
+$("prev").addEventListener("click", () => go(-1)); $("next").addEventListener("click", () => go(1)); $("nextOpen").addEventListener("click", nextOpen);
+$("find").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); if (hits.length && $("find").dataset.q === $("find").value) stepFind(e.shiftKey ? -1 : 1); else { $("find").dataset.q = $("find").value; runFind() } } else if (e.key === "Escape") $("find").blur() });
+$("findNext").addEventListener("click", () => { if ($("find").dataset.q !== $("find").value) { $("find").dataset.q = $("find").value; runFind() } else stepFind(1) });
+$("findPrev").addEventListener("click", () => stepFind(-1));
+$("answer").addEventListener("change", () => { L().answer = $("answer").value.trim(); save(items[idx].id) });
+$("note").addEventListener("change", () => { L().note = $("note").value.trim(); save(items[idx].id) });
+document.addEventListener("keydown", (e) => {
+  const tag = e.target.tagName;
+  if (tag === "TEXTAREA" || tag === "INPUT") { if (e.key === "Escape") e.target.blur(); return }
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if (k === "s") { e.preventDefault(); addSelection() }
+  else if (k === "a") { e.preventDefault(); setState("A") }
+  else if (k === "n") { e.preventDefault(); setState("N") }
+  else if (k === "u") { e.preventDefault(); setState("U") }
+  else if (k === "r") { e.preventDefault(); setState("R") }
+  else if (k === "f") { e.preventDefault(); $("find").focus() }
+  else if (k === "arrowright") { e.preventDefault(); go(1) }
+  else if (k === "arrowleft") { e.preventDefault(); go(-1) }
+  else if (k === ".") nextOpen();
+  else if (k === "?") $("guidebox").open = !$("guidebox").open;
+});
+
+const firstOpen = items.findIndex(i => !labels[i.id]?.state);
+idx = firstOpen < 0 ? 0 : firstOpen;
+render();
+
+(async () => {
+  const db = window.claude ? await window.claude.use("db") : null;
+  if (!db) { setStatus("Labels can't reach Claude from this view, so they're kept in this browser only. Open the page from claude.ai to save them.", true); return }
+  coll = db.collection(DATA.collection);
+  let first = true;
+  coll.onSnapshot((snap) => {
+    snap.docs.forEach(d => { const v = d.data(); if (v && !(d.id in pending)) labels[d.id] = { state: v.state || "", spans: v.spans || [], answer: v.answer || "", note: v.note || "" } });
+    lsSave();
+    if (first) {
+      first = false;
+      const stored = new Set(snap.docs.map(d => d.id));
+      items.forEach(i => { if (labels[i.id]?.state && !stored.has(i.id)) save(i.id) });
+      const o = items.findIndex(i => !labels[i.id]?.state); if (o >= 0) idx = o;
+      setStatus("Connected. Labels save as you go.");
+      render();
+    } else renderProgress();     // never re-render mid-labeling: it would reset the text box's scroll and search
+  }, (e) => setStatus("Lost the connection to saved labels (" + e.code + "). Keep going; they're kept in this browser. Reload to reconnect.", true));
+})();
+</script>
