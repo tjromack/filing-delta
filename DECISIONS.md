@@ -388,3 +388,17 @@ sample only.
   16/16 mutations caught, a stated-precision window), and the README says so.
 - **Consequence:** no precision figure for the claim matcher is presented as measured. If M7/M10 need one, the
   blind spot check is the cheapest route (about 20 claims, about 10 minutes).
+
+## FD-DEC 028 — The QA set: 60 questions, mixed authorship, labels Trevor's (2026-10-19)
+**Status:** Decided (Trevor chose "I draft, you label + add" and "60 (40 / 20)").
+
+- **Composition:** 40 answerable and 20 unanswerable. Claude drafts question *text* (about 28 answerable from sampled
+  passages, plus the 20 unanswerable by design). Trevor writes 12 or more of his own. Every label is Trevor's:
+  answerable or not, the gold span, the short gold answer. That keeps the CLAUDE.md pin (a model never produces the
+  labels it is scored against).
+- **Disclosure:** each question records its author, and results are reported by author. Model-drafted questions
+  tend to suit a model answering them, which is the reason Trevor's own questions are in the set.
+- **Blind:** no system answer is shown while labeling (the M5 lesson, FD-DEC 026/027). Explanation comes up front
+  on three practice items outside the set.
+- **Alternatives rejected (offered):** Trevor writes all 60 (about 2 hours); Claude drafts all and Trevor only labels
+  (fastest, every question model-shaped). Sizes 30 (wide intervals) and 100 (about 2 hours).

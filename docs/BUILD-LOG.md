@@ -610,3 +610,26 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - M5 gate: stop for Trevor's approval. Next is M6 (retrieval + grounded QA, cite or abstain), where Trevor labels
   the answerable/unanswerable QA set.
+
+---
+
+## 2026-10-19 — M5 approved; M6 survey and design
+
+### What happened
+- Trevor approved M5 and started M6. He chose the QA set's make-up: Claude drafts, Trevor labels and adds his own;
+  60 questions, 40 answerable and 20 unanswerable (FD-DEC 028).
+- `spancheck` 0.3.1 installed from PyPI and pinned (Trevor's B1 package; its `Case` takes `meta.answerable`, and
+  outputs carry `contexts`, `citations` and a `sources` map for source-scoped provenance).
+- Survey: 238 indexable sections, 38,664 paragraphs, 2.6 million words. Design: `docs/design/qa.md`.
+
+### What broke
+- `git push` failed with "Repository not found": the GitHub CLI's active account had switched to another login
+  without access to the private repo. Commits stay local until Trevor switches back (`gh auth switch --user tjromack`).
+
+### Learnings
+- **Repetition across years is the QA design problem.** The same risk factor sits in up to eight 10-Ks, so
+  retrieval is scoped to the asked-about filing deterministically before it ranks anything. Otherwise answers cite
+  the right words from the wrong year.
+
+### Open / next
+- Trevor reviews `docs/design/qa.md`, then the build starts with the verifier and its forged-citation tests.
