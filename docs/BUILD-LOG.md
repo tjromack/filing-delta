@@ -672,3 +672,23 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - Draft the 48 questions (about 28 answerable plus 20 unanswerable by design); Trevor writes his 12 or more.
   Then the practice page and the labeling page.
+
+### 2026-10-19 — M6 part 2: 48 questions drafted
+- `tools/qa_draft_pool.py` picked 33 source passages deterministically (3 per company, varied filings and
+  sections) before any question was written, so I didn't choose easy passages. Five boilerplate passages
+  (forward-looking-statement disclaimers, the risk-factor preamble) were dropped as things no one would ask, plus
+  four to balance companies.
+- `tools/qa_drafted.py` → `tests/golden/qa_questions.json`:
+  - 24 answerable from the pool, across lookup, risk-presence and stated-figure questions.
+  - 4 change questions built from risk-factor additions Trevor labeled material in the M4 blind set.
+  - 20 unanswerable: 4 outside coverage, 3 non-corpus companies, 4 advice or prediction, and 9 plausible
+    undisclosed details. Each undisclosed one was keyword-checked against the scoped section text first; JPMorgan
+    names Dimon and "discretionary bonus payments" but gives no amount, a deliberate near-miss.
+- Every answerable draft scopes to its source filing and section. One (Weyco, "2023 10-K … end of 2022") names
+  two years and pulls in both filings, deliberately, because people ask that way.
+
+### A methodological catch before building the labeling page
+- Proposing candidate passages for Trevor's questions with the system's own BM25 would make retrieval recall
+  circular: gold spans could only come from what the retriever already found. So the labeling page embeds the
+  **full scoped section text** with an in-page search, and Trevor selects gold spans anywhere in it. Drafted
+  questions open at their source passage, but any span can be chosen.
