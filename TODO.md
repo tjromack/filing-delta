@@ -80,7 +80,7 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] Error analysis write-up (`docs/materiality-error-analysis.md`); README limits + verification rows
 - [x] **Gate:** a reproducible, keyless confusion matrix. **<- stop for approval**
 
-## M5 — XBRL company facts join (done; awaiting approval)
+## M5 — XBRL company facts join (done; approved 2026-10-19)
 - [x] Survey + design (`docs/design/xbrl-join.md`); inline XBRL first, company-facts fallback (FD-DEC 025)
 - [x] Company-facts endpoint through the same client; facts joined to filing periods as context
       (`filing-delta facts` -> `data/facts/`, `docs/xbrl-report.md`): two-source cross-check 65,243/65,243 equal
@@ -92,7 +92,7 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       (FD-DEC 026): 0/99 overrides, reported as not independent (`docs/claims-eval.md`); he chose to close as is
 - [x] **Gate:** join verified on the corpus (two-source cross-check; outputs byte-identical offline). **← stop for approval**
 
-## M6 — retrieval + grounded QA (cite or abstain)
+## M6 — retrieval + grounded QA (cite or abstain) (in progress)
 - [ ] Index over parsed sections, keeping offsets
 - [ ] `Answer | Abstain` type; exact-substring citation verifier; any unverifiable answer becomes an abstention (FD-DEC 005)
 - [ ] Hand-labeled QA set (answerable + plausible unanswerable), done by Trevor

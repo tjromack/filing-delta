@@ -16,7 +16,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M2 · section parser | `9338d76` | 270/272 present sections ok (99.3%), 16 absent, 2 failed (exhibit); 28 goldens proposed | lxml reused element ids and merged table rows; two furniture rules deleted real content |
 | M3 · paragraph diff | `105e3db` | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
 | M4 · materiality classifier | `8df0811` (approved) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
-| M5 · XBRL facts join | (this commit, awaiting approval) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
+| M5 · XBRL facts join | `7da4250` (approved) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
 
 ---
 
