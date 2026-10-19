@@ -82,6 +82,7 @@ details { background: var(--sheet); border: 1px solid var(--rule); border-radius
 summary { cursor: pointer; font-weight: 500 }
 .guide { display: grid; gap: 6px; margin: 10px 0 0; max-width: 74ch } .guide dt { font-weight: 600 } .guide dd { margin: 0 0 6px; color: var(--muted) }
 .worked { border: 1px dashed var(--start); border-radius: 6px; padding: 10px 14px; font-size: .9rem; display: grid; gap: 6px }
+.hint { font-size: .85rem; color: var(--muted) } .hint.warn { color: var(--kN); font-weight: 500 }
 .done { border: 1px solid var(--kA); color: var(--kA); border-radius: 6px; padding: 10px 14px; font-weight: 500 }
 @media (prefers-reduced-motion: reduce) { .bar > i { transition: none } }
 </style>
@@ -131,7 +132,7 @@ summary { cursor: pointer; font-weight: 500 }
   <div class="spans" id="spans"></div>
   <div>
     <label class="l" for="answer">Short answer in your own words (for Answerable)</label>
-    <input class="answer" id="answer" placeholder="e.g. Growth in paying memberships and price increases">
+    <input class="answer" id="answer" placeholder="e.g. Growth in paying memberships and price increases (Enter saves as Answerable)">
   </div>
   <div>
     <label class="l" for="note">Note (optional)</label>
@@ -141,6 +142,7 @@ summary { cursor: pointer; font-weight: 500 }
 </div>
 
 <div class="keys"><div class="in">
+  <div class="hint" id="hint" role="status">Select the answer in the filing text, type a short answer, then press Enter (or A).</div>
   <div class="row">
     <button id="addSpan"><kbd>S</kbd>Add selection</button>
     <button class="lab A" id="bA"><kbd>A</kbd>Answerable</button>
@@ -170,6 +172,8 @@ function lsLoad() { try { return JSON.parse(localStorage.getItem(LS) || "{}") } 
 function lsSave() { try { localStorage.setItem(LS, JSON.stringify(labels)) } catch {} }
 Object.assign(labels, lsLoad());
 function setStatus(t, warn) { const s = $("status"); s.textContent = t; s.classList.toggle("warn", !!warn) }
+function hint(t, warn) { const h = $("hint"); h.textContent = t; h.classList.toggle("warn", !!warn) }
+let lastSel = null;           // the last selection made inside the filing text, kept when focus moves to the answer box
 const L = () => labels[items[idx].id] || (labels[items[idx].id] = { state: "", spans: [], answer: "", note: "" });
 
 function save(id) {
@@ -210,17 +214,27 @@ function offsetOf(node, off) {
   if (!el || el.dataset.start === undefined) return null;
   return +el.dataset.start + (node.nodeType === 3 ? off : 0);
 }
-function addSelection() {
-  const sel = window.getSelection(); if (!sel.rangeCount) return;
+function currentSelection() {
+  const sel = window.getSelection(); if (!sel.rangeCount || sel.isCollapsed) return null;
   const r = sel.getRangeAt(0), doc = $("doc");
-  if (!doc.contains(r.startContainer) || !doc.contains(r.endContainer)) { setStatus("Select text inside the filing box first.", true); return }
+  if (!doc.contains(r.startContainer) || !doc.contains(r.endContainer)) return null;
   let a = offsetOf(r.startContainer, r.startOffset), b = offsetOf(r.endContainer, r.endOffset);
-  if (a === null || b === null || b <= a) { setStatus("Select some text inside the filing box first.", true); return }
-  const key = items[idx].sections[tab], text = SECT[key];
+  const key = items[idx].sections[tab];
+  if (a === null || b === null || b <= a || !key) return null;
+  const text = SECT[key];
   while (a < b && /\s/.test(text[a])) a++;
   while (b > a && /\s/.test(text[b - 1])) b--;
-  L().spans.push({ key, start: a, end: b }); sel.removeAllRanges();
+  return b > a ? { key, start: a, end: b } : null;
+}
+function addSelection() {
+  const s = currentSelection() || lastSel;
+  if (!s) { hint("Select some words inside the filing text first, then press S.", true); return false }
+  const v = L();
+  if (!v.spans.some(x => x.key === s.key && x.start === s.start && x.end === s.end)) v.spans.push(s);
+  lastSel = null; window.getSelection().removeAllRanges();
   save(items[idx].id); renderDoc(); renderSpans(); renderProgress();
+  hint("Span added. Type a short answer below, then press Enter (or A).");
+  return true;
 }
 function renderSpans() {
   const box = $("spans"); box.textContent = "";
@@ -258,6 +272,7 @@ function renderTabs() {
 }
 function render() {
   const it = items[idx], v = L();
+  if (render.last !== it.id) { lastSel = null; render.last = it.id }
   const meta = $("meta"); meta.textContent = "";
   meta.append(mk("span", "id", it.id), mk("span", "", (idx + 1) + " of " + items.length), mk("span", "", v.state ? NAMES[v.state] : "not labeled yet"));
   $("q").textContent = it.question;
@@ -290,13 +305,20 @@ function renderProgress() {
 function setState(k) {
   const v = L();
   v.answer = $("answer").value.trim(); v.note = $("note").value.trim();
-  if (k === "A" && (!v.spans.length || !v.answer)) { setStatus("For Answerable, add at least one span (S) and a short answer first.", true); return }
+  if (k === "A" && !v.spans.length && (currentSelection() || lastSel)) addSelection();   // selected but not added: add it
+  if (k === "A" && !v.spans.length) { hint("Answerable needs the answer's words selected in the filing text. Select them, then press A again.", true); return }
+  if (k === "A" && !v.answer) { hint("Type a short answer in the box below, then press Enter.", true); $("answer").focus(); return }
   v.state = k; save(items[idx].id); go(1);
+  hint("Saved as " + NAMES[k] + ". Select the answer in the filing text, type a short answer, then press Enter (or A).");
 }
 function go(d) { idx = Math.min(items.length - 1, Math.max(0, idx + d)); render(); window.scrollTo(0, 0) }
 function nextOpen() { for (let s = 1; s <= items.length; s++) { const j = (idx + s) % items.length; if (!labels[items[j].id]?.state) { idx = j; render(); window.scrollTo(0, 0); return } } }
 
+$("addSpan").addEventListener("mousedown", (e) => e.preventDefault());   // keep the text selection when clicking
 $("addSpan").addEventListener("click", addSelection);
+STATES.forEach(k => $("b" + k).addEventListener("mousedown", (e) => e.preventDefault()));
+document.addEventListener("selectionchange", () => { const s = currentSelection(); if (s) lastSel = s });
+$("answer").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); setState("A") } });
 STATES.forEach(k => $("b" + k).addEventListener("click", () => setState(k)));
 $("prev").addEventListener("click", () => go(-1)); $("next").addEventListener("click", () => go(1)); $("nextOpen").addEventListener("click", nextOpen);
 $("find").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); if (hits.length && $("find").dataset.q === $("find").value) stepFind(e.shiftKey ? -1 : 1); else { $("find").dataset.q = $("find").value; runFind() } } else if (e.key === "Escape") $("find").blur() });
