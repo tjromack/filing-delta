@@ -24,7 +24,7 @@
 * { box-sizing: border-box }
 body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 0 190px }
+  padding-block: 0 40px }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper) }
 .wrap { max-width: 920px; margin: 0 auto; display: grid; gap: 14px }
 header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--paper);
@@ -59,9 +59,11 @@ label.l { font-size: .8rem; color: var(--muted) }
 textarea, .answer { width: 100%; font-family: var(--sans); font-size: .92rem; color: var(--ink); background: var(--sheet);
   border: 1px solid var(--rule); border-radius: 6px; padding: 8px }
 textarea { min-height: 52px }
-.keys { position: fixed; left: 0; right: 0; bottom: 0; z-index: 3; background: var(--sheet); border-top: 1px solid var(--rule);
-  padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)) }
-.keys .in { max-width: 920px; margin: 0 auto; display: grid; gap: 8px }
+/* The actions sit in the page flow right under the answer box (a fixed bar can land below the visible area when the
+   viewer sizes the frame to the page); sticky keeps them in view where the frame scrolls. */
+.keys { position: sticky; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); z-index: 3; background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px }
+.keys .in { display: grid; gap: 8px }
 .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
 button { font-family: var(--sans); font-size: .9rem; border: 1px solid var(--rule); background: var(--paper); color: var(--ink);
   border-radius: 6px; padding: 7px 12px; cursor: pointer }
@@ -138,11 +140,8 @@ summary { cursor: pointer; font-weight: 500 }
     <label class="l" for="note">Note (optional)</label>
     <textarea id="note" placeholder="Anything that made this a close call"></textarea>
   </div>
-  <div class="map" id="map" aria-label="All questions; click one to jump to it"></div>
-</div>
-
 <div class="keys"><div class="in">
-  <div class="hint" id="hint" role="status">Select the answer in the filing text, type a short answer, then press Enter (or A).</div>
+  <div class="hint" id="hint" role="status">Drag across the answering words in the text above, type a short answer, then press Enter (or A).</div>
   <div class="row">
     <button id="addSpan"><kbd>S</kbd>Add selection</button>
     <button class="lab A" id="bA"><kbd>A</kbd>Answerable</button>
@@ -157,6 +156,8 @@ summary { cursor: pointer; font-weight: 500 }
     </div>
   </div>
 </div></div>
+  <div class="map" id="map" aria-label="All questions; click one to jump to it"></div>
+</div>
 
 <script>
 const DATA = /*__DATA__*/null;
@@ -245,7 +246,8 @@ function renderSpans() {
     const go = mk("button", "", "Show"); go.addEventListener("click", () => { tab = items[idx].sections.indexOf(s.key); renderTabs(); renderDoc(); scrollToChar(s.start) });
     row.append(go, rm); box.append(row);
   });
-  if (!L().spans.length) box.append(mk("span", "none", "No answer span selected yet."));
+  if (!L().spans.length) box.append(mk("span", "none", "No answer span yet. Drag your mouse across the words that " +
+    "answer the question (search highlights don't count), then press S or Add selection."));
 }
 function scrollToChar(c) {
   const els = [...$("doc").children].filter(e => e.dataset.start !== undefined);
