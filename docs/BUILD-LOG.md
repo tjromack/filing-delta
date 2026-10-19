@@ -633,3 +633,6 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 ### Open / next
 - Trevor reviews `docs/design/qa.md`, then the build starts with the verifier and its forged-citation tests.
+- 2026-10-19 (later): Trevor fixed the GitHub login (pushes resumed) and approved `docs/design/qa.md`. His
+  question sheet, `docs/qa-questions-trevor.md`, was created so he can write his questions before seeing any drafted
+  ones.

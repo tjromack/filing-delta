@@ -1,6 +1,6 @@
 # M6 design: grounded QA that cites or abstains
 
-Status: **proposal, for Trevor's review.** Coverage: the locked corpus. That is 10-K Item 1A and Item 7 with period of
+Status: **approved by Trevor, 2026-10-19.** Coverage: the locked corpus. That is 10-K Item 1A and Item 7 with period of
 report 2018-01-01 to 2025-12-31, and 10-Q Part I Item 2 and Part II Item 1A filed 2025-01-01 to 2026-09-30, for 11
 companies.
 
