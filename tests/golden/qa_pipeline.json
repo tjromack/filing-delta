@@ -1,0 +1,7 @@
+{
+ "pipeline_version": "571c5437f514",
+ "prompt_version": "32c1f63639d9",
+ "frozen": "2026-10-19",
+ "model": "claude-sonnet-5-5 (ANTHROPIC_MODEL default)",
+ "dev": "tools/qa_dev.py: 14 Claude-written questions, 12 answered and all verified"
+}

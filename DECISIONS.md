@@ -402,3 +402,27 @@ sample only.
   on three practice items outside the set.
 - **Alternatives rejected (offered):** Trevor writes all 60 (about 2 hours); Claude drafts all and Trevor only labels
   (fastest, every question model-shaped). Sizes 30 (wide intervals) and 100 (about 2 hours).
+
+## FD-DEC 029 — QA pipeline as built, tuned on a dev slice, frozen (2026-10-19)
+**Status:** Decided. Frozen at pipeline `571c5437f514`, prompt `32c1f63639d9` (`tests/golden/qa_pipeline.json`).
+
+- **As designed** (`docs/design/qa.md`): deterministic scoping (company, form, fiscal year/quarter, section hint),
+  scope-time abstention for advice, predictions, companies outside the corpus and periods outside coverage, BM25 top
+  8, `claude-sonnet-5-5` with JSON output, and an exact-substring verifier where one failed citation abstains the
+  whole answer.
+- **Added during dev, each for a measured failure:**
+  1. A rule against the model's own conclusions ("therefore … the main driver"). Netflix's first answer drew one
+     that its quotes didn't state.
+  2. A light deterministic stemmer. Netflix's stated reason ("revenues … increased … primarily due to …") was missed
+     because the question said "revenue … increase".
+  3. **Change questions ranked from the M3 diff.** "What risks did Coca-Cola add between 2022 and 2023" has no topic
+     words, so BM25 ranked noise. It now ranks the diff's added units first (removed ones for "dropped"). Each
+     passage is labeled with the diff's finding, so the model knows a passage is new rather than guessing from
+     excerpts.
+  4. Performance words (revenue, cash flow, drove...) point to MD&A.
+- **Dev result:** of 14 Claude-written questions (never part of the labeled 60), 12 answered with every citation
+  verified exact on the first try, 1 correctly abstained by the model (a salary the sections don't contain), and 1
+  abstained by rule (buy advice). No curly-quote failures, so exact matching stays exact. Measured cost of all dev
+  iterations: $0.30 (35 calls).
+- **Alternative rejected:** loosening citation matching (folding quotes or whitespace). Not needed on dev evidence,
+  and it would weaken pin 5.

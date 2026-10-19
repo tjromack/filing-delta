@@ -636,3 +636,39 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - 2026-10-19 (later): Trevor fixed the GitHub login (pushes resumed) and approved `docs/design/qa.md`. His
   question sheet, `docs/qa-questions-trevor.md`, was created so he can write his questions before seeing any drafted
   ones.
+
+## 2026-10-19 — M6 part 1: the pipeline, built, tested, frozen
+
+### What happened
+- `filing_delta/qa/` built:
+  - `answer.py`: the `Answer | Abstain` type and the exact-substring verifier, the gate.
+  - `scope.py`, `index.py`: scoping and BM25.
+  - `prompt.py`, `ask.py`: the answer stage through the M4 recorder.
+  - `version.py`.
+- Tests: 16 forged-citation gate tests, 27 scope and ranking tests, 7 end-to-end pipeline tests with a scripted
+  model. Every mutation caught (25 across the stages). Full suite: 228.
+- Dev slice (`tools/qa_dev.py`, 14 of my questions, not in the 60): 12 answered and verified, 2 correct
+  abstentions. Frozen at pipeline `571c5437f514` (FD-DEC 029). Measured cost $0.30.
+
+### What broke and the fix
+- Netflix, round 1: the answer added "membership growth was therefore the main driver", which its quotes didn't
+  say. A prompt rule fixed it, and round 2 abstained instead.
+- Netflix, round 2: the abstention was right, but for the wrong reason. Retrieval had missed the filing's own
+  sentence because nothing was stemmed ("revenue increase" vs. "revenues … increased"). A light stemmer fixed it,
+  and round 3 quoted the stated reason.
+- Coca-Cola "what new risks were added": BM25 had only change words to rank on. Change questions now rank the M3
+  diff's added units first, and passages carry the diff's label. The answer named the sustainability-regulation
+  risk and the Pillar Two tax text as new.
+- Two mutation survivors in the tests: an empty-quote check that was genuinely redundant (removed), and a bounds
+  check whose only distinct job, stopping Python's negative slicing, no test reached (test added). One more
+  survivor: the quarter filter was untested because the test catalog had one 10-Q per company.
+
+### Learnings
+- **The verifier hasn't had to reject anything real yet:** dev produced 0 failed citations in 12 answers. The
+  forged-citation tests are what show it works. The labeled 60 will show whether that holds.
+- **The diff and the QA stage compose.** "What changed" questions are where this tool differs from a plain RAG
+  system, and the deterministic M3 diff is what answers them.
+
+### Open / next
+- Draft the 48 questions (about 28 answerable plus 20 unanswerable by design); Trevor writes his 12 or more.
+  Then the practice page and the labeling page.
