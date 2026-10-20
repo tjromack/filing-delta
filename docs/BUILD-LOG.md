@@ -728,3 +728,14 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   a committed golden file before any run, as in M4 and M5.
 - **Lesson for M8's read view:** pages meant for real use need testing in the environment they'll run in. An
   artifact viewer is a different environment from a browser tab.
+
+## 2026-10-20 — M6 part 3: the answer key, from a model jury
+
+### What happened
+- After the practice page, Trevor found full manual labeling too slow, especially for the multi-year questions,
+  and asked about having models label. I explained why a model-built key can't be the independent measure (the
+  system answers with Sonnet; a model key measures model agreement) and offered four options. He chose a two-model
+  jury with his review of their disagreements (FD-DEC 031).
+- `tools/qa_jury.py`: Opus 5.5 and Fable 5.1, each reading the full scoped sections (about 1.7 million tokens per
+  juror across the 60), JSON output, quotes mapped to sentence-level gold. A one-question smoke test passed for
+  both (they agreed that Apple doesn't disclose Greater China iPhone units). 118 requests submitted via Batches.

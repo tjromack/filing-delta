@@ -438,3 +438,23 @@ sample only.
   the page didn't show. Scoring counts every W as a pipeline miss, never as a correct abstention.
 - **Alternative rejected:** embedding every section of every named company (several MB per company, past the page
   limit across 60 items).
+
+## FD-DEC 031 — The QA answer key: a two-model jury, with Trevor reviewing disagreements (2026-10-20)
+**Status:** Decided (Trevor chose "jury, you check disagreements" over a jury plus 20 blind human labels, a
+jury-only key, and labeling all 60 himself). It narrows the CLAUDE.md rule "hand labels are human labels" for the M6
+QA set, and is disclosed wherever M6/M7 results appear.
+
+- **Why:** labeling 60 questions in full, some needing year-over-year reading of long sections, was too manual.
+  Trevor asked whether models could do it.
+- **The jury:** `claude-opus-5-5` and `claude-fable-5-1` each label all 60 independently from the full scoped
+  section text: a state, exact quotes mapped to sentence-level gold, and a short answer. Neither is the pipeline's
+  answering model (`claude-sonnet-5-5`), and neither sees the pipeline's retrieval or answers. Requests are recorded
+  by hash, so the key replays with no key. `tools/qa_jury.py`.
+- **Trevor's part:** where the two jurors disagree (state differs, or no shared answering sentence), he decides,
+  seeing both jurors' labels. Where they agree, their label is the key.
+- **What the results can claim:** agreement with a model-built key, human-adjudicated only where the models split.
+  This is not an independent human measurement. The jurors' blind spots, where both are wrong the same way, go
+  unseen. Trevor's review is anchored by seeing the jurors' answers (the M5 lesson, FD-DEC 026/027). M7 reports it
+  that way, and the B4 export marks each label's provenance (jury-agreed or Trevor-adjudicated).
+- **Alternatives offered and rejected:** jury plus 20 blind human labels, to calibrate the jury (recommended; it
+  keeps an independent number at about 15 minutes); a jury-only key; labeling all 60 by hand (about 45 minutes).
