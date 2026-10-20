@@ -17,7 +17,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M3 · paragraph diff | `105e3db` | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
 | M4 · materiality classifier | `8df0811` (approved) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
 | M5 · XBRL facts join | `7da4250` (approved) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
-| M6 · grounded QA | (this commit, awaiting approval) | 35/35 answers verified exact; 23/23 correct abstentions; recall@8 36/37 against a model-jury key (58/60 jurors agreed) | labeling in the claude.ai viewer failed; a local labeling server and a model jury replaced it; misses are "no, but" questions |
+| M6 · grounded QA | `3c9b650` + v2 (approved) | 35/35 answers verified exact; 23/23 correct abstentions; recall@8 36/37 against a model-jury key (58/60 jurors agreed) | labeling in the claude.ai viewer failed; a local labeling server and a model jury replaced it; misses are "no, but" questions |
 
 ---
 
@@ -777,3 +777,20 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - M6 gate: stop for Trevor's approval, plus his call on "no, but". Then M7: `spancheck` scores the recorded run
   (citation provenance and support, abstention, groundedness, cost and latency).
+
+### 2026-10-20 — M6 approved; "no, but" answers (pipeline v2)
+- Trevor approved M6 and chose to answer "no, but" questions (FD-DEC 033). Prompt rule 8 answers "[filing]'s
+  [section] doesn't say X. It does say Z", citing Z, with a boundary: a specific absent fact (a number, name or
+  amount) or nothing on the subject still abstains. Five new dev questions outside the 60 checked both sides of
+  the boundary: Walmart climate litigation and Netflix ad plan vs. churn answered "no, but"; the F-150 price,
+  Apple and cryptocurrency, and Tim Cook's salary abstained.
+- The dev slice also caught a scoping bug. "Does Coca-Cola's 2023 10-K say weight-loss drugs have already reduced
+  its sales?" was routed to MD&A only because of "sales", but the text is in the risk factors. Performance words now
+  narrow to MD&A only alongside a figure or driver cue (test added, both mutations caught). Re-asked, the answer
+  quoted the weight-loss-drug risk sentence in "no, but" form.
+- Re-frozen as v2 `117a48a6de87`, with v1 recorded in `tests/golden/qa_pipeline.json`. v2 on the 60: 36/37
+  answerable answered (QA52 now "no, but"), 23/23 abstentions still correct, 36/36 citations verified. $0.34 for
+  the run, about $0.25 for the extra dev questions.
+- **Remaining miss, QA21:** vocabulary. The question says "paid sharing"; the filing says "multi-household usage and
+  shared viewing outside of a household". BM25 can't connect them, and adding synonyms for a scored item would be
+  tuning on the test. Left as the clearest case for meaning-based search, and noted for M7's error analysis.

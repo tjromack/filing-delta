@@ -50,6 +50,10 @@ MDA = re.compile(r"\bmd&a\b|management['’]s\s+discussion|results\s+of\s+operat
 PERF = re.compile(r"\b(?:revenues?|sales|net\s+income|earnings|operating\s+income|margins?|cash\s+flows?|"
                   r"capital\s+(?:spending|expenditures?|investments?)|expenses?|dividends?|drove|driven|drivers?)\b",
                   re.I)
+# ...but only when the question asks for a figure or a driver. "Did weight-loss drugs reduce its sales?" is about a
+# risk the filing describes, not an MD&A figure.
+FIGURE = re.compile(r"\b(?:drove|driven|drivers?|why|how\s+much|how\s+many|what\s+(?:was|were)|increased?|"
+                    r"decreased?|grew|growth|declined?|amount|total)\b", re.I)
 CHANGE = re.compile(r"\b(?:add|added|adds|new|newly|remove|removed|drop|dropped|change|changed|changes|differ|"
                     r"different|no\s+longer)\b", re.I)
 
@@ -101,7 +105,7 @@ def scope(q: str, catalog: list[Filing]) -> Scope:
                              f"fiscal year. Coverage: {COVERAGE}.")
     if RISK.search(q) and not MDA.search(q):
         sections = ("10K_1A", "10Q_P2_1A")
-    elif (MDA.search(q) or PERF.search(q)) and not RISK.search(q):
+    elif (MDA.search(q) or (PERF.search(q) and FIGURE.search(q))) and not RISK.search(q):
         sections = ("10K_7", "10Q_P1_2")
     else:
         sections = ("10K_1A", "10K_7", "10Q_P1_2", "10Q_P2_1A")

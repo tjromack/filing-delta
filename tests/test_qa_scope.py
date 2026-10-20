@@ -72,6 +72,8 @@ def test_section_hints():
     assert scope("What risks does Apple describe in 2023?", CAT).sections == (K1A, Q1A)
     assert scope("What drove Apple's revenue in 2023?", CAT).sections == (K7, Q2)
     assert scope("What does Apple's 2023 10-K say about its retail stores?", CAT).sections == (K1A, K7, Q2, Q1A)
+    # a performance word alone doesn't narrow to MD&A: this asks about a described risk, not a figure
+    assert scope("Does Apple's 2023 10-K say tariffs have reduced its sales?", CAT).sections == (K1A, K7, Q2, Q1A)
 
 
 def test_section_not_parsed_abstains():

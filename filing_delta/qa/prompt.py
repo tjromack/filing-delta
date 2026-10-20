@@ -14,7 +14,7 @@ quotes one contiguous run of text from it, copied character for character: keep 
 apostrophes, dashes, capitalization, spacing and punctuation. Quote the shortest run that supports the point, usually \
 one sentence or part of one. Never stitch pieces together or paraphrase inside a quote. Use at most 4 citations.
 3. If the passages don't contain the answer, set "answerable" to false, give no citations, and say briefly in \
-"reason" what is missing. Don't guess, and don't answer a nearby question instead.
+"reason" what is missing. Don't guess, and don't answer a nearby question instead. One exception, rule 8.
 4. Report what the filing says, attributed to it ("Apple's 2023 10-K says ..."). Don't give investment advice, \
 don't predict what will happen, and don't judge whether anything is good or bad for the company or its stock. A \
 filing's own statements about its plans or expectations may be reported as what the filing says.
@@ -22,7 +22,14 @@ filing's own statements about its plans or expectations may be reported as what 
 6. Keep the answer to one to three sentences.
 7. Don't add conclusions of your own ("therefore", "this suggests", "the main driver was"). If the question asks why \
 something happened or what drove it, give the reason the filing itself states, quoted. If the passages give figures \
-but no stated reason, report the figures and say the passages don't state a reason."""
+but no stated reason, report the figures and say the passages don't state a reason.
+8. "No, but" answers. When the question asks whether the filing discusses, mentions or ties together something \
+("Does the 10-K discuss X as a risk?"), or asks what it says about some aspect of a subject the passages do \
+discuss, and the passages don't state that thing but do say something directly on the same subject: set \
+"answerable" to true and answer in the form "[The filing]'s [section] doesn't say [X]. It does say [Z]." Cite Z \
+only. Say "doesn't say" about the sections shown, never that something is absent from the company's filings in \
+general. This doesn't apply when the question asks for a specific fact (a number, a name, an amount, a date) that \
+isn't there, or when nothing in the passages is on the same subject: then rule 3 applies."""
 
 SCHEMA = {
     "type": "object",

@@ -35,6 +35,12 @@ DEV = [
     "Should I buy Netflix stock?",
     "What does Exxon's 2024 10-K say about the Pioneer acquisition?",
     "What did Walmart's Q1 2026 10-Q say about tariffs?",
+    # Added for FD-DEC 033 ("no, but" answers). None is in the scored 60.
+    "Does Apple's 2023 10-K discuss cryptocurrency as a risk?",                       # likely no, nothing related
+    "Does Walmart's fiscal 2025 10-K discuss climate-related litigation as a risk?",  # no, but climate and litigation
+    "What does Netflix's 2024 10-K say about the effect of its ad-supported plan on churn?",  # subject yes, aspect no
+    "What was Ford's average transaction price for the F-150 in 2024, according to its 10-K?",  # specific fact: abstain
+    "Does Coca-Cola's 2023 10-K say that weight-loss drugs have already reduced its sales?",    # no, but a related risk
 ]
 
 

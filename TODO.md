@@ -92,7 +92,7 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       (FD-DEC 026): 0/99 overrides, reported as not independent (`docs/claims-eval.md`); he chose to close as is
 - [x] **Gate:** join verified on the corpus (two-source cross-check; outputs byte-identical offline). **← stop for approval**
 
-## M6 — retrieval + grounded QA (cite or abstain) (done; awaiting approval)
+## M6 — retrieval + grounded QA (cite or abstain) (done; approved 2026-10-20)
 - [x] Design approved (`docs/design/qa.md`); deterministic scoping, BM25 over exact-offset units, change questions
       ranked from the M3 diff (FD-DEC 029)
 - [x] `Answer | Abstain` type; exact-substring citation verifier; any unverifiable answer becomes an abstention

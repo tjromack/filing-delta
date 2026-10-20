@@ -479,3 +479,20 @@ QA set, and is disclosed wherever M6/M7 results appear.
 - **What the numbers can claim:** agreement with a model-built key (FD-DEC 031). The 48 drafted questions scored
   48/48 and Trevor's 12 scored 10/12, which repeats FD-DEC 028's warning that model-drafted questions are the easy
   ones.
+
+## FD-DEC 033 — M6 approved; "no, but" questions are answered, with a boundary (2026-10-20)
+**Status:** Decided (Trevor: answer "the filing doesn't say X; it says Z" and proceed). Resolves FD-DEC 032's open
+question.
+
+- **Rule (prompt rule 8):** a question that asks whether a filing discusses or ties together something, or asks what
+  it says about an aspect of a subject it does discuss, gets "[The filing]'s [section] doesn't say X. It does say Z",
+  citing Z. That is still an `Answer` with at least one verified citation, so pin 5 holds.
+- **Boundary:** a request for a specific absent fact (a number, name, amount, date) still abstains, as does a question
+  with nothing on the same subject in the passages. Otherwise the rule would turn correct abstentions (iPhone units,
+  executive pay) into evasive answers.
+- **Scoped wording:** "doesn't say" is said about the sections searched, never about the company's filings in
+  general. It also rests on retrieval: the model sees the top 8 passages, so an absence claim is only as good as
+  recall (36/37 on the M6 set).
+- **Process:** tuned on dev questions outside the 60, then re-frozen. The M6 run under the previous pipeline stays
+  in the record (`docs/qa-eval-v1.md`). A v2 run on the 60 is reported beside it, disclosed as not independent
+  evidence for QA21/QA52, since those two items prompted the change.

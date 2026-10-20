@@ -1,7 +1,16 @@
 {
- "pipeline_version": "571c5437f514",
- "prompt_version": "32c1f63639d9",
- "frozen": "2026-10-19",
+ "pipeline_version": "117a48a6de87",
+ "prompt_version": "a3e1a02aa61d",
+ "frozen": "2026-10-20",
  "model": "claude-sonnet-5-5 (ANTHROPIC_MODEL default)",
- "dev": "tools/qa_dev.py: 14 Claude-written questions, 12 answered and all verified"
+ "change": "FD-DEC 033: 'no, but' answers (prompt rule 8); performance words narrow to MD&A only with a figure/driver cue",
+ "dev": "tools/qa_dev.py: 19 Claude-written questions (14 + 5 for 'no, but'), none in the scored 60; 15 answered, all verified",
+ "previous": [
+  {
+   "pipeline_version": "571c5437f514",
+   "prompt_version": "32c1f63639d9",
+   "frozen": "2026-10-19",
+   "report": "docs/qa-eval-v1.md"
+  }
+ ]
 }
