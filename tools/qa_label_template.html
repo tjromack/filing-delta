@@ -86,6 +86,15 @@ details { background: var(--sheet); border: 1px solid var(--rule); border-radius
 summary { cursor: pointer; font-weight: 500 }
 .guide { display: grid; gap: 6px; margin: 10px 0 0; max-width: 74ch } .guide dt { font-weight: 600 } .guide dd { margin: 0 0 6px; color: var(--muted) }
 .worked { border: 1px dashed var(--start); border-radius: 6px; padding: 10px 14px; font-size: .9rem; display: grid; gap: 6px }
+.jury { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px }
+.juror { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 6px;
+  font-size: .9rem; min-width: 0 }
+.juror.j1 { border-top: 4px solid var(--kW) } .juror.j2 { border-top: 4px solid var(--kU) }
+.juror .who { font-family: var(--mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted) }
+.juror .st { font-weight: 600 } .juror .why { color: var(--muted); overflow-wrap: anywhere }
+.juror .row { gap: 6px }
+.doc .j1 { box-shadow: inset 3px 0 var(--kW) } .doc .j2 { text-decoration: underline 3px var(--kU); text-underline-offset: 4px }
+.doc .j1.j2 { box-shadow: inset 3px 0 var(--kW) }
 .hint { font-size: .85rem; color: var(--muted) } .hint.warn { color: var(--kN); font-weight: 500 }
 .done { border: 1px solid var(--kA); color: var(--kA); border-radius: 6px; padding: 10px 14px; font-weight: 500 }
 @media (prefers-reduced-motion: reduce) { .bar > i { transition: none } }
@@ -123,6 +132,7 @@ summary { cursor: pointer; font-weight: 500 }
   </section>
 
   <div id="worked" class="worked" hidden></div>
+  <div id="jury" class="jury" hidden></div>
 
   <div class="tabs" id="tabs"></div>
   <div class="find" id="findrow">
@@ -182,7 +192,8 @@ function save(id) {
   lsSave();
   if (!coll) return;
   const v = labels[id];
-  const body = { state: v.state || "", spans: v.spans || [], answer: v.answer || "", note: v.note || "", at: new Date().toISOString() };
+  const body = { state: v.state || "", spans: v.spans || [], answer: v.answer || "", note: v.note || "",
+                 choice: v.choice || "own", at: new Date().toISOString() };
   pending[id] = (pending[id] || Promise.resolve()).then(() => coll.doc(id).set(body)).then(
     () => setStatus("Saved " + id + ". Labels save as you go."),
     (e) => setStatus("Couldn't save " + id + " (" + (e && e.code || "error") + "). It's kept in this browser; try again in a moment.", true));
@@ -219,6 +230,7 @@ function renderDoc() {
   const start = it.start && it.start.key === key ? it.start : null;
   const cuts = new Set([0, text.length]);
   sents.forEach(([a, b]) => { cuts.add(a); cuts.add(b) });
+  (it.jury || []).forEach(j => j.spans.forEach(s => { if (s.key === key) { cuts.add(s.start); cuts.add(s.end) } }));
   hits.forEach(([a, b]) => { cuts.add(a); cuts.add(b) });
   gold.forEach(s => { cuts.add(s.start); cuts.add(s.end) });
   if (start) { cuts.add(start.start); cuts.add(start.end) }
@@ -231,8 +243,37 @@ function renderDoc() {
     if (gold.some(s => s.start <= a && b <= s.end)) sp.classList.add("gold");
     if (hits.some(([s, e]) => s <= a && b <= e)) sp.classList.add("hit");
     if (start && start.start <= a && b <= start.end) sp.classList.add("start");
+    (it.jury || []).forEach((j, n) => { if (j.spans.some(s => s.key === key && s.start <= a && b <= s.end)) sp.classList.add("j" + (n + 1)) });
     doc.append(sp);
   }
+}
+// Review mode: the two jurors' labels, side by side. "Use this" copies a juror's label as the decision; the normal
+// controls below label it differently.
+const JSTATE = { answerable: "A", not_answerable: "N", unsure: "U", wrong_filing: "W", reject: "R" };
+function renderJury(it) {
+  const box = $("jury"); box.textContent = ""; box.hidden = !it.jury;
+  if (!it.jury) return;
+  it.jury.forEach((j, n) => {
+    const c = mk("div", "juror j" + (n + 1));
+    c.append(mk("div", "who", "Juror " + (n + 1) + " · " + j.model + (n ? " · underlined in the text" : " · bar at left in the text")),
+             mk("div", "st", NAMES[JSTATE[j.state]] + (j.answer ? ": " + j.answer : "")),
+             mk("div", "why", j.reason || ""));
+    const row = mk("div", "row");
+    if (j.spans.length) {
+      const show = mk("button", "", "Show its sentences");
+      show.addEventListener("click", () => { tab = Math.max(0, it.sections.indexOf(j.spans[0].key)); renderTabs(); renderDoc(); scrollToChar(j.spans[0].start) });
+      row.append(show);
+    }
+    const use = mk("button", "lab A on", "Use juror " + (n + 1) + "'s label");
+    use.addEventListener("click", () => {
+      const v = L();
+      v.state = JSTATE[j.state]; v.spans = j.spans.map(s => ({ ...s })); v.answer = j.answer || ""; v.choice = "juror" + (n + 1);
+      v.note = $("note").value.trim();
+      save(it.id); go(1);
+      hint("Saved juror " + (n + 1) + "'s label for " + it.id + ".");
+    });
+    row.append(use); c.append(row); box.append(c);
+  });
 }
 function pickAtMatch() {
   const key = items[idx].sections[tab];
@@ -294,12 +335,14 @@ function render() {
   meta.append(mk("span", "id", it.id), mk("span", "", (idx + 1) + " of " + items.length), mk("span", "", v.state ? NAMES[v.state] : "not labeled yet"));
   $("q").textContent = it.question;
   $("scope").textContent = it.scope_label || "";
-  $("sub").textContent = (DATA.practice ? "· practice (not scored)" : "· " + items.length + " questions") + " · build " + DATA.built;
+  $("sub").textContent = (DATA.practice ? "· practice (not scored)" : DATA.collection === "review" ?
+    "· " + items.length + " jury disagreements to decide" : "· " + items.length + " questions") + " · build " + DATA.built;
   const w = $("worked"); w.textContent = ""; w.hidden = !it.worked;
   if (it.worked) {
     const b = mk("button", "", "Show the worked answer"); b.addEventListener("click", () => { w.textContent = ""; it.worked.split("\n").forEach(p => w.append(mk("div", "", p))) });
     w.append(b);
   }
+  renderJury(it);
   hits = []; $("find").value = ""; $("findN").textContent = "";
   tab = it.start ? Math.max(0, it.sections.indexOf(it.start.key)) : 0;
   renderTabs(); renderDoc(); renderSpans();
@@ -325,7 +368,7 @@ function setState(k) {
   if (k === "A" && !v.spans.length && hits.length && hitI >= 0) pickAtMatch();     // searched but didn't pick: use the match
   if (k === "A" && !v.spans.length) { hint("Answerable needs the answer picked: click the sentence in the filing text, or search for its words and click Pick this sentence.", true); return }
   if (k === "A" && !v.answer) { hint("Type a short answer in the box below, then press Enter.", true); $("answer").focus(); return }
-  v.state = k; save(items[idx].id); go(1);
+  v.state = k; v.choice = "own"; save(items[idx].id); go(1);
   hint("Saved as " + NAMES[k] + ". Click the answering sentence(s), type a short answer, then press Enter or click Answerable.");
 }
 function go(d) { idx = Math.min(items.length - 1, Math.max(0, idx + d)); render(); window.scrollTo(0, 0) }
@@ -379,7 +422,7 @@ render();
                                             .then(r => { if (!r.ok) throw { code: "HTTP " + r.status } }) }) };
     try {
       const saved = await (await fetch(url())).json();
-      Object.entries(saved).forEach(([id, v]) => { labels[id] = { state: v.state || "", spans: v.spans || [], answer: v.answer || "", note: v.note || "" } });
+      Object.entries(saved).forEach(([id, v]) => { labels[id] = { state: v.state || "", spans: v.spans || [], answer: v.answer || "", note: v.note || "", choice: v.choice || "own" } });
       lsSave();
       const o = items.findIndex(i => !labels[i.id]?.state); if (o >= 0) idx = o;
       render();

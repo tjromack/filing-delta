@@ -739,3 +739,12 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - `tools/qa_jury.py`: Opus 5.5 and Fable 5.1, each reading the full scoped sections (about 1.7 million tokens per
   juror across the 60), JSON output, quotes mapped to sentence-level gold. A one-question smoke test passed for
   both (they agreed that Apple doesn't disclose Greater China iPhone units). 118 requests submitted via Batches.
+- **Jury result:** all 118 batch requests succeeded, and every quote from both jurors was located in the section
+  text. The jurors agree on **58 of 60**: all 28 drafted answerable questions answerable, all 20 by-design
+  unanswerable ones not answerable. **Both disagreements are among Trevor's own 12** (QA21, Netflix paid sharing;
+  QA54, Pfizer's 10-Q vs. 10-K). That bears out FD-DEC 028's caution that model-drafted questions are easy for
+  models; the human-written ones are where judgment is needed. Measured cost $16.41 ($4.67 Opus, $11.74 Fable),
+  above my $10 estimate because the inputs ran larger than I'd first sized. Committed as
+  `tests/golden/qa_jury.json` before any pipeline run on the set.
+- A review mode on the labeling page shows both jurors' labels, with their sentences marked in the text. "Use juror
+  N" or Trevor's own label; each saved label records which. Tested through the local server with real clicks.

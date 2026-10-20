@@ -16,7 +16,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = {"/": "qa-labeler.html", "/labeler": "qa-labeler.html", "/practice": "qa-practice.html"}
+PAGES = {"/": "qa-review.html", "/review": "qa-review.html", "/labeler": "qa-labeler.html",
+         "/practice": "qa-practice.html"}
 OUT = ROOT / "data" / "qa"
 PORT = 8765
 

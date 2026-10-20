@@ -81,6 +81,17 @@ def main() -> None:
     if mode == "practice":
         items, extra = build_items(PRACTICE)
         coll, dest, practice = "practice", "qa-practice.html", True
+    elif mode == "review":
+        # FD-DEC 031: only the questions the two jurors disagree on, with both jurors' labels shown.
+        jury = json.loads((ROOT / "data" / "qa" / "jury.json").read_text(encoding="utf-8"))
+        qs = {q["id"]: q for q in json.loads((ROOT / "tests" / "golden" / "qa_questions.json")
+                                             .read_text(encoding="utf-8"))["questions"]}
+        dis = [r for r in jury if not r["agree"]]
+        items, extra = build_items([qs[r["id"]] for r in dis])
+        for it, r in zip(items, dis):
+            it["jury"] = [{"model": m, **{k: v for k, v in j.items() if k != "misses"}} for m, j in r["jurors"].items()]
+            it.pop("start", None)          # in review, the jurors' sentences are the guide, not the drafting passage
+        coll, dest, practice = "review", "qa-review.html", False
     else:
         data = json.loads((ROOT / "tests" / "golden" / "qa_questions.json").read_text(encoding="utf-8"))
         qs = data["questions"]
