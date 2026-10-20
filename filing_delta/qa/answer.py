@@ -18,6 +18,7 @@ class Citation:
     start: int
     end: int
     quote: str
+    claim: str = ""     # the part of the answer this citation supports (v3); verification ignores it
 
 
 @dataclass(frozen=True)
@@ -66,7 +67,8 @@ def verify(text: str, citations: list[Citation], sections: Mapping[tuple[str, st
     return Answer(text.strip(), tuple(citations)), []
 
 
-def locate(quote: str, unit_start: int, unit_text: str, accession: str, section: str) -> Citation | None:
+def locate(quote: str, unit_start: int, unit_text: str, accession: str, section: str,
+           claim: str = "") -> Citation | None:
     """A quote copied from a retrieved passage -> a citation with absolute offsets in the section, or None if the
     quote is not an exact substring of that passage. No normalization of any kind (design §2)."""
     if not quote:
@@ -74,4 +76,4 @@ def locate(quote: str, unit_start: int, unit_text: str, accession: str, section:
     i = unit_text.find(quote)
     if i < 0:
         return None
-    return Citation(accession, section, unit_start + i, unit_start + i + len(quote), quote)
+    return Citation(accession, section, unit_start + i, unit_start + i + len(quote), quote, claim)

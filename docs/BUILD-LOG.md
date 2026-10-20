@@ -18,7 +18,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M4 · materiality classifier | `8df0811` (approved) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
 | M5 · XBRL facts join | `7da4250` (approved) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
 | M6 · grounded QA | `3c9b650` + v2 (approved) | 35/35 answers verified exact; 23/23 correct abstentions; recall@8 36/37 against a model-jury key (58/60 jurors agreed) | labeling in the claude.ai viewer failed; a local labeling server and a model jury replaced it; misses are "no, but" questions |
-| M7 · spancheck | (this commit, awaiting approval) | provenance 71/71; abstention 59/60; answers entailed by their own citations 51/60; p50 2.4 s; $0.34 per 60 | 9 answers add true but uncited details; the exact-substring verifier can't see that, the judge can |
+| M7 · spancheck | `9357eca` + v3 (approved) | v3: provenance 89/89; answers entailed by their own citations 59/60 (51 in v2); p50 2.6 s; $0.38 per 60 | 9 answers add true but uncited details; the exact-substring verifier can't see that, the judge can |
 
 ---
 
@@ -828,3 +828,26 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 ### Open / next
 - M7 gate: Trevor's approval and his call on v3 (cite every figure and detail, with per-citation claims).
+
+### 2026-10-20 — M7 approved; pipeline v3 (cite every detail)
+- Trevor approved M7 and wanted the under-citation fix "at some point", leaving the timing to me. Done before M8
+  (FD-DEC 035): M8 packages the published numbers, so changing them afterwards would mean redoing the release.
+- `tools/spancheck_run.py dev` scores the dev slice's citations, so tuning never reads the scored 60. v2 dev
+  baseline: per-citation support 42%, answer entailed by citations 90%. v3 dev: 84%, 90%.
+- v3 on the 60: answers entailed by their own citations **59/60** (from 51); per-citation support 87% (from 67%);
+  89/89 provenance; 37/37 answered; 23/23 abstentions; $0.38; p50 2.6 s.
+  Judge calls $1.23 (252, 155 new).
+
+### What broke
+- **QA21 turned from an honest abstention into a misleading answer:** "the passages … never mention paid
+  sharing", after retrieval missed the "multi-household usage" text. Every grader passes it. The report now
+  computes and lists answers whose quotes miss the key's passage, so this can't hide in a 100% abstention score.
+
+### Learnings
+- **Making answers cite more made them less repeatable** (identical citation sets 47 → 28 of 60), while the
+  decisions stayed identical. Stability of *which* quotes isn't the same as stability of *what* is claimed.
+- **"No, but" and imperfect retrieval interact badly.** The rule that rescued QA52 produced QA21's false absence.
+  An absence claim needs a stronger retrieval guarantee than a positive one.
+
+### Open / next
+- M8 design (read view, release artifact, clean-clone run), for Trevor's review before building.

@@ -49,10 +49,12 @@ def first_sentence(p):
 
 def test_exact_quote_is_a_verified_answer_with_provenance(tmp_path, cat):
     t = run(lambda p: {"answerable": True, "answer": "It buys abroad.", "reason": "",
-                       "citations": [{"passage": "P1", "quote": first_sentence(p)}]}, tmp_path, cat)
+                       "citations": [{"passage": "P1", "quote": first_sentence(p), "claim": "It buys abroad."}]},
+            tmp_path, cat)
     r = t["result"]
     assert r["type"] == "answer" and len(r["citations"]) == 1
     c = r["citations"][0]
+    assert c["claim"] == "It buys abroad."                     # v3: the claim travels with its citation
     text = (ROOT / "data" / "sections" / c["accession"] / f"{c['section']}.txt").read_text(encoding="utf-8")
     assert text[c["start"]:c["end"]] == c["quote"]
     assert "Weyco 10-K, fiscal 2023" in t["provenance"] and "unaudited" in t["provenance"]

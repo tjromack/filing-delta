@@ -1,16 +1,22 @@
 {
- "pipeline_version": "117a48a6de87",
- "prompt_version": "a3e1a02aa61d",
+ "pipeline_version": "2369f1ea207a",
+ "prompt_version": "8e982d7fefa2",
  "frozen": "2026-10-20",
  "model": "claude-sonnet-5-5 (ANTHROPIC_MODEL default)",
- "change": "FD-DEC 033: 'no, but' answers (prompt rule 8); performance words narrow to MD&A only with a figure/driver cue",
- "dev": "tools/qa_dev.py: 19 Claude-written questions (14 + 5 for 'no, but'), none in the scored 60; 15 answered, all verified",
+ "change": "FD-DEC 035: every figure and detail must be inside a quote; each citation names the claim it supports",
+ "dev": "tools/qa_dev.py: the same 19 dev questions, none in the scored 60; per-citation judged support 42% -> 84%, answer entailed by its citations 90% -> 90%",
  "previous": [
   {
    "pipeline_version": "571c5437f514",
    "prompt_version": "32c1f63639d9",
    "frozen": "2026-10-19",
    "report": "docs/qa-eval-v1.md"
+  },
+  {
+   "pipeline_version": "117a48a6de87",
+   "prompt_version": "a3e1a02aa61d",
+   "frozen": "2026-10-20",
+   "report": "docs/qa-eval-v2.md, docs/spancheck-report-v2.md"
   }
  ]
 }

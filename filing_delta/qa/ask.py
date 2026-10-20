@@ -33,7 +33,7 @@ def result_json(r: Answer | Abstain) -> dict:
         return {"type": "abstain", "reason": r.reason}
     return {"type": "answer", "text": r.text,
             "citations": [{"accession": c.accession, "section": c.section, "start": c.start, "end": c.end,
-                           "quote": c.quote} for c in r.citations]}
+                           "quote": c.quote, "claim": c.claim} for c in r.citations]}
 
 
 def ask(question: str, root: Path, catalog: list[Filing], recorder: Recorder) -> dict:
@@ -82,7 +82,8 @@ def ask(question: str, root: Path, catalog: list[Filing], recorder: Recorder) ->
     problems: list[str] = []
     for i, c in enumerate(out.get("citations") or [], 1):
         p = pid.get(c.get("passage"))
-        loc = locate(c.get("quote") or "", p["start"], p["text"], p["accession"], p["section"]) if p else None
+        loc = locate(c.get("quote") or "", p["start"], p["text"], p["accession"], p["section"],
+                     c.get("claim") or "") if p else None
         if loc is None:
             problems.append(f"citation {i}: quote is not an exact substring of {c.get('passage')}")
         else:

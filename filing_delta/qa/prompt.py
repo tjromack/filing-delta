@@ -12,7 +12,11 @@ Rules:
 2. Every point in your answer must be supported by a citation. A citation names one passage (P1, P2, ...) and \
 quotes one contiguous run of text from it, copied character for character: keep the passage's own quote marks, \
 apostrophes, dashes, capitalization, spacing and punctuation. Quote the shortest run that supports the point, usually \
-one sentence or part of one. Never stitch pieces together or paraphrase inside a quote. Use at most 4 citations.
+one sentence or part of one. Never stitch pieces together or paraphrase inside a quote. Use at most 6 citations.
+   Every figure, percentage, amount, date, name and specific detail in your answer must appear inside one of your \
+quotes. If a detail you want to state isn't in a quote, add a citation for it or leave the detail out.
+   Each citation's "claim" is the part of your answer it supports, in your answer's words: one point, not the whole \
+answer. Together the claims should cover everything the answer says.
 3. If the passages don't contain the answer, set "answerable" to false, give no citations, and say briefly in \
 "reason" what is missing. Don't guess, and don't answer a nearby question instead. One exception, rule 8.
 4. Report what the filing says, attributed to it ("Apple's 2023 10-K says ..."). Don't give investment advice, \
@@ -38,8 +42,8 @@ SCHEMA = {
         "answer": {"type": "string"},
         "citations": {"type": "array", "items": {
             "type": "object",
-            "properties": {"passage": {"type": "string"}, "quote": {"type": "string"}},
-            "required": ["passage", "quote"], "additionalProperties": False}},
+            "properties": {"passage": {"type": "string"}, "quote": {"type": "string"}, "claim": {"type": "string"}},
+            "required": ["passage", "quote", "claim"], "additionalProperties": False}},
         "reason": {"type": "string"},
     },
     "required": ["answerable", "answer", "citations", "reason"],

@@ -107,7 +107,10 @@ def entailed_by_citations(provider, name="answer_entailed_by_citations", thresho
     return g
 
 
-def outputs() -> tuple[list, dict]:
+def outputs(run_file: str = "run.jsonl") -> tuple[list, dict]:
+    """Cases and Outputs from a recorded run. For the dev slice there's no key: each case is marked answerable as
+    the pipeline answered it, so only citation and grounding graders mean anything there."""
+    dev = run_file != "run.jsonl"
     qs = {q["id"]: q for q in load("qa_questions.json")["questions"]}
     key = {k["id"]: k for k in load("qa_key.json")["key"]}
     lat = {}
@@ -123,8 +126,10 @@ def outputs() -> tuple[list, dict]:
 
     by_acc = {f.accession: f for f in catalog(ROOT)}
     cases, outs = [], {}
-    for line in (QA / "run.jsonl").read_text(encoding="utf-8").splitlines():
+    for n, line in enumerate((QA / run_file).read_text(encoding="utf-8").splitlines(), 1):
         t = json.loads(line)
+        if dev:
+            t["id"] = f"DEV{n:02d}"
         qid, r = t["id"], t["result"]
         contexts, sources = [], {}
         for p in t["retrieved"]:
@@ -142,7 +147,10 @@ def outputs() -> tuple[list, dict]:
                      + " · " + SECTION_LABEL[c["section"]]) if f else ""
             if p.get("change"):
                 label += " · " + CHANGE_LABEL[p["change"]]
-            cites.append({"span": c["quote"], "source_id": src, "label": label})
+            cite = {"span": c["quote"], "source_id": src, "label": label}
+            if c.get("claim"):                       # v3: the citation names the claim it supports
+                cite["claim"] = c["claim"]
+            cites.append(cite)
         u = t.get("usage") or {}
         cost = ((u.get("input_tokens") or 0) * SONNET[0] + (u.get("output_tokens") or 0) * SONNET[1]
                 + (u.get("cache_read_input_tokens") or 0) * SONNET[2]
@@ -152,6 +160,10 @@ def outputs() -> tuple[list, dict]:
                      "usage": {"input_tokens": u.get("input_tokens") or 0, "output_tokens": u.get("output_tokens") or 0,
                                "cost_usd": round(cost, 6)},
                      "latency_ms": (lat.get(qid) or {}).get("total_ms"), "stage": t["stage"]}
+        if dev:
+            cases.append(Case(qid, qid, category="dev", meta={"answerable": r["type"] == "answer", "author": "dev",
+                                                              "question": t["question"]}))
+            continue
         cases.append(Case(qid, qid, category=key[qid]["state"],
                           meta={"answerable": key[qid]["state"] == "answerable", "author": qs[qid]["author"],
                                 "question": qs[qid]["question"], "key_provenance": key[qid]["provenance"]}))
@@ -244,6 +256,33 @@ def score(offline: bool) -> None:
             lines.append(f"| {cid} | {span[:110].replace('|', '/')} | {'supported' if l.claim_supported else 'not'} "
                          f"({l.support}) | {'supported' if j.claim_supported else 'not'} ({j.support}) |")
         lines.append("")
+    # Answers the graders pass but whose quotes never touch the key's passage. For an absence ("no, but") answer that
+    # means the "doesn't say" half may be false: retrieval missed text that was there.
+    key = {k["id"]: k for k in load("qa_key.json")["key"]}
+    off = []
+    for line in (QA / "run.jsonl").read_text(encoding="utf-8").splitlines():
+        t = json.loads(line)
+        k, r = key[t["id"]], t["result"]
+        if k["state"] != "answerable" or r["type"] != "answer":
+            continue
+        gold = {(s["key"], s["start"], s["end"]) for s in k["spans"]}
+        hit = False
+        for c in r["citations"]:
+            ck = f"{c['accession']}|{c['section']}"
+            for g in gold:
+                gt = (ROOT / "data" / "sections" / g[0].split("|")[0] / f"{g[0].split('|')[1]}.txt").read_text(
+                    encoding="utf-8")[g[1]:g[2]]
+                if (g[0] == ck and g[1] < c["end"] and c["start"] < g[2]) or \
+                        (g[0].split("|")[0] == c["accession"] and (c["quote"] in gt or (len(gt) > 40 and gt in c["quote"]))):
+                    hit = True
+        if not hit:
+            off.append((t["id"], r["text"]))
+    if off:
+        lines += ["## Passing answers that miss the key's passage", "",
+                  "These pass every grader above, but none of their quotes touches the passage the answer key points "
+                  "to. For an absence (\"no, but\") answer, that means the \"doesn't say\" half may be false: retrieval "
+                  "missed text that was there, and no grader here can see it.", ""]
+        lines += [f"- **{i}**: {txt[:300]}" for i, txt in off] + [""]
     lines += ["## Limits", "",
               "- The key is model-built (FD-DEC 031), so these are agreement figures, not an independent measurement.",
               "- The judge isn't calibrated on this corpus. `spancheck` asks for a human gold set before a judge is "
@@ -259,5 +298,25 @@ def score(offline: bool) -> None:
     _ = audit
 
 
+def dev(offline: bool) -> None:
+    """Tuning aid: the citation graders over the dev slice (data/qa/dev.jsonl), never over the scored 60."""
+    sys.stdout.reconfigure(encoding="utf-8")
+    load_env()
+    cases, outs = outputs("dev.jsonl")
+    judge = RecordedJudge(offline)
+    run = evaluate(cases, lambda qid: {k: v for k, v in outs[qid].items() if k != "stage"},
+                   graders=[citation_accuracy(name="citation_accuracy_judged", claim_split=True,
+                                              support_fn=judge_support(provider=judge, model=JUDGE)),
+                            entailed_by_citations(judge)])
+    for g, s in run.scorecard().by_grader().items():
+        print(f"{g}: pass {s['pass_rate']:.0%} (n={s['n']})")
+    for cr in run.results:
+        for gr in cr.grades:
+            if not gr.passed:
+                print(f"  {cr.case_id} {gr.grader}: {gr.detail[:200]} | {cr.meta['question'][:60]}")
+    print(f"judge calls {judge.calls}, ${judge.usd:.2f}")
+
+
 if __name__ == "__main__":
-    {"latency": lambda: latency(), "score": lambda: score("--offline" in sys.argv)}[sys.argv[1]]()
+    {"latency": lambda: latency(), "score": lambda: score("--offline" in sys.argv),
+     "dev": lambda: dev("--offline" in sys.argv)}[sys.argv[1]]()

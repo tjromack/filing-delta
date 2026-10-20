@@ -527,3 +527,28 @@ question.
   citation name the claim it supports (spancheck's `claim` field). Tune on dev, re-freeze, re-run and re-score.
   Cost under $2.
 - **Not done:** the optional multi-provider comparison. M6's two-model jury already compares models on the key.
+
+## FD-DEC 035 — Pipeline v3: every detail quoted, each citation names its claim; done before M8 (2026-10-20)
+**Status:** Decided. Trevor approved M7 and wanted the FD-DEC 034 fix "at some point", leaving the timing to me.
+Done now, because M8 packages every published number into a release that a clean clone must reproduce: doing it
+after M8 would mean rebuilding that release.
+
+- **Change:** prompt rule 2 requires every figure, amount, date, name and specific detail to sit inside a quote.
+  Each citation carries `claim` (the part of the answer it supports), which `spancheck` uses for support instead of
+  guessing with `claim_split`. Up to 6 citations. `Citation.claim` doesn't take part in verification.
+- **Dev (same 19 questions, none in the 60):** per-citation judged support 42% → 84%; answer entailed by its own
+  citations 90% → 90%. The two remaining failures are "no, but" answers, whose absence half no quote can entail.
+- **v3 on the 60** (frozen `2369f1ea207a`; v2 reports kept as `docs/qa-eval-v2.md`, `docs/spancheck-report-v2.md`):
+  - answer entailed by its own citations 51/60 → **59/60**;
+  - per-citation judged support 67% → 87%;
+  - provenance 89/89; abstention 60/60 (by spancheck);
+  - 37/37 answerable answered;
+  - p50 2.6 s; $0.38.
+- **Costs of the change:** citation sets vary more between runs (identical citations 47/60 → 28/60; the
+  answer-or-abstain decision stays 60/60), and latency rose 0.2 s at the median.
+- **The new failure mode, now flagged in the report:** QA21 used to abstain, a recall miss. It now answers "the
+  passages … never mention paid sharing", which is misleading: the 10-K discusses it as "multi-household usage". It
+  passes every spancheck grader. An absence claim is only as good as retrieval, and no grader checks it, so the
+  report lists answers whose quotes miss the key's passage. Not tuned on the scored set. Candidate fixes for later:
+  meaning-based retrieval; or allowing "no, but" only when the question's own subject terms appear in the retrieved
+  passages.
