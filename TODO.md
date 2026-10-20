@@ -92,11 +92,15 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       (FD-DEC 026): 0/99 overrides, reported as not independent (`docs/claims-eval.md`); he chose to close as is
 - [x] **Gate:** join verified on the corpus (two-source cross-check; outputs byte-identical offline). **← stop for approval**
 
-## M6 — retrieval + grounded QA (cite or abstain) (in progress)
-- [ ] Index over parsed sections, keeping offsets
-- [ ] `Answer | Abstain` type; exact-substring citation verifier; any unverifiable answer becomes an abstention (FD-DEC 005)
-- [ ] Hand-labeled QA set (answerable + plausible unanswerable), done by Trevor
-- [ ] **Gate:** the verifier is tested against forged citations. **← stop**
+## M6 — retrieval + grounded QA (cite or abstain) (done; awaiting approval)
+- [x] Design approved (`docs/design/qa.md`); deterministic scoping, BM25 over exact-offset units, change questions
+      ranked from the M3 diff (FD-DEC 029)
+- [x] `Answer | Abstain` type; exact-substring citation verifier; any unverifiable answer becomes an abstention
+- [x] QA set: 60 questions (48 drafted + Trevor's 12; FD-DEC 028). Answer key from a two-model jury (Opus 5.5 +
+      Fable 5.1, 58/60 agreed) with Trevor deciding the 2 disagreements (FD-DEC 031; replaces "done by Trevor")
+- [x] One run of the frozen pipeline (`docs/qa-eval.md`): 35/35 answers verified, 23/23 correct abstentions,
+      retrieval recall@8 36/37; misses are two "no, but" questions (FD-DEC 032)
+- [x] **Gate:** the verifier is tested against forged citations (16 gate tests, all mutations caught). **← stop**
 
 ## M7 — spancheck run
 - [ ] Score citation accuracy, abstention correctness, hallucination rate, cost and latency with `spancheck` (PyPI)

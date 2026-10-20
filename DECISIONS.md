@@ -458,3 +458,24 @@ QA set, and is disclosed wherever M6/M7 results appear.
   that way, and the B4 export marks each label's provenance (jury-agreed or Trevor-adjudicated).
 - **Alternatives offered and rejected:** jury plus 20 blind human labels, to calibrate the jury (recommended; it
   keeps an independent number at about 15 minutes); a jury-only key; labeling all 60 by hand (about 45 minutes).
+
+## FD-DEC 032 — M6 results, and the open "no, but" question (2026-10-20)
+**Status:** Recorded at the M6 gate. The "no, but" behavior is left open for Trevor, not tuned on the scored set.
+
+- **Run** (pipeline `571c5437f514`, one pass, `docs/qa-eval.md`, $0.34):
+  - 35/35 model answers had every citation verify exact; none were withheld.
+  - 23/23 key-unanswerable questions abstained: 10 by the model, 13 by scope rules.
+  - 35/37 key-answerable questions answered, every one citing the key's passage.
+  - Retrieval recall@8: 36/37.
+- **Scorer fix before reporting:** QA58's answer cited a sentence Coca-Cola's 10-K repeats verbatim at another
+  position. A citation now counts as citing the key's passage if it quotes the same words from the same filing.
+  This changes the scorer, not the pipeline.
+- **Both misses are "no, but" questions** (QA21 Netflix paid sharing; QA52 Exxon climate litigation), both Trevor's.
+  The key's answers are of the form "the filing doesn't tie X to Y; it says Z (cited)". The pipeline abstains,
+  because it can cite what a filing says but not an absence. Whether a cited "no, but" is an answer or an abstention
+  is a product decision. Changing the prompt now would tune on the scored set, so it goes to Trevor: keep abstaining
+  (strict reading of pin 5), or answer "the filing doesn't say X; it does say Z" with Z cited (a new dev slice and
+  re-freeze before any re-run).
+- **What the numbers can claim:** agreement with a model-built key (FD-DEC 031). The 48 drafted questions scored
+  48/48 and Trevor's 12 scored 10/12, which repeats FD-DEC 028's warning that model-drafted questions are the easy
+  ones.

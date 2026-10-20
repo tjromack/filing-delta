@@ -17,6 +17,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M3 · paragraph diff | `105e3db` | 176 pairs diffed; aligner precision 0.83 / recall 0.80 vs 70 human labels (instance) | the diff's edge flags caught JPM's MD&A losing its last page; the labeling question was ambiguous |
 | M4 · materiality classifier | `8df0811` (approved) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
 | M5 · XBRL facts join | `7da4250` (approved) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
+| M6 · grounded QA | (this commit, awaiting approval) | 35/35 answers verified exact; 23/23 correct abstentions; recall@8 36/37 against a model-jury key (58/60 jurors agreed) | labeling in the claude.ai viewer failed; a local labeling server and a model jury replaced it; misses are "no, but" questions |
 
 ---
 
@@ -748,3 +749,31 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   `tests/golden/qa_jury.json` before any pipeline run on the set.
 - A review mode on the labeling page shows both jurors' labels, with their sentences marked in the text. "Use juror
   N" or Trevor's own label; each saved label records which. Tested through the local server with real clicks.
+
+### 2026-10-20 — M6 part 4: the key, the run, the gate
+- Trevor decided both jury disagreements, taking juror 2 (Fable) each time: QA21 answerable, citing three Netflix
+  risk sentences on enforcing multi-household limits; QA54 not answerable. `tools/qa_key.py` wrote
+  `tests/golden/qa_key.json` (37 answerable, 23 not), committed (`86923a4`) before the pipeline ran on the set.
+- `tools/run_qa.py`, one pass of the frozen pipeline: 47 model calls, $0.34.
+  - 35/35 answers' citations verified exact; 0 withheld.
+  - 23/23 correct abstentions (10 model, 13 rule).
+  - 35/37 answerable answered; retrieval recall@8 36/37.
+  - `--offline` regenerates `docs/qa-eval.md` byte-identically.
+
+### What broke and the fix
+- QA58 was scored as citing the wrong passage. Coca-Cola's 2025 10-K repeats its definition of concentrate sales
+  volume verbatim, and the answer cited the other copy. The scorer now accepts the same words from the same filing.
+
+### Learnings
+- **The two misses are a definitional gap, not a bug.** For "does the filing discuss X" questions where the truth
+  is "not explicitly, but it says this nearby", the jury counted the cited nearby text as an answer. The pipeline
+  abstains because it can't cite an absence. It's left to Trevor (FD-DEC 032).
+- **Mechanics held under real questions.** No citation failed verification, on dev or on the 60. The verifier's
+  value so far is as a guarantee, demonstrated by the forged-citation tests, rather than as a filter that has caught
+  something real.
+- **Labeling cost:** the jury key took Trevor about 5 minutes (2 decisions) and $16.41 in jury calls, against the
+  estimated 45 minutes for full labeling. The price: the key is model-built.
+
+### Open / next
+- M6 gate: stop for Trevor's approval, plus his call on "no, but". Then M7: `spancheck` scores the recorded run
+  (citation provenance and support, abstention, groundedness, cost and latency).
