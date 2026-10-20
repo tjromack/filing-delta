@@ -102,11 +102,13 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       retrieval recall@8 36/37; misses are two "no, but" questions (FD-DEC 032)
 - [x] **Gate:** the verifier is tested against forged citations (16 gate tests, all mutations caught). **← stop**
 
-## M7 — spancheck run
-- [ ] Score citation accuracy, abstention correctness, hallucination rate, cost and latency with `spancheck` (PyPI)
-- [ ] Publish the report + error analysis, including where the judge disagrees
-- [ ] (Optional) multi-provider comparison through the provider interface
-- [ ] **Gate:** a reproducible spancheck report, published. **← stop**
+## M7 — spancheck run (done; awaiting approval)
+- [x] Score citation accuracy, abstention correctness, hallucination rate, cost and latency with `spancheck` 0.3.1
+      (PyPI): `tools/spancheck_run.py`, judge Opus 5.5 through the recorder; timed re-run for latency
+- [x] Publish the report + error analysis, including where the judge disagrees (`docs/spancheck-report.md`)
+- [ ] (Optional) multi-provider comparison through the provider interface: not done (the jury in M6 already
+      compares two models on the key; deferred)
+- [x] **Gate:** a reproducible spancheck report (byte-identical offline, all 214 judge verdicts replayed). **← stop**
 
 ## M8 — read view + try-it path + clean clone
 - [ ] FastAPI + a small read view: section diff, with the material/cosmetic label and the source span

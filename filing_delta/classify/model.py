@@ -55,7 +55,12 @@ class AnthropicProvider:
         self._client = anthropic_client()
 
     def complete(self, request: dict) -> dict:
-        return message_record(self._client.messages.create(**request))
+        import time
+
+        t = time.perf_counter()
+        rec = message_record(self._client.messages.create(**request))
+        rec["latency_ms"] = round((time.perf_counter() - t) * 1000, 1)   # wall-clock, recorded with the response
+        return rec
 
 
 @dataclass

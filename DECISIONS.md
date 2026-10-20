@@ -496,3 +496,34 @@ question.
 - **Process:** tuned on dev questions outside the 60, then re-frozen. The M6 run under the previous pipeline stays
   in the record (`docs/qa-eval-v1.md`). A v2 run on the 60 is reported beside it, disclosed as not independent
   evidence for QA21/QA52, since those two items prompted the change.
+
+## FD-DEC 034 — M7: spancheck results, and under-citation as the finding (2026-10-20)
+**Status:** Recorded at the M7 gate. A fix (pipeline v3) is offered to Trevor, not made.
+
+- **Method:** `spancheck` 0.3.1 (PyPI, unmodified) scores the recorded v2 run. Outputs carry the explicit
+  abstention flag, the retrieved passages as contexts, and each citation's source scoped to the passage it was
+  quoted from. The judge is `claude-opus-5-5`, not the answering model, through the recorder: 214 verdicts, all
+  replayable, $0.95 plus $0.15 for the re-scores. Latency comes from a separate timed re-run into its own cache, so
+  the scored run is untouched.
+- **Results:**
+  - provenance 71/71;
+  - abstention 59/60 (QA21, the "paid sharing" vocabulary miss);
+  - judged groundedness against retrieved passages 98%;
+  - answer entailed by its own citations 51/60;
+  - per-citation support about 67% (lexical 34/71, judged 33/71, disagreeing on 9);
+  - p50 2.4 s, p95 3.5 s;
+  - $0.34 per 60 questions;
+  - the re-run made the same decision on 60/60, with identical citations on 47/60.
+- **Two scoring choices, both disclosed:**
+  1. `claim_split` (spancheck's documented option for answer-level quotes).
+  2. The answer-vs-citations judge sees each quote with the filing, section and diff label its citation carries. A
+     first pass without them failed answers for not "establishing" which filing a quote came from, an artifact of
+     the input, not the answer.
+- **The finding:** 9 answers state true details found in retrieved passages but not in their own quotes ("98 basis
+  points", "inflation peaked in 2022"). Pin 5 holds (every answer has verified citations), but not every claim is
+  cited. Per-citation support is low for a related reason: one answer sentence combines several facts, each cited
+  separately.
+- **Offered fix (v3, Trevor's call):** require a citation for every figure and specific detail, and have each
+  citation name the claim it supports (spancheck's `claim` field). Tune on dev, re-freeze, re-run and re-score.
+  Cost under $2.
+- **Not done:** the optional multi-provider comparison. M6's two-model jury already compares models on the key.

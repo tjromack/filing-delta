@@ -18,6 +18,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M4 · materiality classifier | `8df0811` (approved) | blind test, scored once: agreement 77%, precision 0.89 / recall 0.80 vs 122 human labels; 5,623 corpus changes, Sonnet–Haiku agreement 77.0% (kappa 0.58), $7.95 | the information-gap explanation for the misses was tested by a re-check and mostly failed: a guide-reading difference, not missing context |
 | M5 · XBRL facts join | `7da4250` (approved) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
 | M6 · grounded QA | `3c9b650` + v2 (approved) | 35/35 answers verified exact; 23/23 correct abstentions; recall@8 36/37 against a model-jury key (58/60 jurors agreed) | labeling in the claude.ai viewer failed; a local labeling server and a model jury replaced it; misses are "no, but" questions |
+| M7 · spancheck | (this commit, awaiting approval) | provenance 71/71; abstention 59/60; answers entailed by their own citations 51/60; p50 2.4 s; $0.34 per 60 | 9 answers add true but uncited details; the exact-substring verifier can't see that, the judge can |
 
 ---
 
@@ -794,3 +795,36 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - **Remaining miss, QA21:** vocabulary. The question says "paid sharing"; the filing says "multi-household usage and
   shared viewing outside of a household". BM25 can't connect them, and adding synonyms for a scored item would be
   tuning on the test. Left as the clearest case for meaning-based search, and noted for M7's error analysis.
+
+---
+
+## 2026-10-20 — M7: spancheck
+
+### What happened
+- Read `spancheck` 0.3.1's API from the installed package (`Case`/`Output`/`evaluate`, `citation_accuracy` with
+  `sources` scoping and `claim_split`, `judge_support`/`llm_judge`, `audit_log`). Its Anthropic provider defaults to
+  `claude-sonnet-5-5`; I used my own provider instead, through the recorder, so the judge replays with no key.
+- **Latency wasn't in the recorded run.** The recorder now stores wall-clock with every new response, and a timed
+  re-run into a separate cache measured it. The pipeline's frozen hash stayed unchanged: a trace-field edit to
+  `ask.py` was reverted after it changed the hash.
+- `tools/spancheck_run.py score` → `docs/spancheck-report.md` (byte-identical offline) and the audit log.
+
+### What broke and the fix
+- The report crashed on `Scorecard.by_grader()`, which returns `{score, pass_rate, n}` per grader, not a rate.
+- The first "answer vs. its citations" pass failed answers for not "establishing" the filing or the "newly added"
+  status. The judge saw bare quotes, without the label each citation carries. With the labels: 49 → 51 of 60.
+
+### Learnings
+- **Provenance and grounding are solid; claim-level citation isn't.** Every quote is real (71/71), and answers are
+  grounded in what was retrieved (98%). But 9 answers add true details from passages they didn't quote. The cited
+  span supports part of the answer, not all of it. An exact-substring verifier can't catch that; an entailment
+  judge can. That's the value of M7 over M6's own checks.
+- **Per-citation support is low (about 67%) mostly by construction:** answers pack several cited facts into a
+  sentence, and claim_split pairs each quote with a whole sentence. Per-claim citations (spancheck's `claim` field)
+  would measure this properly.
+- **The judge and the lexical proxy disagree on 9 of 71 citations, both ways:** the judge rejects keyword-overlap
+  passes (QA07, QA22), and accepts paraphrase that word overlap misses (QA16, QA27). This is where calibrating the
+  judge on human labels would start.
+
+### Open / next
+- M7 gate: Trevor's approval and his call on v3 (cite every figure and detail, with per-citation claims).
