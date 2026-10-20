@@ -851,3 +851,13 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 ### Open / next
 - M8 design (read view, release artifact, clean-clone run), for Trevor's review before building.
+
+---
+
+## 2026-10-20 — M8 survey and design
+- Survey before design: a clean clone needs only the EDGAR cache (731 MB) and the model cache (141 MB), plus the
+  timed latencies. Neither cache holds personal data (the User-Agent isn't stored). The full keyless rebuild on
+  this machine took about 3.5 minutes, and every committed file in `docs/`, `tests/golden/` and `corpus/` came
+  out byte-identical: the reproduction the M8 gate will demand on a fresh runner already holds locally.
+- Design: `docs/design/m8.md` covers a one-command reproduce script, a GitHub Release for the data, a clean-clone
+  Action, and a FastAPI read view (changes plus recorded questions; live asking only with a key).
