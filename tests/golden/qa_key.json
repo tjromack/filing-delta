@@ -1,0 +1,1713 @@
+{
+ "built": "2026-10-20",
+ "rule": "FD-DEC 031",
+ "key": [
+  {
+   "id": "QA01",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA02",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "The sections shown do not give a membership count for India. Membership figures are reported only by region. Asia-Pacific (APAC) had 45,338 thousand paid memberships at the end of 2023, but India is not broken out.",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA03",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA04",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000104169-25-000021|10K_1A",
+     "start": 90836,
+     "end": 91071
+    },
+    {
+     "key": "0000104169-25-000021|10K_1A",
+     "start": 91072,
+     "end": 91243
+    },
+    {
+     "key": "0000104169-25-000021|10K_1A",
+     "start": 91244,
+     "end": 91506
+    },
+    {
+     "key": "0000104169-25-000021|10K_1A",
+     "start": 91507,
+     "end": 91584
+    },
+    {
+     "key": "0000104169-25-000021|10K_1A",
+     "start": 91585,
+     "end": 91872
+    }
+   ],
+   "answers": [
+    "On January 13, 2020, the CCI ordered its Director General to investigate alleged competition law violations by certain Flipkart subsidiaries in India and other parties. On September 13, 2024, those subsidiaries received a non-confidential version of the DG's Investigation Report alleging certain violations. The CCI is not bound by the report. It will do its own analysis, including hearing objections, before issuing a final order, which could include monetary and non-monetary relief. That order can be appealed. Walmart says it cannot estimate any loss or range of loss, cannot assure the scope or outcome, and cannot assure there will be no material adverse effect on its business or results.",
+    "The 10-K says that on January 13, 2020 the CCI ordered its Director General to investigate alleged competition law violations by certain Flipkart subsidiaries and other parties. On September 13, 2024 those subsidiaries received a non-confidential version of the DG's Investigation Report alleging certain competition law violations. The CCI is not bound by the Report and will conduct its own analysis, including hearing objections from the subsidiaries and others, before issuing a final order, which could include monetary and non-monetary relief and would be subject to appeal. Walmart says it can give no assurance as to the scope or outcome, cannot reasonably estimate any loss or range of loss, and cannot assure that its business, financial position, results of operations or cash flows will not be materially adversely affected."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA05",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000078003-24-000039|10K_7",
+     "start": 24171,
+     "end": 24586
+    }
+   ],
+   "answers": [
+    "Less than 1% of Pfizer's consolidated revenues (and assets) in both 2023 and 2022.",
+    "Less than 1% of Pfizer's consolidated revenues (and assets) for both 2023 and 2022."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA06",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA07",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000034088-25-000061|10Q_P1_2",
+     "start": 3107,
+     "end": 3333
+    },
+    {
+     "key": "0000034088-25-000061|10Q_P1_2",
+     "start": 3334,
+     "end": 3497
+    },
+    {
+     "key": "0000034088-25-000061|10Q_P1_2",
+     "start": 3498,
+     "end": 3679
+    }
+   ],
+   "answers": [
+    "It is a non-GAAP measure: earnings (or loss) with individually significant non-operational events removed. These events typically have an absolute total corporate earnings impact of at least $250 million in a quarter. An item's impact on a single segment can be below $250 million when it affects several segments or periods. Non-operational impacts generally below the $250 million threshold stay in the measure.",
+    "The 10-Q defines Earnings (loss) excluding Identified Items (a non-GAAP measure) as earnings (loss) excluding individually significant non-operational events with, typically, an absolute corporate total earnings impact of at least $250 million in a given quarter. A segment's impact may be below $250 million when the item affects several segments or periods, and the measure still includes non-operational items generally below the $250 million threshold. Management uses it to improve comparability across periods by removing significant non-operational events; it is not a substitute for GAAP net income attributable to ExxonMobil."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA08",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1092,
+     "end": 1288
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1289,
+     "end": 1348
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1349,
+     "end": 1378
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1379,
+     "end": 1399
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1400,
+     "end": 1505
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1506,
+     "end": 1567
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1568,
+     "end": 1638
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1639,
+     "end": 1661
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1662,
+     "end": 1678
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 1680,
+     "end": 1957
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 3194,
+     "end": 3410
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 4548,
+     "end": 4646
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 4647,
+     "end": 4692
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 6658,
+     "end": 6961
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 8420,
+     "end": 8704
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 9887,
+     "end": 10100
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 13627,
+     "end": 13870
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 20023,
+     "end": 20188
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 23910,
+     "end": 24158
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 29235,
+     "end": 29407
+    },
+    {
+     "key": "0000040545-24-000027|10K_1A",
+     "start": 31512,
+     "end": 31782
+    }
+   ],
+   "answers": [
+    "GE's 2023 10-K groups its strategic risks into eight areas: (1) the planned separation of GE Aerospace and GE Vernova into independent companies; (2) the global macro-environment, including economic, political and geopolitical developments; (3) the global energy transition; (4) the condition of the commercial aviation sector; (5) the competitive environment and the success of technology and innovation; (6) its business portfolio, including acquisitions, dispositions and joint ventures; and (7) intellectual property.\n\nOn the separation specifically, GE says:\n- It may struggle to carry out the plan or finish it on time, and may not get some or all of the expected benefits.\n- The GE Vernova spin-off depends on several conditions: Board approval, tax rulings or opinions, an effective Form 10 registration statement, and set capital structures and credit ratings. Failing these, or market disruption, could delay it significantly or stop it entirely. If it is not completed, GE will have incurred costs without the benefits.\n- Regulators' terms could limit or add costs for the separate companies.\n- GE expects non-U.S. cash taxes, and possibly non-cash tax expense, from the restructuring. There is no assurance the spin-off will be tax-free in the U.S.; if it is taxable, the tax liability would be significant.\n- Executing the plan brings practical challenges: distracted management, splitting assets and liabilities, keeping employees and business relationships, assigning contracts and intellectual property, and transition services.\n- GE could face claims under parent-company guarantees and other credit support it provides for GE Vernova, possibly for years after the spin-off.\n- The resulting companies will be smaller and less diversified, so they are more exposed to economic and market shocks and to more volatile results. They will also carry separate standalone costs.\n- The combined market value of the stocks after separation is uncertain.",
+    "GE's 2023 10-K lists strategic risks as those associated with: its planned separation of GE Aerospace and GE Vernova into independent companies (the \"Strategic plan\" risk — challenges executing or completing the separation on time, not realizing expected benefits, failure to satisfy conditions, tax risks, credit support exposure, smaller less-diversified companies after separation); the global macro-environment and sector conditions; the global energy transition; the commercial aviation sector; the competitive environment (demand, technology and innovation); the business portfolio (acquisitions, dispositions, joint ventures, capital allocation, restructuring); intellectual property; and other risks."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA09",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA10",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA11",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000021344-23-000011|10K_1A",
+     "start": 3298,
+     "end": 3376
+    },
+    {
+     "key": "0000021344-23-000011|10K_1A",
+     "start": 3377,
+     "end": 3515
+    },
+    {
+     "key": "0000021344-23-000011|10K_1A",
+     "start": 3516,
+     "end": 4332
+    },
+    {
+     "key": "0000021344-23-000011|10K_1A",
+     "start": 4333,
+     "end": 4455
+    },
+    {
+     "key": "0000021344-23-000011|10K_1A",
+     "start": 14913,
+     "end": 15193
+    },
+    {
+     "key": "0000021344-23-000011|10K_1A",
+     "start": 59864,
+     "end": 60125
+    },
+    {
+     "key": "0000021344-23-000011|10K_1A",
+     "start": 60126,
+     "end": 60133
+    }
+   ],
+   "answers": [
+    "Yes. The risk factors say Coca-Cola suspended its business in Russia in March 2022 and that its business in Ukraine has been disrupted. The company did not expect these to have a material impact on results. It still warned the conflict could cause volatile commodity markets, supply chain and cyber disruptions, higher costs, sanctions, loss of assets or impairment charges. It also cites the conflict as raising energy prices, particularly in Europe, and as a driver of currency fluctuations.",
+    "Yes. The Risk Factors section discusses the Russia-Ukraine conflict: Coca-Cola suspended its business in Russia in March 2022 and its Ukraine operations have been disrupted; while not expected to be material, the conflict has caused and could continue to cause volatile commodity markets, supply chain disruptions, cyber risk, employee safety risks, higher input/energy costs, sanctions, possible asset loss or impairments, and currency fluctuations."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA12",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000104169-23-000020|10K_7",
+     "start": 26329,
+     "end": 26476
+    },
+    {
+     "key": "0000104169-23-000020|10K_7",
+     "start": 26477,
+     "end": 26658
+    }
+   ],
+   "answers": [
+    "Walmart's consolidated gross profit rate fell 98 basis points in fiscal 2023. The MD&A attributes the decline mainly to markdowns and merchandise mix in the U.S., plus higher supply chain costs and inflation-related LIFO charges in the Sam's Club segment.",
+    "The consolidated gross profit rate decreased 98 basis points in fiscal 2023, primarily due to markdowns and merchandise mix in the U.S., higher supply chain costs, and inflation-related LIFO charges in the Sam's Club segment."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA13",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000950170-23-004451|10K_1A",
+     "start": 4082,
+     "end": 4110
+    },
+    {
+     "key": "0000950170-23-004451|10K_1A",
+     "start": 4111,
+     "end": 4190
+    },
+    {
+     "key": "0000950170-23-004451|10K_1A",
+     "start": 4191,
+     "end": 4214
+    },
+    {
+     "key": "0000950170-23-004451|10K_1A",
+     "start": 4215,
+     "end": 4223
+    }
+   ],
+   "answers": [
+    "Gregory Abel. The 2022 10-K says Berkshire's Board has agreed that Mr. Abel, Vice Chairman of the non-insurance operations, should replace Mr. Buffett if a replacement were needed now. It adds that the Board could change this view in the future.",
+    "Gregory Abel (Mr. Abel), Vice Chairman of Berkshire's non-insurance operations."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA14",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001065280-26-000034|10K_1A",
+     "start": 47976,
+     "end": 48227
+    },
+    {
+     "key": "0001065280-26-000034|10K_1A",
+     "start": 48228,
+     "end": 48438
+    },
+    {
+     "key": "0001065280-26-000034|10K_1A",
+     "start": 61633,
+     "end": 61818
+    }
+   ],
+   "answers": [
+    "Outside the U.S., Netflix may face different and stricter user-protection, data-protection and privacy laws. These include rules on data localization, data transfer and restrictions on exporting data. Failing to comply could expose it to liability, and changing its business model or practices to meet these rules could add expenses.",
+    "The 10-K says international operations expose Netflix to different and more stringent user protection, data protection and privacy laws, including data localization and/or restrictions on data export. In the privacy risk factor it adds that internationally it may face additional or more stringent obligations on handling member personal information (data localization, data transfer, data export restrictions), and that failing to comply could create liability and adapting its business model or practices could add expenses. It also references GDPR and possible notifications to EU data protection authorities after a breach."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA15",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 51385,
+     "end": 51536
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 51803,
+     "end": 51992
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 52529,
+     "end": 52820
+    }
+   ],
+   "answers": [
+    "Yes. Its 2021 risk factors say significant additional labeling or warning requirements, or limits on marketing or sale, could inhibit sales of the affected products. It gives California's Proposition 65 as an example: if warnings had to be added to its beverage labels, the consumer reaction and possible bad publicity could hurt sales in California and in other markets.",
+    "Yes. The Risk Factors include a dedicated risk that significant additional product labeling or warning requirements (or limits on marketing/sale) could inhibit sales of affected products. It cites California's Proposition 65 as an example, saying that if warnings were required on labels, consumer reaction and adverse publicity could negatively affect sales both in California and in other markets."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA16",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000021344-21-000008|10K_1A",
+     "start": 5204,
+     "end": 5474
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 2580,
+     "end": 2670
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 2671,
+     "end": 2768
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 2769,
+     "end": 2842
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 2843,
+     "end": 2868
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 2869,
+     "end": 2890
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 2891,
+     "end": 2968
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 2969,
+     "end": 3246
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 3247,
+     "end": 3397
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 3399,
+     "end": 3615
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 3616,
+     "end": 3698
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 3699,
+     "end": 3901
+    },
+    {
+     "key": "0000021344-22-000009|10K_1A",
+     "start": 14686,
+     "end": 14945
+    }
+   ],
+   "answers": [
+    "The 2021 10-K folds the 2020 list of separate COVID-19 supply bullets into one paragraph that says the pandemic has disrupted, and could keep disrupting, Coca-Cola's global supply chain. New in that paragraph: delivery delays now cover ingredients and equipment as well as concentrates and packaging, and sourcing problems now cover key ingredients as well as containers. It also warns that future disruptions could leave the company unable to secure key ingredients and inputs, which could delay deliveries to customers and consumers. It adds that supply chain pressures are expected to continue into 2022. The input-cost risk factor now names the COVID-19 pandemic as one of the factors that move ingredient and packaging prices.",
+    "In the 2021 10-K Coca-Cola replaced the 2020 bullets (concentrate production disruptions, concentrate shipping delays, bottler plant closures, and container sourcing constraints) with a new consolidated paragraph stating that the pandemic 'has disrupted and could continue to disrupt our global supply chain.' New content included: delays in delivery not just of concentrates but of 'ingredients, packaging and equipment'; 'difficulty or delays in sourcing key ingredients'; the possibility of 'an inability to secure key ingredients and inputs, which could cause delays in delivering our products to our customers and consumers'; and a forward-looking statement that it expects 'supply chain pressures to continue into 2022.' It also added 'fluctuations in input costs, inflation rates' to the list of risks COVID-19 may exacerbate."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA17",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 2269,
+     "end": 2520
+    },
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 3626,
+     "end": 3780
+    },
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 3781,
+     "end": 3844
+    },
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 3845,
+     "end": 3898
+    },
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 3899,
+     "end": 3950
+    },
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 50316,
+     "end": 50549
+    },
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 50550,
+     "end": 50731
+    },
+    {
+     "key": "0000320193-20-000096|10K_1A",
+     "start": 50732,
+     "end": 50923
+    }
+   ],
+   "answers": [
+    "Yes. The fiscal 2020 risk factors say that after the initial COVID-19 outbreak, Apple saw disruptions to manufacturing, its supply chain and logistics services provided by outsourcing partners. This caused temporary iPhone supply shortages that hurt sales worldwide. The section also warns that future impacts could include material adverse effects on its supply chain.",
+    "Yes. The risk factors state that following the initial COVID-19 outbreak, Apple experienced disruptions to its manufacturing, supply chain and logistical services provided by outsourcing partners, causing temporary iPhone supply shortages, and that the pandemic has caused and could cause further supply chain disruptions."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA18",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000019617-21-000236|10K_7",
+     "start": 172177,
+     "end": 172316
+    },
+    {
+     "key": "0000019617-21-000236|10K_7",
+     "start": 172317,
+     "end": 172456
+    },
+    {
+     "key": "0000019617-21-000236|10K_7",
+     "start": 172457,
+     "end": 172465
+    },
+    {
+     "key": "0000019617-21-000236|10K_7",
+     "start": 172466,
+     "end": 172576
+    }
+   ],
+   "answers": [
+    "The Federal Reserve sets capital requirements (including well-capitalized standards) for the consolidated financial holding company, and the OCC sets similar minimum capital requirements and standards for its insured depository institution subsidiaries, including JPMorgan Chase Bank, N.A. The U.S. rules generally follow the Basel Committee's Capital Accord, as amended from time to time.",
+    "The Federal Reserve sets capital requirements (including well-capitalized standards) for the consolidated financial holding company, and the OCC sets similar minimum capital requirements for the insured depository institution subsidiaries, including JPMorgan Chase Bank, N.A. The U.S. capital requirements generally follow the Capital Accord of the Basel Committee (Basel III), as amended from time to time."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA19",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA20",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000078003-23-000024|10K_1A",
+     "start": 69397,
+     "end": 69476
+    },
+    {
+     "key": "0000078003-23-000024|10K_1A",
+     "start": 70527,
+     "end": 70735
+    },
+    {
+     "key": "0000078003-23-000024|10K_1A",
+     "start": 71383,
+     "end": 71857
+    },
+    {
+     "key": "0000078003-23-000024|10K_1A",
+     "start": 72122,
+     "end": 72314
+    },
+    {
+     "key": "0000078003-23-000024|10K_1A",
+     "start": 72525,
+     "end": 72928
+    }
+   ],
+   "answers": [
+    "The 2022 10-K added a new \"Climate Change and Sustainability\" risk factor that the 2021 10-K did not have. It covers three things. First, transitional and physical climate risks. Second, the risk of not meeting Pfizer's voluntary greenhouse gas goal, set in June 2022, to reach Net-Zero by 2040. Third, ESG risks: stakeholders are increasingly sensitive to issues such as access to medicines, DEI, environmental stewardship, human rights and responsible sourcing. That focus could bring new requirements and higher costs. Missing ESG goals, or being seen to miss them, could lead to negative stakeholder reaction (including from proxy advisors), reputational damage and reduced demand.",
+    "The 2022 10-K added an entirely new risk factor under General Risks titled \"CLIMATE CHANGE AND SUSTAINABILITY,\" which did not exist in the 2021 10-K. It describes transitional and physical climate-change risks (e.g., energy prices, carbon pricing/taxes, GHG disclosure requirements; water stress, flooding, wildfires, extreme weather affecting production and supply chains), notes Pfizer's June 2022 net-zero-by-2040 goal and the risk of not meeting it, and warns that increasing stakeholder focus on ESG matters (access to medicines, DEI, environmental stewardship, human rights, responsible sourcing, etc.) could raise costs and that failing (or being perceived to fail) to meet ESG goals could cause negative stakeholder reaction, reputational damage and reduced demand."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA21",
+   "state": "answerable",
+   "spans": [
+    {
+     "end": 4484,
+     "key": "0001065280-24-000030|10K_1A",
+     "start": 4321
+    },
+    {
+     "end": 4701,
+     "key": "0001065280-24-000030|10K_1A",
+     "start": 4485
+    },
+    {
+     "end": 68562,
+     "key": "0001065280-24-000030|10K_1A",
+     "start": 68146
+    }
+   ],
+   "answers": [
+    "The 10-K does not credit paid sharing with driving membership growth. It only discusses the increased enforcement against multi-household usage/shared viewing as a risk: such adjustments may not be well-received by consumers and could negatively impact Netflix's ability to attract and retain members, revenue per paying membership, revenue and results of operations, and it notes that predicting consumer adoption of efforts to limit multi-household usage is inherently difficult. The MD&A reports 29.5 million paid net additions in 2023 (up 232%) but does not attribute them to paid sharing."
+   ],
+   "provenance": "trevor_adjudicated (juror2)",
+   "note": null,
+   "decided": "2026-10-20T21:08:11.979Z"
+  },
+  {
+   "id": "QA22",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000320193-25-000057|10Q_P1_2",
+     "start": 14135,
+     "end": 14418
+    }
+   ],
+   "answers": [
+    "Apple's Q2 fiscal 2025 effective tax rate was 15.5%, below the 21% statutory federal rate. The main reason was a lower effective tax rate on foreign earnings, including the impact of changes in unrecognized tax benefits. State income taxes partly offset this.",
+    "Primarily because of a lower effective tax rate on foreign earnings, including the impact of changes in unrecognized tax benefits, partially offset by state income taxes."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA23",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 11689,
+     "end": 11761
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 11762,
+     "end": 11851
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 11853,
+     "end": 11966
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 11967,
+     "end": 12001
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 12002,
+     "end": 12035
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 12036,
+     "end": 12053
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 12054,
+     "end": 12086
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 12087,
+     "end": 12139
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 12140,
+     "end": 12167
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 12169,
+     "end": 12366
+    },
+    {
+     "key": "0000037996-23-000012|10K_7",
+     "start": 13008,
+     "end": 13157
+    }
+   ],
+   "answers": [
+    "Contribution costs move with production volume. They include material (including commodity), warranty, and freight and duty costs, and they generally vary in direct proportion to volume. Structural costs do not have a directly proportionate relationship to production volume, though volume affects their parts to differing degrees. They include manufacturing; vehicle and software engineering; spending-related costs; advertising and sales promotion; administrative, IT, and selling; and pension and OPEB costs. Structural costs are generally within Ford's discretion to varying degrees and can be adjusted over time.",
+    "Contribution costs are costs that typically vary directly with production volume (material including commodity, warranty, and freight and duty costs). Structural costs typically do not have a directly proportionate relationship to production volume (manufacturing; vehicle and software engineering; spending-related; advertising and sales promotion; administrative, IT, and selling; and pension and OPEB costs) and are impacted to differing degrees by volume, with Ford having varying degrees of discretion over them."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA24",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA25",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16014,
+     "end": 16069
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16070,
+     "end": 16258
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16259,
+     "end": 16348
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16350,
+     "end": 16442
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16444,
+     "end": 16539
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16541,
+     "end": 16638
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16640,
+     "end": 16681
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16683,
+     "end": 16791
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16793,
+     "end": 16845
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16847,
+     "end": 16885
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16887,
+     "end": 16937
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16939,
+     "end": 16969
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 16971,
+     "end": 17126
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 17128,
+     "end": 17172
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 17174,
+     "end": 17232
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 17234,
+     "end": 17298
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 17300,
+     "end": 17378
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 17380,
+     "end": 17508
+    },
+    {
+     "key": "0000019617-22-000272|10K_1A",
+     "start": 17510,
+     "end": 17591
+    }
+   ],
+   "answers": [
+    "The 10-K says legislative and regulatory initiatives outside the U.S. could force JPMorgan to make significant changes to its operations and legal entity structure in the countries or regions involved in order to comply. The rules it cites cover:\n- setting up locally-based intermediate holding companies or operating subsidiaries;\n- keeping minimum capital or liquidity in local subsidiaries;\n- ring-fencing core banking from markets activities;\n- resolution regimes;\n- requirements to execute or settle trades on exchanges or through central counterparties;\n- position limits and reporting rules for derivatives;\n- governance and accountability regimes;\n- conduct of business and control requirements;\n- limits on compensation.\n\nThe filing says such differences in regulation have required, and could again require, the Firm to:\n- divest assets or restructure;\n- absorb higher operational, capital and liquidity costs;\n- change its prices;\n- curtail products, services or other business opportunities;\n- pay more to comply with different legal frameworks.",
+    "The 10-K says legislative and regulatory initiatives outside the U.S. could require JPMorgan Chase to make significant modifications to its operations and legal entity structure in the relevant countries or regions to comply. Examples include rules on establishing locally-based intermediate holding companies or operating subsidiaries; minimum capital or liquidity in local subsidiaries; ring-fencing core banking from markets activities; resolution of financial institutions; executing/settling transactions on exchanges or through CCPs; derivatives position limits and reporting; governance and accountability regimes; conduct of business and control requirements; and compensation restrictions. These differences and conflicts have required and could require the Firm to divest assets or restructure operations, absorb higher operational, capital and liquidity costs, change pricing, curtail products/services and business opportunities (including acquisitions or principal investments), and incur higher compliance costs, which could harm its competitiveness, businesses, results and profitability."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA26",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA27",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000104169-25-000137|10Q_P1_2",
+     "start": 33504,
+     "end": 33666
+    },
+    {
+     "key": "0000104169-25-000137|10Q_P1_2",
+     "start": 33667,
+     "end": 33934
+    }
+   ],
+   "answers": [
+    "Walmart's working capital deficit was $21.5 billion as of July 31, 2025, up from $18.8 billion a year earlier. The increase came mainly from the timing of certain payments and more long-term debt due within one year. Higher inventories and receivables from sales growth partly offset it.",
+    "Walmart's working capital deficit was $21.5 billion as of July 31, 2025, up from $18.8 billion a year earlier. The increase was primarily driven by the timing of certain payments and an increase in long-term debt due within one year, partially offset by higher inventories and receivables related to sales growth."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA28",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "The sections shown do not say how many employees Walmart had in China. China comes up only as one of the markets where Walmart operates, in the PIPL privacy-law discussion, and as a source of lower-margin formats in the international results. No headcount for China is given.",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA29",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000078003-21-000038|10K_1A",
+     "start": 61637,
+     "end": 62003
+    },
+    {
+     "key": "0000078003-21-000038|10K_1A",
+     "start": 62004,
+     "end": 62302
+    }
+   ],
+   "answers": [
+    "In its \"Cost and Expense Control and Nonordinary Events\" risk factor, Pfizer says growing costs and expenses, changes in product and geographic mix, and the effects of acquisitions, divestitures, restructurings, internal reorganizations, product withdrawals, recalls and other unusual events could hurt future results. The key risks it names are that it may not realize the projected benefits of its cost-reduction and productivity initiatives and other strategic initiatives, and that ongoing business could be disrupted.",
+    "Under \"Cost and Expense Control and Nonordinary Events,\" Pfizer warns that it may not realize the projected benefits of its cost-reduction and productivity initiatives (and other strategic initiatives, acquisitions or divestitures), and that these initiatives could disrupt its ongoing business, which could adversely affect future results."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA30",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001065280-21-000040|10K_7",
+     "start": 26381,
+     "end": 26737
+    }
+   ],
+   "answers": [
+    "About $12.2 billion of Netflix's roughly $19.2 billion in content obligations at December 31, 2020 were not on its balance sheet, because they did not yet meet the criteria for recognition. The other $7.0 billion was on the balance sheet: $4.4 billion current and $2.6 billion non-current. The filing also says unknown future titles, estimated at roughly $1 billion to $4 billion over the next three years, are not included in these figures.",
+    "$12.2 billion of Netflix's $19.2 billion total content obligations at December 31, 2020 were not reflected on its consolidated balance sheet because they did not yet meet the criteria for recognition."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA31",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA32",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001193125-26-083899|10K_7",
+     "start": 111023,
+     "end": 111190
+    }
+   ],
+   "answers": [
+    "The filing singles out Pilot, the largest of four reporting units whose estimated fair values did not exceed carrying values by at least 20% in the fourth-quarter 2025 review. Pilot's estimated fair value was about $20.2 billion and its carrying value was $18.7 billion, which included $6.5 billion of goodwill.",
+    "Pilot, with an estimated fair value of approximately $20.2 billion and a carrying value of $18.7 billion (including $6.5 billion of goodwill)."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA33",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA34",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000320193-21-000105|10K_7",
+     "start": 10074,
+     "end": 10255
+    }
+   ],
+   "answers": [
+    "Apple's R&D expense rose 17% to $21.9 billion in 2021, driven mainly by higher headcount-related expenses, R&D-related professional services, and infrastructure-related costs.",
+    "R&D expense growth in 2021 (up 17% to $21.9 billion) was driven primarily by increases in headcount-related expenses, R&D-related professional services and infrastructure-related costs."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA35",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001564590-22-007322|10K_1A",
+     "start": 11968,
+     "end": 12009
+    },
+    {
+     "key": "0001564590-22-007322|10K_1A",
+     "start": 12011,
+     "end": 12149
+    },
+    {
+     "key": "0001564590-22-007322|10K_1A",
+     "start": 12150,
+     "end": 12344
+    }
+   ],
+   "answers": [
+    "The 2021 10-K added a new risk factor, \"Climate change may impact our businesses.\" It says climate change could increase hurricanes, floods, wildfires and other risks that could cause losses for its businesses. It also says that failing to comply with new or existing climate-related regulations, or reinterpretations of them, could significantly hurt its financial results. The 2020 10-K had no such standalone risk factor; it mentioned climate change only in a list of regulations affecting the utilities and energy businesses, and that wording is unchanged in 2021.",
+    "The 2021 10-K added a new, stand-alone risk factor titled \"Climate change may impact our businesses,\" stating that climate change could increase hurricanes, floods, wildfires and other risks producing losses, and that failure to comply with new or existing (or reinterpreted) climate change regulations could significantly hurt financial results. The 2020 10-K had no such risk factor; it mentioned climate change only in passing within the list of regulations affecting the BHE utilities and energy businesses."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA36",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA37",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 4562,
+     "end": 4676
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 90869,
+     "end": 91005
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91007,
+     "end": 91048
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91049,
+     "end": 91177
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91178,
+     "end": 91316
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91318,
+     "end": 91361
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91363,
+     "end": 91393
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91395,
+     "end": 91441
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91443,
+     "end": 91544
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91546,
+     "end": 91599
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91601,
+     "end": 91875
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 91876,
+     "end": 92126
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 92127,
+     "end": 92301
+    },
+    {
+     "key": "0000019617-24-000225|10K_1A",
+     "start": 92303,
+     "end": 92678
+    }
+   ],
+   "answers": [
+    "The 2022 10-K does not mention First Republic. The 2023 10-K adds a new risk factor saying the acquisition, completed May 1, 2023 from the FDIC, may not deliver all the expected benefits. Results could fall short on the final purchase price settlement, the total cost and time of integration, the performance of the acquired assets and liabilities, or an improved JPMorgan stock price. It also warns of several other risks:\n- integration could disrupt ongoing businesses or create inconsistencies in controls and policies that hurt client relationships;\n- key employees could leave;\n- unexpected costs or losses could arise, including if JPMorgan fails to meet the conditions of its shared-loss agreements with the FDIC, which could reduce the credit-loss coverage those agreements provide.\n\nThe summary of operational risks was also updated to include acquisition risks, naming First Republic.",
+    "The 2022 10-K did not mention First Republic. The 2023 10-K added a new operational risk factor titled \"JPMorgan Chase’s acquisition of certain assets and liabilities of First Republic Bank may not result in all of the benefits anticipated\" (and referenced it in the risk summary). It warns that actual results may differ from expectations regarding settlement of the final purchase price, total integration cost, time to complete integration, performance of the acquired assets and liabilities, and an improved stock price; that integration could be complex and costly, disrupt businesses or create inconsistencies in standards, controls and policies that hurt client relationships; that loss of key employees could hurt the business; and that JPMorgan could incur unanticipated costs or losses, including if it fails to comply with the conditions of the FDIC shared-loss agreements, diminishing their credit-loss coverage."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA38",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4360,
+     "end": 4417
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4418,
+     "end": 4428
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4429,
+     "end": 4448
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4449,
+     "end": 4458
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4459,
+     "end": 4520
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4521,
+     "end": 4600
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4601,
+     "end": 4606
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4773,
+     "end": 4776
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4777,
+     "end": 4789
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4790,
+     "end": 4825
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4826,
+     "end": 4831
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 4833,
+     "end": 4972
+    },
+    {
+     "key": "0001193125-26-083899|10K_1A",
+     "start": 5015,
+     "end": 5185
+    },
+    {
+     "key": "0001193125-26-083899|10K_7",
+     "start": 85247,
+     "end": 85517
+    }
+   ],
+   "answers": [
+    "In May 2025 the Board appointed Greg Abel to succeed Warren Buffett as CEO, effective January 1, 2026. Abel is now responsible for major capital allocation and investment decisions. Ajit Jain (Vice Chairman, insurance) and Adam Johnson (President, Consumer Products, Service and Retailing) report directly to him. The filing presents this as a key-person risk: losing key personnel could materially hurt operations. The Board continually monitors that risk, and its succession plans plus the strong managers of the operating units help mitigate it.",
+    "In the Risk Factors (key-person risk), Berkshire discloses that in May 2025 its Board appointed Gregory E. Abel to succeed Warren E. Buffett as CEO effective January 1, 2026. Major capital allocation and investment decisions are now Mr. Abel's responsibility; Ajit Jain (Vice Chairman, insurance operations) and Adam Johnson (President of Consumer Products, Service and Retailing) report directly to Abel. The filing says loss of key personnel could materially harm operations, that the Board continually monitors this risk, and that the Board's succession plans together with the strong managers of its diversified operating units help mitigate it. The MD&A also reflects the transition by stating share repurchases are made at prices below intrinsic value as determined by the CEO after consultation with the Chairman of the Board."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA39",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000104169-23-000020|10K_7",
+     "start": 34773,
+     "end": 34919
+    },
+    {
+     "key": "0000104169-23-000020|10K_7",
+     "start": 34920,
+     "end": 35090
+    }
+   ],
+   "answers": [
+    "Walmart International's gross profit rate fell 50 basis points in fiscal 2023. The decline was mainly due to continued growth in lower-margin formats and channels in China, and to category mix shifts into lower-margin categories.",
+    "Walmart International's gross profit rate fell 50 basis points in fiscal 2023, driven primarily by continued growth in lower margin formats and channels in China and category mix shifts into lower margin categories."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA40",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA41",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA42",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000037996-24-000009|10K_1A",
+     "start": 3743,
+     "end": 3917
+    },
+    {
+     "key": "0000037996-24-000009|10K_1A",
+     "start": 15756,
+     "end": 16171
+    },
+    {
+     "key": "0000037996-24-000009|10K_1A",
+     "start": 47722,
+     "end": 48066
+    },
+    {
+     "key": "0000037996-24-000009|10K_1A",
+     "start": 48067,
+     "end": 48393
+    },
+    {
+     "key": "0000037996-24-000009|10K_1A",
+     "start": 48573,
+     "end": 48876
+    },
+    {
+     "key": "0000037996-24-000009|10K_7",
+     "start": 2475,
+     "end": 2499
+    },
+    {
+     "key": "0000037996-24-000009|10K_7",
+     "start": 2500,
+     "end": 2844
+    },
+    {
+     "key": "0000037996-24-000009|10K_7",
+     "start": 2845,
+     "end": 3205
+    }
+   ],
+   "answers": [
+    "The 2023 10-K adds that Ford has seen lower-than-anticipated industrywide EV adoption rates and near-term pricing pressures. The 2022 10-K has no such statements. Ford says this has led, and may again lead, it to adjust spending, production and product launches to match the pace of EV adoption. It recorded about $0.7 billion of related charges in 2023, for payments to EV suppliers and inventory adjustments, and may incur more. Ford also says it may underuse or cut plant capacity and reduce production hours or shifts, which could bring supplier claims. It could fail to recoup its battery plant investments, and its raw material and component suppliers could become distressed.",
+    "The 2023 10-K newly states that Ford has observed lower-than-anticipated industrywide EV adoption rates and near-term pricing pressures. It adds a new \"Electric Vehicle Market\" key trend in MD&A saying this has led (and may lead) Ford to adjust spending, production and/or product launches to match the pace of adoption, and that it recorded about $0.7 billion of charges in 2023 (supplier payments, inventory adjustments) and may incur more. The 2023 risk factors add related language: a risk factor heading now flags price competition \"particularly for electric vehicles\"; Ford may not recoup battery plant investments if plants can't run at expected capacity; it may reduce plant capacity, hours or shifts and face supplier claims; EV raw material/component suppliers may become distressed; and high battery costs hinder price parity with ICE vehicles. The 2022 10-K only had generic language that the EV market might not develop at the rate expected."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA43",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001558370-24-003196|10K_7",
+     "start": 2789,
+     "end": 2973
+    },
+    {
+     "key": "0001558370-24-003196|10K_7",
+     "start": 2974,
+     "end": 3041
+    },
+    {
+     "key": "0001558370-24-003196|10K_7",
+     "start": 3042,
+     "end": 3136
+    }
+   ],
+   "answers": [
+    "After the post-pandemic supply chain disruptions, Weyco expected long transit times to last through much of 2022. So it brought in much of its Spring 2023 inventory early. Transit times then improved by the end of 2022, which left inventory at peak levels at December 31, 2022.",
+    "Because in 2022 Weyco brought in much of its Spring 2023 inventory early, expecting that the extended inventory transit times from post-pandemic supply chain disruptions would persist through much of 2022; transit times then improved by year-end, leaving inventory at peak levels."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA44",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001564590-20-005874|10K_7",
+     "start": 83664,
+     "end": 83751
+    }
+   ],
+   "answers": [
+    "Berkshire's retailing group had pre-tax earnings of $874 million in 2019, up 1.6% from $860 million in 2018.",
+    "$874 million in 2019 (up 1.6% from $860 million in 2018)."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA45",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000040545-25-000015|10K_1A",
+     "start": 44751,
+     "end": 45162
+    },
+    {
+     "key": "0000040545-25-000015|10K_1A",
+     "start": 45163,
+     "end": 45448
+    }
+   ],
+   "answers": [
+    "GE says it carries cyber insurance but can't be certain the coverage will be enough for the liabilities it actually incurs. It also can't be sure the insurance will stay available on economically reasonable terms, or at all, or that an insurer won't deny coverage for a future claim. It adds that cyber incidents can lead to costs that insurance doesn't cover, such as higher digital infrastructure or related costs.",
+    "GE says it carries cyber insurance but cannot be certain the coverage will be adequate for liabilities actually incurred, that insurance will remain available on economically reasonable terms (or at all), or that an insurer will not deny coverage for a future claim. It also notes cybersecurity incidents can lead to increased digital infrastructure or related costs not covered by insurance."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA46",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001104659-20-032373|10K_1A",
+     "start": 4667,
+     "end": 4799
+    }
+   ],
+   "answers": [
+    "No. Weyco buys all its products from independent foreign manufacturers, mainly in China and India. It says it has good working relationships with them but no long-term contracts.",
+    "No. Weyco purchases all its products from independent foreign manufacturers (primarily in China and India) and, although it has good working relationships with them, it does not have long-term contracts with them."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA47",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA48",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA49",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "The filing doesn't give a per-pair price paid to Chinese manufacturers. It says only that Weyco buys all its products from independent foreign manufacturers, mainly in China and India, without long-term contracts. It also says it has begun negotiating price reductions with Chinese suppliers because of new tariffs, but no per-pair cost is stated.",
+    "The 10-K does not disclose any price per pair paid to Chinese manufacturers; it only notes that products are sourced primarily from China and India and that the company has begun negotiating price reductions with Chinese suppliers in response to tariffs."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA50",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "The 10-K sections shown do not report how many iPhones Apple sold (unit volume) in fiscal 2023. They give only iPhone net sales of $200,583 million, down 2% or $4.9 billion from 2022.",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA51",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA52",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000034088-20-000016|10K_1A",
+     "start": 7214,
+     "end": 7399
+    },
+    {
+     "key": "0000034088-20-000016|10K_1A",
+     "start": 7400,
+     "end": 7498
+    },
+    {
+     "key": "0000034088-20-000016|10K_1A",
+     "start": 7499,
+     "end": 7728
+    },
+    {
+     "key": "0000034088-20-000016|10K_1A",
+     "start": 8045,
+     "end": 8092
+    },
+    {
+     "key": "0000034088-20-000016|10K_1A",
+     "start": 8093,
+     "end": 8271
+    }
+   ],
+   "answers": [
+    "Not by name. The risk factors flag a general litigation risk, including suits by state and local governments and private plaintiffs who use the legal system to push public policy agendas or seek money from the company. They never tie that litigation to climate change. The climate change risk factor covers regulation (cap-and-trade, carbon taxes, efficiency standards, renewable mandates), not lawsuits.",
+    "Not explicitly. The Risk Factors section discusses litigation risk in general terms (including suits by state and local government actors and private plaintiffs seeking to use the legal system to promote public policy agendas) and separately discusses climate change as a regulatory/policy risk (cap and trade, carbon taxes, efficiency standards, etc.), but it does not expressly describe climate-related litigation as a risk; the two topics are not linked in the text."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA53",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA54",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    ""
+   ],
+   "provenance": "trevor_adjudicated (juror2)",
+   "note": null,
+   "decided": "2026-10-20T21:08:51.892Z"
+  },
+  {
+   "id": "QA55",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000034088-25-000010|10K_7",
+     "start": 33064,
+     "end": 33269
+    },
+    {
+     "key": "0000034088-25-000010|10K_7",
+     "start": 33270,
+     "end": 33412
+    },
+    {
+     "key": "0000034088-25-000010|10K_7",
+     "start": 33413,
+     "end": 33516
+    },
+    {
+     "key": "0000034088-25-000010|10K_7",
+     "start": 33517,
+     "end": 33586
+    },
+    {
+     "key": "0000034088-25-000010|10K_7",
+     "start": 33587,
+     "end": 33689
+    },
+    {
+     "key": "0000034088-25-000010|10K_7",
+     "start": 33690,
+     "end": 33766
+    }
+   ],
+   "answers": [
+    "Exxon says inflation across major countries peaked in 2022, pushed up from already high 2021 levels by the Russia-Ukraine conflict's effect on energy and commodities. It has trended down since 2023 because major central banks tightened monetary policy aggressively and global growth slowed. The pace of that decline has varied a lot between OECD and non-OECD countries. As inflation neared official targets in the U.S. and Eurozone, the Federal Reserve and the European Central Bank began cutting interest rates in 2024. China, by contrast, has faced persistent deflationary pressure since 2023.",
+    "The MD&A (Recent Business Environment) says inflation across major countries peaked in 2022 (rising from elevated 2021 levels due to Russia-Ukraine impacts on energy and commodities), and has trended down since 2023 because of aggressive monetary tightening by major central banks and slowing global growth, with significant variation between OECD and non-OECD countries. With inflation approaching official targets in the U.S. and Eurozone, the Federal Reserve and ECB began lowering interest rates in 2024, while China has faced persistent deflationary pressure since 2023."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA56",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0000037996-22-000013|10K_1A",
+     "start": 25139,
+     "end": 25525
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 8661,
+     "end": 8857
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 35416,
+     "end": 35797
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 36924,
+     "end": 37287
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 45611,
+     "end": 45728
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 46635,
+     "end": 46730
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 46731,
+     "end": 47220
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 51399,
+     "end": 51746
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 52353,
+     "end": 52531
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 63538,
+     "end": 63716
+    },
+    {
+     "key": "0000037996-25-000013|10K_1A",
+     "start": 63717,
+     "end": 63920
+    }
+   ],
+   "answers": [
+    "In 2021 Ford framed EV risk mostly as a hypothetical: if the EV market didn't develop at the expected rate, even with regulation encouraging rapid adoption, or if EVs were viewed negatively or consumers preferred rivals, results could suffer. By 2024 the risk was described as already happening. Ford said it had seen lower-than-anticipated industrywide EV adoption, that regulation was shifting away from supporting rapid adoption, and that it had adjusted spending, production and launches as a result. The 2024 filing also adds several new EV risks:\n- near-term EV pricing pressure and high battery costs;\n- charges tied to EV suppliers and the risk of not recouping battery-plant investments;\n- dependence on battery raw materials (lithium, cobalt, nickel) and offtake contracts that leave the volume risk with Ford;\n- competition from Chinese EV makers;\n- the possible repeal or restriction of IRA EV incentives.",
+    "In 2021, Ford framed EV risk hypothetically: 'if' the EV market did not develop at the expected rate (even with a supportive regulatory framework), or if consumers preferred competitors' EVs, results could be hurt; battery availability was mentioned only briefly as a possible component shortage. By 2024, the description shifted to realized risks: Ford states it has 'observed lower than initially anticipated industrywide electric vehicle adoption rates' and near-term pricing pressures, which have led it to cut EV spending, production and launches and to accrue charges for payments to EV suppliers and inventory adjustments; it notes the regulatory framework is shifting away from supporting EV adoption and U.S. policy changes could remove incentives. The 2024 filing also adds entirely new EV-specific risks: a stand-alone risk factor on multi-year offtake agreements for battery raw materials (lithium, cobalt, nickel) that leave Ford bearing the risk of lower EV volumes and fluctuating costs; dependence on battery raw-material supply and responsible sourcing; high battery costs preventing price parity with ICE vehicles and underutilized battery plants; competition from Chinese EV exporters; and dependence on IRA tax credits that policymakers may repeal."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA57",
+   "state": "not_answerable",
+   "spans": [],
+   "answers": [
+    "",
+    ""
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA58",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001628280-26-010047|10K_7",
+     "start": 40207,
+     "end": 40471
+    },
+    {
+     "key": "0001628280-26-010047|10K_7",
+     "start": 40472,
+     "end": 40727
+    }
+   ],
+   "answers": [
+    "Concentrate sales volume is the amount of concentrates, syrups, source waters and powders/minerals, expressed in unit case equivalents, that the Company sells, or uses in finished products it sells, to its bottling partners or other customers. For Costa non-ready-to-drink products, it is the amount of beverages sold to customers or consumers, mainly measured by number of transactions and also expressed in unit case equivalents.",
+    "Concentrate sales volume is the amount of concentrates, syrups, source waters and powders/minerals (expressed in unit case equivalents) sold by, or used in finished products sold by, the Company to its bottling partners or other customers. For Costa non-ready-to-drink products, it is the amount of beverages, primarily measured in number of transactions (expressed in unit case equivalents), sold by the Company to customers or consumers."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA59",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 2055,
+     "end": 2166
+    },
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 3105,
+     "end": 3109
+    },
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 3110,
+     "end": 3201
+    },
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 4284,
+     "end": 4441
+    },
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 9517,
+     "end": 9612
+    },
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 9613,
+     "end": 9721
+    },
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 13039,
+     "end": 13127
+    },
+    {
+     "key": "0001104659-26-027690|10K_7",
+     "start": 13128,
+     "end": 13220
+    }
+   ],
+   "answers": [
+    "Weyco says the incremental tariffs imposed in 2025 raised its product costs and squeezed gross margin, even with a 10% price increase in July. Consolidated gross margin fell from 45.3% in 2024 to 43.2% in 2025, mainly because of those tariff costs. Wholesale gross margin fell from 40.2% to 37.5%. The company paid about $16 million in incremental tariffs in 2025 and has sued for a refund. It adds that fluid U.S. trade policy leaves gross margin uncertain in the near term.",
+    "The 10-K says incremental tariffs imposed in early 2025 increased product costs throughout 2025, resulting in gross margin compression despite a 10% price increase in July. Consolidated gross margin fell to 43.2% from 45.3%, primarily due to higher tariff costs, and Wholesale gross margin fell to 37.5% from 40.2%, negatively impacted by incremental tariffs. It also notes that fluid U.S. trade policy creates near-term gross margin uncertainty, that the company paid about $16 million of incremental tariffs in 2025, and that it has mitigation strategies in place."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  },
+  {
+   "id": "QA60",
+   "state": "answerable",
+   "spans": [
+    {
+     "key": "0001065280-20-000040|10K_1A",
+     "start": 22319,
+     "end": 22489
+    },
+    {
+     "key": "0001065280-20-000040|10K_1A",
+     "start": 22748,
+     "end": 22879
+    }
+   ],
+   "answers": [
+    "Yes. Netflix says its mix of marketing and public relations programs includes social media sites. The risk it ties to these channels is that if they are curtailed, its ability to engage members and attract new ones may be hurt. That could happen if advertising rates rise or if Netflix stops using platforms that members find intrusive or damaging to its brand.",
+    "Yes. The risk factors state Netflix uses a broad mix of marketing and public relations programs, including social media sites, to promote its service and content. The related risk is that if available marketing channels are curtailed (e.g., if Netflix limits or discontinues certain marketing sources because advertising rates increase or members deem platforms intrusive or damaging to the brand), its ability to engage members and attract new members may be adversely affected."
+   ],
+   "provenance": "jury_agreed",
+   "note": null
+  }
+ ]
+}
