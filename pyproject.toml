@@ -11,7 +11,10 @@ dependencies = [
     "truststore>=0.10",
     "lxml>=6.0",
     "anthropic>=1.14,<2",
-    "spancheck==0.3.1",   # B1, from PyPI; never vendored (CLAUDE.md)
+    "spancheck==0.3.1", # B1, from PyPI; never vendored (CLAUDE.md)
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+    "python-multipart>=0.0.9",
 ]
 
 [project.optional-dependencies]

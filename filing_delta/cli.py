@@ -118,6 +118,16 @@ def cmd_claims(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_serve(args: argparse.Namespace) -> int:
+    import uvicorn
+
+    from .web import create_app
+
+    print(f"filing-delta read view: http://127.0.0.1:{args.port}/  (Ctrl+C to stop)", flush=True)
+    uvicorn.run(create_app(ROOT), host="127.0.0.1", port=args.port, log_level="warning")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     load_env()
     p = argparse.ArgumentParser(prog="filing-delta")
@@ -138,6 +148,9 @@ def main(argv: list[str] | None = None) -> int:
     fa.set_defaults(func=cmd_facts)
     cl = sub.add_parser("claims", help="match MD&A headline claims to tagged values; docs/claims-report.md")
     cl.set_defaults(func=cmd_claims)
+    sv = sub.add_parser("serve", help="the read view at http://127.0.0.1:8000 (changes + recorded answers)")
+    sv.add_argument("--port", type=int, default=8000)
+    sv.set_defaults(func=cmd_serve)
     args = p.parse_args(argv)
     return args.func(args)
 

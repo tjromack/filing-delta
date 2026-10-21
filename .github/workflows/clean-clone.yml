@@ -1,0 +1,40 @@
+# Clean-clone reproduction (M8 gate, FD-DEC 036): a fresh runner with no API key downloads the data release,
+# rebuilds everything, re-runs every evaluation from recorded model responses, and fails if any committed report
+# or golden file differs by a single byte.
+name: clean-clone
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clean-clone-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install (from the lock file)
+        run: uv sync --frozen --extra dev
+
+      - name: Download and verify the data release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: uv run --frozen python tools/fetch_release.py
+
+      - name: Reproduce every published number (no API key)
+        env:
+          ANTHROPIC_API_KEY: ""
+        run: uv run --frozen python tools/reproduce.py

@@ -3,9 +3,9 @@
 **See what a company newly disclosed, quietly dropped, or materially reworded between filings — with every claim
 traceable to the exact span it came from.**
 
-> **Status: under construction.** Ingestion, section parsing, the diff, the material/cosmetic classifier and the XBRL
-> facts join are done and verified (see *How it's verified*). Grounded QA and the quickstart are in progress (`TODO.md`). Results not yet measured are marked
-> `[TKTK]`.
+> **Status:** built and verified through M8. Ingestion, section parsing, the diff, the material/cosmetic classifier,
+> the XBRL join, grounded QA and its `spancheck` evaluation are done; every number below reproduces from a clean
+> clone with no API key (see *Quickstart*). Remaining: the Build 4 export and the case study (`TODO.md`).
 
 ## What it does
 
@@ -47,7 +47,36 @@ deterministic processing from model judgment, and scoring the model half.
 
 ## Quickstart
 
-[TKTK — a one-command, keyless cold run from a fresh clone, using the released EDGAR + model-response cache.]
+Reproduce every published number from a fresh clone, with no API key (about 8 minutes):
+
+```
+git clone https://github.com/tjromack/filing-delta.git && cd filing-delta
+uv sync --extra dev
+uv run python tools/fetch_release.py     # the data release: EDGAR responses + recorded model responses (63 MB)
+uv run python tools/reproduce.py         # rebuild, re-run every evaluation, fail if any report changes by a byte
+```
+
+`fetch_release.py` uses the GitHub CLI (`gh`) and checks the download against `release/manifest.json` before
+unpacking. `reproduce.py` blanks `ANTHROPIC_API_KEY`, so every model output comes from the recorded responses. The
+same run happens on a fresh Linux runner on every push (`.github/workflows/clean-clone.yml`).
+
+Then browse it:
+
+```
+uv run filing-delta serve                # http://127.0.0.1:8000
+```
+
+The read view shows each company's filings compared period over period: inserted and deleted words, the
+material/cosmetic label with its reason and evidence, and the exact character span and SEC.gov link for every
+change. It also shows the 60 recorded questions with every citation highlighted in its filing. With
+`ANTHROPIC_API_KEY` set, **Ask** answers a new question through the frozen pipeline.
+
+![A risk-factor comparison in the read view: deleted and inserted words, with a material label and its evidence](docs/img/read-view-changes.png)
+
+![A recorded answer with its citation highlighted in the filing text](docs/img/read-view-answer.png)
+
+To fetch the corpus yourself instead (about 250 requests at SEC's fair-access rate), set `EDGAR_USER_AGENT="Your
+Name you@example.com"` in `.env` and run `uv run filing-delta fetch`, then `parse`, `diff`, `facts`, `claims`.
 
 ## How it's verified
 

@@ -861,3 +861,22 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   out byte-identical: the reproduction the M8 gate will demand on a fresh runner already holds locally.
 - Design: `docs/design/m8.md` covers a one-command reproduce script, a GitHub Release for the data, a clean-clone
   Action, and a FastAPI read view (changes plus recorded questions; live asking only with a key).
+
+## 2026-10-20 — M8 build: release, reproduce, read view
+- Trevor approved the M8 design and chose all three recommendations (FD-DEC 036).
+- `tools/build_release.py`: 63 MB archive and a committed manifest. `tools/fetch_release.py` verifies and unpacks
+  safely. `tools/reproduce.py` runs 16 steps keyless and fails on any changed committed file.
+- **Rehearsal before uploading anything:** a fresh clone, a fresh environment and the local archive.
+  - First run failed immediately: the EDGAR client refused to start without a User-Agent even in cache-only mode,
+    and a clean clone has no `.env`. Fixed by building no network client at all when offline without one
+    (FD-DEC 037), not with a placeholder identity.
+  - Second run: **REPRODUCED, every committed report and golden file byte for byte, 487 s, no API key.**
+- Data release `data-2026-10-20` published on the private repo; the asset size matches the manifest.
+- Read view (`filing-delta serve`, FastAPI, server-rendered, no JavaScript, all values escaped):
+  - companies → compared periods → changes with inline word diff, material/cosmetic label with its rationale and
+    evidence, exact character spans and SEC.gov links, and a material-only filter;
+  - the 60 recorded questions with every citation highlighted in context;
+  - Ask only when a key is set;
+  - the limits statement on every page.
+  - 7 test-client tests. Driven in Chrome at 1280 px and 400 px: no overflow, no errors.
+  - Fixed after looking: citation context ran paragraphs together.
