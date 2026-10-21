@@ -118,7 +118,7 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
 - [x] One-command keyless cold run (`tools/fetch_release.py` + `tools/reproduce.py`); a clean-clone GitHub
       Action with badge
 - [x] README filled in with real numbers and stated coverage; two screenshots
-- [x] **Gate:** a cold clone on a fresh runner reproduces the published numbers: CI run 39523066842,
+- [x] **Gate:** a cold clone on a fresh runner reproduces the published numbers: CI run 39523066842 (v3) and 39527545724 (v4, release data-2026-10-20b),
       byte for byte, no API key. **← stop**
 
 ## M9 — labeled QA pairs exported for B4
