@@ -552,3 +552,18 @@ after M8 would mean rebuilding that release.
   report lists answers whose quotes miss the key's passage. Not tuned on the scored set. Candidate fixes for later:
   meaning-based retrieval; or allowing "no, but" only when the question's own subject terms appear in the retrieved
   passages.
+
+## FD-DEC 036 — M8: data release, clean-clone check, read view (2026-10-20)
+**Status:** Decided (Trevor approved `docs/design/m8.md`: a GitHub Release on the private repo; the clean-clone Action
+on every push and on demand; a read view covering changes and questions).
+
+- **Release:** `tools/build_release.py` packs the EDGAR cache (512 files), the model cache (10,754 records) and the
+  timed latencies into one archive, 63 MB compressed from about 870 MB, since filing HTML compresses well.
+  `release/manifest.json` (committed) pins the archive's sha256 and a digest per directory.
+  `tools/fetch_release.py` verifies the archive before unpacking, rejects members that would land outside `data/`,
+  and verifies the unpacked trees.
+- **Reproduction:** `tools/reproduce.py` blanks `ANTHROPIC_API_KEY`, rebuilds everything, re-runs every evaluation
+  and report from recorded responses, runs the tests, and fails if any committed file under `docs/`, `tests/` or
+  `corpus/` changed.
+- **DuckDB deferred:** named in the stack, but JSON per filing is the single source the reports already read, and
+  it's fast enough for 144 filings. Revisit if the corpus grows.

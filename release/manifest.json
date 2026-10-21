@@ -1,0 +1,20 @@
+{
+ "tag": "data-2026-10-20",
+ "asset": "filing-delta-data-2026-10-20.tar.gz",
+ "sha256": "91ce5246104a3bf45b3c64d7d8a36ada73336f9072737deddc88a2d953911791",
+ "bytes": 62594747,
+ "contents": {
+  "data/edgar-cache": {
+   "digest": "158bcb9688c119c3afc954826e707c7d36ee59a054230cc5e9280b2d51b8e30c",
+   "files": 512
+  },
+  "data/model-cache": {
+   "digest": "18946912a85f51fd1e76bfc1153598b8a816e21143b839d8a346aca22cdf7626",
+   "files": 10754
+  },
+  "data/qa/latency.jsonl": {
+   "digest": "80c393033572b468cbb054bf9967e99ceb23660d8208ef0474c2e21b102a3eca",
+   "files": 1
+  }
+ }
+}
