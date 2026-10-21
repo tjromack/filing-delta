@@ -1,6 +1,6 @@
 """Download the data release named in release/manifest.json, verify it, and unpack it into data/ (M8).
 
-    python tools/fetch_release.py      # needs the GitHub CLI (gh) logged in, or GH_TOKEN set (as in the Action)
+    python tools/fetch_release.py      # GitHub CLI (gh) if installed, else curl from the public release URL
 
 Verifies the archive's sha256 against the committed manifest before unpacking, refuses any archive member that
 would land outside data/, then checks each directory's digest. Skips the download when the archive is already in
@@ -9,6 +9,7 @@ dist/ and matches.
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 import sys
 import tarfile
@@ -18,14 +19,24 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from build_release import MANIFEST, sha256_file, tree_digest  # noqa: E402
 
+REPO = "tjromack/filing-delta"
+
 
 def main() -> None:
     m = json.loads(MANIFEST.read_text(encoding="utf-8"))
     archive = ROOT / "dist" / m["asset"]
     if not (archive.exists() and sha256_file(archive) == m["sha256"]):
         archive.parent.mkdir(exist_ok=True)
-        subprocess.run(["gh", "release", "download", m["tag"], "--pattern", m["asset"], "--dir", str(archive.parent),
-                        "--clobber"], check=True, cwd=ROOT)
+        if shutil.which("gh") and "--no-gh" not in sys.argv:
+            subprocess.run(["gh", "release", "download", m["tag"], "--pattern", m["asset"],
+                            "--dir", str(archive.parent), "--clobber"], check=True, cwd=ROOT)
+        else:
+            # No GitHub CLI: the public release URL, fetched with curl (the OS trust store; CLAUDE.md TLS gotcha).
+            url = f"https://github.com/{REPO}/releases/download/{m['tag']}/{m['asset']}"
+            r = subprocess.run(["curl", "-fSL", "--retry", "3", "-o", str(archive), url], cwd=ROOT)
+            if r.returncode:
+                raise SystemExit(f"Couldn't download {url}. If the repository is private, install the GitHub CLI "
+                                 "(gh) and log in, then run this again.")
         if sha256_file(archive) != m["sha256"]:
             raise SystemExit(f"{m['asset']}: sha256 doesn't match release/manifest.json; refusing to unpack.")
     with tarfile.open(archive, "r:gz") as tar:

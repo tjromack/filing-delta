@@ -5,15 +5,23 @@
 **See what a company newly disclosed, quietly dropped, or materially reworded between filings — with every claim
 traceable to the exact span it came from.**
 
-> **Status:** built and verified through M8. Ingestion, section parsing, the diff, the material/cosmetic classifier,
-> the XBRL join, grounded QA and its `spancheck` evaluation are done; every number below reproduces from a clean
-> clone with no API key (see *Quickstart*). Remaining: the case study (`TODO.md`).
+**Demonstrates:** separating deterministic diffing from model judgment, then scoring the model half against labels.
+
+**Try it** (no API key; fresh clone to the read view in about 3 minutes):
+
+```
+git clone https://github.com/tjromack/filing-delta.git && cd filing-delta && uv run filing-delta demo
+```
+
+> **Status:** built and verified (milestones M0–M9; `TODO.md`). Every number below reproduces from a clean clone with
+> no API key (see *Quickstart*). Case study: `docs/CASE-STUDY.md`.
 
 ## What it does
 
-1. **Fetches** 10-K, 10-Q and 8-K filings from SEC EDGAR, honoring EDGAR's fair-access rules: a declared
-   User-Agent, a rate limit, and a local cache so a re-run makes zero requests.
-2. **Parses** the narrative sections (Item 1A Risk Factors, Item 7 MD&A) out of decades of inconsistent filer HTML.
+1. **Fetches** 10-K and 10-Q filings from SEC EDGAR (144 filings, 11 companies), honoring EDGAR's fair-access
+   rules: a declared User-Agent, a rate limit, and a local cache so a re-run makes zero requests.
+2. **Parses** the narrative sections (Item 1A Risk Factors, Item 7 MD&A; for 10-Qs, Part II Item 1A and Part I
+   Item 2) out of eight years of inconsistent filer HTML: four layout styles, both sides of the move to inline XBRL.
    Every parse failure is logged and counted, never skipped silently.
 3. **Diffs** each section period over period at paragraph level: added, removed, reworded, moved. This step is
    **fully deterministic and uses no model.**
@@ -28,7 +36,7 @@ Anyone who has to read the same company's risk factors year after year and wants
 compliance and audit reviewers, researchers. It's also for engineers who want a worked example of separating
 deterministic processing from model judgment, and scoring the model half.
 
-## What it does not do
+## What this does not let me claim
 
 - **It is not investment advice.** It reports what filings say and how the text changed. It makes no judgment about
   what that means for a security, and nothing it outputs is forward-looking.
@@ -50,7 +58,8 @@ deterministic processing from model judgment, and scoring the model half.
   and "material" on figure-only updates (`docs/materiality-error-analysis.md`).
 - **It doesn't cover anything outside its ingested corpus.** Coverage: **10-K** with a period of report from 2018-01-01 to
   2025-12-31, and **10-Q** filed 2025-01-01 to 2026-09-30, for **11 companies** (`corpus.toml`; every accession in
-  `corpus/manifest.csv`). Amendments are excluded. Questions outside that range get an abstention.
+  `corpus/manifest.csv`). Amendments and 8-Ks are excluded (FD-DEC 040). Questions outside that range get an
+  abstention.
 - It doesn't parse exhibits, financial statements or XBRL tables as narrative. XBRL facts are joined as context
   only, always labeled as coming from the 10-K's audited statements or the 10-Q's unaudited interim statements.
 

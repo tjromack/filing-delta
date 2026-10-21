@@ -128,6 +128,41 @@ def cmd_serve(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_demo(args: argparse.Namespace) -> int:
+    """The cold-start path (rubric gate 6): from a fresh clone to the read view in one command, with no API key.
+
+    Downloads and verifies the data release, rebuilds only what the read view reads (sections, diffs, the
+    classifier's corpus labels and the recorded QA run, all from cached and recorded responses), then serves it.
+    Steps whose outputs already exist are skipped, so a second run starts the server straight away. Regenerated
+    reports come out byte-identical to the committed ones (tools/reproduce.py checks all of them).
+    """
+    import subprocess
+
+    py = sys.executable
+    env = {**os.environ, "ANTHROPIC_API_KEY": "", "PYTHONIOENCODING": "utf-8"}
+    env.pop("ANTHROPIC_MODEL", None)
+    data = ROOT / "data"
+    steps = [
+        ("download and verify the data release (63 MB)", [py, "tools/fetch_release.py"], data / "model-cache"),
+        ("check the EDGAR cache (no network)", [py, "-m", "filing_delta.cli", "fetch", "--offline"], None),
+        ("parse sections", [py, "-m", "filing_delta.cli", "parse"], data / "sections" / "results.jsonl"),
+        ("diff year over year", [py, "-m", "filing_delta.cli", "diff"], data / "diffs"),
+        ("classifier labels (recorded)", [py, "tools/classify_corpus.py", "report", "--compare", "claude-haiku-5-5"],
+         data / "classify" / "corpus-claude-sonnet-5-5.jsonl"),
+        ("question answers (recorded)", [py, "tools/run_qa.py", "--offline"], data / "qa" / "run.jsonl"),
+    ]
+    for label, cmd, done in steps:
+        if done is not None and done.exists():
+            print(f"  ✓ {label} (already done)", flush=True)
+            continue
+        print(f"  … {label}", flush=True)
+        r = subprocess.run(cmd, cwd=ROOT, env=env, capture_output=True, text=True, encoding="utf-8")
+        if r.returncode:
+            print(r.stdout[-2000:], r.stderr[-2000:], sep="\n")
+            return 1
+    return cmd_serve(args)
+
+
 def main(argv: list[str] | None = None) -> int:
     load_env()
     p = argparse.ArgumentParser(prog="filing-delta")
@@ -151,6 +186,9 @@ def main(argv: list[str] | None = None) -> int:
     sv = sub.add_parser("serve", help="the read view at http://127.0.0.1:8000 (changes + recorded answers)")
     sv.add_argument("--port", type=int, default=8000)
     sv.set_defaults(func=cmd_serve)
+    dm = sub.add_parser("demo", help="fresh clone to read view in one command, no API key (downloads the data release)")
+    dm.add_argument("--port", type=int, default=8000)
+    dm.set_defaults(func=cmd_demo)
     args = p.parse_args(argv)
     return args.func(args)
 

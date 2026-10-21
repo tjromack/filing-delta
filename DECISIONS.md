@@ -635,3 +635,15 @@ on every push and on demand; a read view covering changes and questions).
   `tools/reproduce.py`, so CI guards it.
 - **Alternatives rejected:** waiting for Build 4 to define the schema (blocks M9, and the data's needs are best
   known here); the spancheck `Case` format alone (it can't carry spans with provenance or label history).
+
+## FD-DEC 040 — 8-Ks were never ingested; the open question is closed (2026-10-21)
+**Status:** Decided at M10, closing FD-DEC 008's open "8-K's role".
+
+- **Fact:** the corpus is 88 10-Ks and 56 10-Qs. No 8-K was fetched, and the README said "10-K, 10-Q and 8-K"
+  until the M10 self-score caught it. That is exactly the overclaim the playbook's "does not let you claim" line
+  forbids.
+- **Why they stayed out:** 8-Ks are event-driven, with no year-over-year counterpart for the diff. Their earnings
+  content (Item 2.02) lives in exhibits, which are out of scope. Their proposed use (plausible unanswerable QA
+  questions) was covered by the by-design unanswerable set (FD-DEC 028).
+- **Fixed:** the README states 10-K and 10-Q only, and "eight years" of filer HTML, not "decades". The case study
+  names 8-K as descoped.
