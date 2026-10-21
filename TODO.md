@@ -110,12 +110,16 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
       compares two models on the key; deferred)
 - [x] **Gate:** a reproducible spancheck report (byte-identical offline, all 214 judge verdicts replayed). **← stop**
 
-## M8 — read view + try-it path + clean clone
-- [ ] FastAPI + a small read view: section diff, with the material/cosmetic label and the source span
-- [ ] Release artifact: EDGAR cache + model-response cache for the locked corpus
-- [ ] One-command keyless cold run; a clean-clone GitHub Action (Gate 1 badge)
-- [ ] README filled in with real numbers and stated coverage; one screenshot
-- [ ] **Gate:** a cold clone on a fresh runner reproduces the published numbers. **← stop**
+## M8 — read view + try-it path + clean clone (done; awaiting approval)
+- [x] FastAPI + a small read view: section diff, with the material/cosmetic label and the source span
+      (`filing-delta serve`; plus the 60 recorded answers with highlighted citations; Ask only with a key)
+- [x] Release artifact: EDGAR cache + model-response cache for the locked corpus (`data-2026-10-20`, 63 MB,
+      private; `release/manifest.json`)
+- [x] One-command keyless cold run (`tools/fetch_release.py` + `tools/reproduce.py`); a clean-clone GitHub
+      Action with badge
+- [x] README filled in with real numbers and stated coverage; two screenshots
+- [x] **Gate:** a cold clone on a fresh runner reproduces the published numbers: CI run 39523066842,
+      byte for byte, no API key. **← stop**
 
 ## M9 — labeled QA pairs exported for B4
 - [ ] Export the answerable/unanswerable pairs, each with source document, span, label and labeler note (B4's item schema)

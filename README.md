@@ -1,5 +1,7 @@
 # filing-delta
 
+[![clean-clone reproduction](https://github.com/tjromack/filing-delta/actions/workflows/clean-clone.yml/badge.svg)](https://github.com/tjromack/filing-delta/actions/workflows/clean-clone.yml)
+
 **See what a company newly disclosed, quietly dropped, or materially reworded between filings — with every claim
 traceable to the exact span it came from.**
 
@@ -90,6 +92,7 @@ Name you@example.com"` in `.env` and run `uv run filing-delta fetch`, then `pars
 | MD&A headline claims vs. tagged values | Whole-company figures stated in MD&A agree with the filing's own statements | No model. Of 1,085 headline claims, 194 match, 1 has no matching tagged value, 12 use non-GAAP wording, 878 can't be checked (segments, other periods). 21 mutation-checked rule tests. Hand check: 100 claims labeled with the matcher's answer shown, 0 of 99 overridden at ~5 s each, so it is not independent evidence (FD-DEC 026): `docs/claims-eval.md` |
 | Cite-or-abstain verifier + QA run | No answer is shown without an exact-span citation; it abstains when the filings don't answer | 16 forged-citation tests (fabricated, altered, wrong offsets, wrong filing, one bad citation among good), all mutations caught. On 60 questions (pipeline v3): 37/37 answers' citations verified exact, 23/23 correct abstentions (10 by the model, 13 by rule), 37/37 answerable questions answered, one of them (QA21) a misleading "doesn't mention" answer after a retrieval miss; retrieval recall@8 36/37. **The answer key is model-built** (two-model jury, Trevor decided their 2 disagreements): `docs/qa-eval.md` |
 | `spancheck` citation + abstention report | Answers cite real spans and abstain when they should | `spancheck` 0.3.1 on the recorded v3 run: provenance 89/89 citations; abstention 60/60; **answer entailed by its own citations 59/60** (51/60 before v3 required every detail to be quoted); per-citation support 87% (judged); answer entailed by retrieved passages 98%. p50 latency 2.6 s, p95 4.2 s; $0.38 per 60 questions; same decision on a re-run 60/60. The report flags QA21, which passes every grader while asserting an absence that retrieval missed. Key is model-built: `docs/spancheck-report.md` |
+| Clean-clone reproduction | Every number here comes from the code and data in this repo, not from one machine | On a fresh Linux runner, with no API key, `tools/reproduce.py` rebuilds everything from the data release and re-runs every evaluation; every committed report and golden file regenerates byte for byte (`.github/workflows/clean-clone.yml`, on every push) |
 | Simulated 429 storm | The EDGAR client backs off and recovers without breaking fair access | Passing (`tests/test_edgar_client.py`); warm re-run of the full corpus = 0 requests |
 
 ## Data
