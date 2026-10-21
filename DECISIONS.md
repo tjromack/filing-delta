@@ -579,7 +579,7 @@ on every push and on demand; a read view covering changes and questions).
 - **Rejected:** a placeholder User-Agent in the reproduce script. If anything ever went online it would send an
   undeclared identity to SEC, which is the thing pin 1 forbids.
 
-## FD-DEC 038 — Pipeline v4: a second look before any "doesn't say" answer, and the figure boundary in code (2026-10-21)
+## FD-DEC 038 — Pipeline v4: a second look before any "doesn't say" answer, and the figure boundary in code (2026-10-20)
 **Status:** Decided (Trevor: fix the remaining defects before M9). Frozen at pipeline `eea85f3f0ffb`, prompt
 `0168f6f29599`. v3's reports are kept as `docs/qa-eval-v3.md` and `docs/spancheck-report-v3.md`.
 
@@ -614,7 +614,7 @@ on every push and on demand; a read view covering changes and questions).
   the wording the second search tried). Guard refusals say why. The README's limits gain "can't prove absence" and
   "the QA key is model-built".
 
-## FD-DEC 039 — The Build 4 export, with a schema proposed here (2026-10-21)
+## FD-DEC 039 — The Build 4 export, with a schema proposed here (2026-10-20)
 **Status:** Decided at M9. The schema is a proposal for Trevor to confirm or change when Build 4 starts.
 
 - **Finding:** M9's gate says "validates against the B4 schema", but Build 4 hasn't started and no item schema
@@ -636,7 +636,7 @@ on every push and on demand; a read view covering changes and questions).
 - **Alternatives rejected:** waiting for Build 4 to define the schema (blocks M9, and the data's needs are best
   known here); the spancheck `Case` format alone (it can't carry spans with provenance or label history).
 
-## FD-DEC 040 — 8-Ks were never ingested; the open question is closed (2026-10-21)
+## FD-DEC 040 — 8-Ks were never ingested; the open question is closed (2026-10-20)
 **Status:** Decided at M10, closing FD-DEC 008's open "8-K's role".
 
 - **Fact:** the corpus is 88 10-Ks and 56 10-Qs. No 8-K was fetched, and the README said "10-K, 10-Q and 8-K"
@@ -647,3 +647,19 @@ on every push and on demand; a read view covering changes and questions).
   questions) was covered by the by-design unanswerable set (FD-DEC 028).
 - **Fixed:** the README states 10-K and 10-Q only, and "eight years" of filer HTML, not "decades". The case study
   names 8-K as descoped.
+
+## FD-DEC 041 — The one-line demo, and guards kept outside the frozen pipeline (2026-10-20)
+**Status:** Decided at M10 (rubric gate 6).
+
+- **Decision:** `filing-delta demo` takes a fresh clone to the read view with no key. It fetches and verifies the
+  data release, rebuilds only what the read view reads (sections, diffs, XBRL facts, the recorded classifier
+  labels and QA run), skips steps whose output exists, then serves. The release fetch falls back from `gh` to curl
+  against the public release URL.
+- **Alternative rejected:** documenting the existing four-command Quickstart as the try-it path. It works, but it
+  isn't a single line on the card, and it runs every evaluation (about 8 minutes) when a visitor only wants to look.
+- **Found by rehearsal:** the demo skipped `facts`, the QA catalog came back empty, and every question was scoped
+  out with no error. The guard that now refuses an empty catalog lives in `qa/guard.py`, outside
+  `version.FILES`: putting it in `qa/index.py` changed the frozen pipeline version, and the run refused to start.
+  A test now pins the pipeline source to the frozen version, so that edit can't pass the suite again.
+- **Why:** checks around a frozen, scored component belong outside the hashed files. Otherwise any hardening
+  invalidates the scored run.

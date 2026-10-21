@@ -20,7 +20,8 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M6 · grounded QA | `3c9b650` + v2 (approved) | 35/35 answers verified exact; 23/23 correct abstentions; recall@8 36/37 against a model-jury key (58/60 jurors agreed) | labeling in the claude.ai viewer failed; a local labeling server and a model jury replaced it; misses are "no, but" questions |
 | M7 · spancheck | `9357eca` + v3 (approved) | v3: provenance 89/89; answers entailed by their own citations 59/60 (51 in v2); p50 2.6 s; $0.38 per 60 | 9 answers add true but uncited details; the exact-substring verifier can't see that, the judge can |
 | M8 · release + read view | `0a17762` (approved) | clean clone on a fresh Linux runner reproduces every report byte for byte, no key (752 s); 63 MB data release; read view | the EDGAR client refused to run offline without a User-Agent; a libxml2 difference broke a test, not an output |
-| M9 · Build 4 export | (this commit, awaiting approval) | 60 items, 37 answerable with 202 exact spans; validates against the proposed schema; every span re-read | no B4 schema existed; proposed one (FD-DEC 039); the validator crashed on bad input before it was fixed |
+| M9 · Build 4 export | `6e8e28c` (approved) | 60 items, 37 answerable with 202 exact spans; validates against the proposed schema; every span re-read | no B4 schema existed; proposed one (FD-DEC 039); the validator crashed on bad input before it was fixed |
+| M10 · self-score + case study | (this commit, awaiting approval) | §01 self-score 16/16, conditional on going public; `filing-delta demo`: fresh clone to read view in 254 s, no key | the demo served a run where every question was scoped out, silently; the first fix changed the frozen pipeline's hash |
 
 ---
 
@@ -901,7 +902,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - M8 gate: stop for Trevor's approval. Then M9 (export the QA pairs for Build 4, with each label's provenance:
   jury-agreed or Trevor-adjudicated) and M10 (case study and rubric self-score).
 
-## 2026-10-21 — Pipeline v4 before M9 (Trevor: fix the remaining defects first)
+## 2026-10-20 — Pipeline v4 before M9 (Trevor: fix the remaining defects first)
 - Both M8 bugs were already fixed. The live defect was QA21's false "doesn't mention". v4 adds a second search
   before any absence answer, driven by the model's own list of other wording (FD-DEC 038).
 - **What broke along the way:**
@@ -922,7 +923,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 
 ---
 
-## 2026-10-21 — M8 approved; M9: the Build 4 export
+## 2026-10-20 — M8 approved; M9: the Build 4 export
 - Trevor approved M8. M9's gate assumed a "B4 schema" that doesn't exist yet: searched the repo, the session
   record and the nearby `benchmark-server` (unrelated). I proposed one here (FD-DEC 039) and flagged it for
   Trevor's review instead of inventing a claim that it matched something.
@@ -933,3 +934,40 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 - **What broke:** the validator crashed with a KeyError on a malformed evidence entry instead of reporting it. A
   validator that crashes on bad input isn't validating; it now reports it. Mutations checked: 3 of 3 caught.
 - The export joined `tools/reproduce.py` (CI now guards `export/` too).
+
+---
+
+## 2026-10-20 — M10: self-score, case study, the one-line demo
+- Trevor approved M9. M10 started with a strict self-score against §01, which found gaps before any writing:
+  - The README claimed 8-K coverage that was never ingested, and "decades" of HTML. Both fixed (FD-DEC 040).
+  - Gate 6 had no single cold-start line. Added `filing-delta demo` (FD-DEC 041), with a curl fallback for the
+    release download.
+- **Rehearsed the demo from fresh clones until it was clean:**
+  1. It crashed writing into `data/classify/`, which a fresh clone lacks (`14fd236`).
+  2. It then served a read view where every recorded question had abstained at scope. The demo skipped `facts`, the
+     QA catalog read an empty `data/facts/`, and `run_qa.py` wrote the wrong report without complaint. Caught only
+     because the rehearsal also checks `git status`, and `docs/qa-eval.md` had changed.
+  3. The first fix (`303c3a5`) put the guard in `qa/index.py`, a frozen pipeline file. The version changed, and the
+     next rehearsal and CI both refused to run. No local test compared the source to the frozen version, so the
+     suite had passed. Moved the guard to `qa/guard.py` and added the pinning test (`95ee209`).
+  4. Third rehearsal: fresh clone to the read view in 254 s, no key, every committed file unchanged.
+     CI on `95ee209` (run 39536607185): REPRODUCED, byte for byte.
+- Wrote `docs/SELF-SCORE.md` (16/16, conditional on making the repo and release public and on one run of the curl
+  path, which can't be exercised while the repo is private) and `docs/CASE-STUDY.md` on the §06 template, with the
+  parse-failure log as its spine. Every figure was checked against its report, and the historical ones are marked as
+  journal-recorded. Fixed two entries in this log and three DECISIONS headers dated 2026-10-21; every commit is
+  dated 2026-10-20.
+- 260 tests pass.
+
+### Learnings
+- **A silent failure is worse in a demo than in a pipeline.** The empty catalog produced a working page with wrong
+  content. This is the parse-failure lesson again: an empty input should be an error, never a valid empty result.
+- **Freezing needs a test, not just a check in one script.** The frozen-version check lived only in `run_qa.py`,
+  so it fired at run time in CI instead of at commit time.
+- **Rehearse the exact command a stranger types.** `reproduce.py` had passed in CI all along. The demo's shorter
+  path skipped a step reproduce runs, and only running the demo itself showed that.
+
+### Open / next
+- **Stop:** M10 gate, Trevor's approval of the self-score and the case study.
+- Before the site: make the repo and the `data-2026-10-20b` release public, then run the one-line command once on a
+  machine without `gh`, to exercise the curl path.

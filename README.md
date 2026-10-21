@@ -7,7 +7,7 @@ traceable to the exact span it came from.**
 
 **Demonstrates:** separating deterministic diffing from model judgment, then scoring the model half against labels.
 
-**Try it** (no API key; fresh clone to the read view in about 3 minutes):
+**Try it** (no API key; fresh clone to the read view in about 4 minutes, including a 63 MB download):
 
 ```
 git clone https://github.com/tjromack/filing-delta.git && cd filing-delta && uv run filing-delta demo
