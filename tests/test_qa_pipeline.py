@@ -165,3 +165,11 @@ def test_scope_abstentions_never_call_the_model(tmp_path, cat):
             raise AssertionError("model called")
     t = ask("Should I buy Weyco stock?", ROOT, cat, Recorder(tmp_path, provider=Boom()))
     assert t["stage"] == "scope" and t["result"]["type"] == "abstain"
+
+
+def test_missing_facts_is_an_error_not_an_empty_scope(tmp_path):
+    """M10 demo rehearsal: without data/facts the catalog came back empty and every question scoped out."""
+    (tmp_path / "data" / "sections").mkdir(parents=True)
+    (tmp_path / "data" / "sections" / "results.jsonl").write_text("", encoding="utf-8")
+    with pytest.raises(FileNotFoundError, match="filing-delta facts"):
+        catalog(tmp_path)

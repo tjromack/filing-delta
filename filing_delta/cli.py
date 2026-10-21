@@ -147,6 +147,8 @@ def cmd_demo(args: argparse.Namespace) -> int:
         ("check the EDGAR cache (no network)", [py, "-m", "filing_delta.cli", "fetch", "--offline"], None),
         ("parse sections", [py, "-m", "filing_delta.cli", "parse"], data / "sections" / "results.jsonl"),
         ("diff year over year", [py, "-m", "filing_delta.cli", "diff"], data / "diffs"),
+        ("XBRL facts (cached; the question scope reads them)", [py, "-m", "filing_delta.cli", "facts", "--offline"],
+         data / "facts"),
         ("classifier labels (recorded)", [py, "tools/classify_corpus.py", "report", "--compare", "claude-haiku-5-5"],
          data / "classify" / "corpus-claude-sonnet-5-5.jsonl"),
         ("question answers (recorded)", [py, "tools/run_qa.py", "--offline"], data / "qa" / "run.jsonl"),

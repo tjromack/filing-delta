@@ -70,8 +70,11 @@ def catalog(root: Path) -> list[Filing]:
     for r in rows:
         if r["form_kind"] == "full" and r["outcome"] != "failed":
             have.setdefault(r["accession"], []).append(r["section"])
+    facts = sorted((root / "data" / "facts").glob("*.json"))
+    if not facts:   # found by the M10 demo rehearsal: an empty catalog scoped every question out, silently
+        raise FileNotFoundError("data/facts/ is empty: run `filing-delta facts` before anything that asks questions")
     out = []
-    for p in sorted((root / "data" / "facts").glob("*.json")):
+    for p in facts:
         fr = json.loads(p.read_text(encoding="utf-8"))
         dei = fr.get("dei") or {}
         fy = fiscal_year(fr["period_end"], fr["form"], (dei.get("CurrentFiscalYearEndDate") or {}).get("text"))
