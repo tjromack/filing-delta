@@ -7,7 +7,7 @@ traceable to the exact span it came from.**
 
 > **Status:** built and verified through M8. Ingestion, section parsing, the diff, the material/cosmetic classifier,
 > the XBRL join, grounded QA and its `spancheck` evaluation are done; every number below reproduces from a clean
-> clone with no API key (see *Quickstart*). Remaining: the Build 4 export and the case study (`TODO.md`).
+> clone with no API key (see *Quickstart*). Remaining: the case study (`TODO.md`).
 
 ## What it does
 
@@ -99,6 +99,7 @@ Name you@example.com"` in `.env` and run `uv run filing-delta fetch`, then `pars
 | MD&A headline claims vs. tagged values | Whole-company figures stated in MD&A agree with the filing's own statements | No model. Of 1,085 headline claims, 194 match, 1 has no matching tagged value, 12 use non-GAAP wording, 878 can't be checked (segments, other periods). 21 mutation-checked rule tests. Hand check: 100 claims labeled with the matcher's answer shown, 0 of 99 overridden at ~5 s each, so it is not independent evidence (FD-DEC 026): `docs/claims-eval.md` |
 | Cite-or-abstain verifier + QA run | No answer is shown without an exact-span citation; it abstains when the filings don't answer | 16 forged-citation tests (fabricated, altered, wrong offsets, wrong filing, one bad citation among good), all mutations caught. On 60 questions (pipeline v4): 37/37 answerable questions answered, every one citing the key's passage; 23/23 correct abstentions (13 by scope rule, 8 by the model, 2 figure questions withheld by rule); 37/37 answers' citations verified exact; retrieval recall 37/37 (with the second search before any "doesn't say" answer). **The answer key is model-built** (two-model jury, Trevor decided their 2 disagreements): `docs/qa-eval.md` |
 | `spancheck` citation + abstention report | Answers cite real spans and abstain when they should | `spancheck` 0.3.1 on the recorded v4 run: provenance 91/91 citations; abstention 60/60; **answer entailed by its own citations 59/60** (the exception is a "doesn't say" answer, whose absence half no quote can prove); per-citation support 88% (judged); answer entailed by retrieved passages 97%. p50 latency 2.9 s, p95 4.2 s; $0.45 per 60 questions; same decision on a re-run 60/60. Key is model-built: `docs/spancheck-report.md` |
+| Build 4 export | The labeled QA pairs are usable by another project, with every span checkable | `export/b4-finance-qa.jsonl`: 60 items (37 answerable, 202 evidence spans), each span's text re-read from its section and its section hash re-checked; validates against `schemas/b4-qa-item.schema.json`; label provenance on every item: `docs/b4-export.md` |
 | Clean-clone reproduction | Every number here comes from the code and data in this repo, not from one machine | On a fresh Linux runner, with no API key, `tools/reproduce.py` rebuilds everything from the data release and re-runs every evaluation; every committed report and golden file regenerates byte for byte (`.github/workflows/clean-clone.yml`, on every push) |
 | Simulated 429 storm | The EDGAR client backs off and recovers without breaking fair access | Passing (`tests/test_edgar_client.py`); warm re-run of the full corpus = 0 requests |
 

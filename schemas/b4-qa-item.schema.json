@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/tjromack/filing-delta/schemas/b4-qa-item.schema.json",
+  "title": "Grounded QA benchmark item (finance corpus, from filing-delta)",
+  "description": "One labeled question for Build 4's benchmark: the question, whether the filings answer it, the gold answer, every evidence span (exact offsets and exact text in a named SEC filing section), and how the label was made. Proposed by filing-delta M9 (FD-DEC 039) as the contract Build 4 adopts or adapts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "corpus", "question", "label", "evidence", "provenance"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "id": {"type": "string", "pattern": "^fd-qa-[0-9]{2}$"},
+    "corpus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "domain", "coverage", "data_release", "text_basis"],
+      "properties": {
+        "name": {"const": "filing-delta"},
+        "domain": {"const": "finance"},
+        "coverage": {"type": "string", "minLength": 20},
+        "data_release": {"type": "string", "description": "the filing-delta data release whose section texts the offsets index"},
+        "text_basis": {"type": "string", "description": "how the offsets map to text"}
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "author", "category"],
+      "properties": {
+        "text": {"type": "string", "minLength": 10},
+        "author": {"enum": ["model_drafted", "human_written"]},
+        "category": {"type": "string"},
+        "author_note": {"type": ["string", "null"]}
+      }
+    },
+    "label": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["answerable", "state", "gold_answers"],
+      "properties": {
+        "answerable": {"type": "boolean"},
+        "state": {"enum": ["answerable", "not_answerable"]},
+        "gold_answers": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["cik", "company", "form", "fiscal_year", "fiscal_period", "period_end", "accession", "url",
+                     "section", "section_sha256", "char_start", "char_end", "text"],
+        "properties": {
+          "cik": {"type": "integer"},
+          "company": {"type": "string"},
+          "form": {"enum": ["10-K", "10-Q"]},
+          "fiscal_year": {"type": "string", "pattern": "^[0-9]{4}$"},
+          "fiscal_period": {"enum": ["FY", "Q1", "Q2", "Q3"]},
+          "period_end": {"type": "string", "format": "date"},
+          "accession": {"type": "string", "pattern": "^[0-9]{10}-[0-9]{2}-[0-9]{6}$"},
+          "url": {"type": "string", "pattern": "^https://www\\.sec\\.gov/Archives/edgar/data/"},
+          "section": {"enum": ["10K_1A", "10K_7", "10Q_P1_2", "10Q_P2_1A"]},
+          "section_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "char_start": {"type": "integer", "minimum": 0},
+          "char_end": {"type": "integer", "minimum": 1},
+          "text": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "labelers", "note", "decision"],
+      "properties": {
+        "method": {"enum": ["jury_agreed", "human_adjudicated"]},
+        "labelers": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "id", "state", "answer", "reason"],
+            "properties": {
+              "kind": {"enum": ["model", "human"]},
+              "id": {"type": "string"},
+              "state": {"enum": ["answerable", "not_answerable", "unsure", "wrong_filing", "reject"]},
+              "answer": {"type": "string"},
+              "reason": {"type": "string"}
+            }
+          }
+        },
+        "note": {"type": ["string", "null"]},
+        "decision": {"type": "string", "description": "the decision record that governs how this label was made"}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"label": {"properties": {"answerable": {"const": true}}}}},
+     "then": {"properties": {"evidence": {"minItems": 1}, "label": {"properties": {"gold_answers": {"minItems": 1}}}}}},
+    {"if": {"properties": {"label": {"properties": {"answerable": {"const": false}}}}},
+     "then": {"properties": {"evidence": {"maxItems": 0}}}},
+    {"if": {"properties": {"provenance": {"properties": {"method": {"const": "human_adjudicated"}}}}},
+     "then": {"properties": {"provenance": {"properties": {"labelers": {"contains": {"properties": {"kind": {"const": "human"}}}}}}}}}
+  ]
+}

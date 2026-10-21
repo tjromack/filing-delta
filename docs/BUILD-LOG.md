@@ -19,7 +19,8 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M5 · XBRL facts join | `7da4250` (approved) | inline vs. company-facts API: 65,243/65,243 values equal; 1,085 MD&A headline claims, 194 match, 878 not checkable (segments, other periods) | suggestion-assisted labels came back 0/99 overrides at 5 s each: no evidence, reported as such |
 | M6 · grounded QA | `3c9b650` + v2 (approved) | 35/35 answers verified exact; 23/23 correct abstentions; recall@8 36/37 against a model-jury key (58/60 jurors agreed) | labeling in the claude.ai viewer failed; a local labeling server and a model jury replaced it; misses are "no, but" questions |
 | M7 · spancheck | `9357eca` + v3 (approved) | v3: provenance 89/89; answers entailed by their own citations 59/60 (51 in v2); p50 2.6 s; $0.38 per 60 | 9 answers add true but uncited details; the exact-substring verifier can't see that, the judge can |
-| M8 · release + read view | `0a17762` (awaiting approval) | clean clone on a fresh Linux runner reproduces every report byte for byte, no key (752 s); 63 MB data release; read view | the EDGAR client refused to run offline without a User-Agent; a libxml2 difference broke a test, not an output |
+| M8 · release + read view | `0a17762` (approved) | clean clone on a fresh Linux runner reproduces every report byte for byte, no key (752 s); 63 MB data release; read view | the EDGAR client refused to run offline without a User-Agent; a libxml2 difference broke a test, not an output |
+| M9 · Build 4 export | (this commit, awaiting approval) | 60 items, 37 answerable with 202 exact spans; validates against the proposed schema; every span re-read | no B4 schema existed; proposed one (FD-DEC 039); the validator crashed on bad input before it was fixed |
 
 ---
 
@@ -918,3 +919,17 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   prompt wording alone didn't.
 - CI on v4 (run 39527545724): **REPRODUCED**, every committed report and golden file byte for byte from release
   `data-2026-10-20b`, no API key, 835 s. M8 complete with the v4 fixes. Stop for Trevor's approval; then M9.
+
+---
+
+## 2026-10-21 — M8 approved; M9: the Build 4 export
+- Trevor approved M8. M9's gate assumed a "B4 schema" that doesn't exist yet: searched the repo, the session
+  record and the nearby `benchmark-server` (unrelated). I proposed one here (FD-DEC 039) and flagged it for
+  Trevor's review instead of inventing a claim that it matched something.
+- `tools/export_b4.py` → `export/b4-finance-qa.jsonl`: 60 items, 37 answerable with 202 sentence-level evidence
+  spans, 23 not. Every label carries its provenance: 58 jury-agreed, 2 human-adjudicated. Questions: 48
+  model-drafted, 12 human-written.
+- Validation: the JSON Schema plus a re-read of every span and section hash. 12 tests forge or break items.
+- **What broke:** the validator crashed with a KeyError on a malformed evidence entry instead of reporting it. A
+  validator that crashes on bad input isn't validating; it now reports it. Mutations checked: 3 of 3 caught.
+- The export joined `tools/reproduce.py` (CI now guards `export/` too).

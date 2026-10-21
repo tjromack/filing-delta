@@ -18,7 +18,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=9.0"]
+dev = [
+    "jsonschema>=4.23",
+    "pytest>=9.0",
+]
 
 [project.scripts]
 filing-delta = "filing_delta.cli:main"
