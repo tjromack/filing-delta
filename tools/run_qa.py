@@ -90,6 +90,7 @@ def main() -> None:
         print(f"{qid} key={k['state']:14} -> {r['type']:7} stage={t['stage']:8} "
               f"{'gold retrieved' if row.get('retrieved_gold') else ''}", flush=True)
     d = ROOT / "data" / "qa"
+    d.mkdir(parents=True, exist_ok=True)
     (d / "run.jsonl").write_text("".join(json.dumps(t, ensure_ascii=False, sort_keys=True) + "\n" for t in traces),
                                  encoding="utf-8")
 

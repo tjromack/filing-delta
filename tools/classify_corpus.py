@@ -177,6 +177,7 @@ def run_model(items: list[dict], model: str) -> list[dict]:
         r.update({"id": it["id"], "stratum": it["stratum"], "section": it["section"], "company": it["company"]})
         out.append(r)
     dest = ROOT / "data" / "classify" / f"corpus-{model}.jsonl"
+    dest.parent.mkdir(parents=True, exist_ok=True)      # a fresh clone has no data/classify (found by the M10 demo)
     dest.write_text("".join(json.dumps(r, sort_keys=True, ensure_ascii=False) + "\n" for r in out), encoding="utf-8")
     return out
 
