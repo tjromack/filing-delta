@@ -13,7 +13,9 @@ import pytest
 
 from filing_delta.classify.model import Recorder
 from filing_delta.qa.ask import ask
+from filing_delta.qa.guard import load_catalog
 from filing_delta.qa.index import catalog
+from filing_delta.qa.version import pipeline_version
 
 ROOT = Path(__file__).resolve().parents[1]
 pytestmark = pytest.mark.skipif(not (ROOT / "data" / "facts").exists(), reason="needs data/ (parse, facts)")
@@ -172,4 +174,10 @@ def test_missing_facts_is_an_error_not_an_empty_scope(tmp_path):
     (tmp_path / "data" / "sections").mkdir(parents=True)
     (tmp_path / "data" / "sections" / "results.jsonl").write_text("", encoding="utf-8")
     with pytest.raises(FileNotFoundError, match="filing-delta facts"):
-        catalog(tmp_path)
+        load_catalog(tmp_path)
+
+
+def test_pipeline_source_matches_the_frozen_version():
+    """Any edit to a file that decides an answer changes the version; the scored run is only valid for the frozen one."""
+    frozen = json.loads((ROOT / "tests" / "golden" / "qa_pipeline.json").read_text(encoding="utf-8"))
+    assert pipeline_version() == frozen["pipeline_version"]

@@ -312,7 +312,7 @@ Questions asking for advice or predictions are refused.</p>""")
             raise HTTPException(403, "No API key configured on this server.")
         from ..classify.model import Recorder
         from ..qa.ask import ask
-        from ..qa.index import catalog
+        from ..qa.guard import load_catalog as catalog
         t = ask(q[:500], root, catalog(root), Recorder(root / "data" / "model-cache"))
         return page("Answer", f'<p class="small"><a href="/ask">Ask another</a></p><h1>{escape(q[:500])}</h1>'
                               + render_answer(t, None))

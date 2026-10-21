@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT))
 from filing_delta.classify.model import Recorder  # noqa: E402
 from filing_delta.cli import load_env  # noqa: E402
 from filing_delta.qa.ask import ask  # noqa: E402
-from filing_delta.qa.index import catalog  # noqa: E402
+from filing_delta.qa.guard import load_catalog as catalog  # noqa: E402
 from filing_delta.qa.version import pipeline_version  # noqa: E402
 
 PRICE = (2.0, 10.0, 0.20, 2.50)      # claude-sonnet-5-5 $/MTok: in, out, cache read, cache write (standard)

@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from filing_delta.qa.index import catalog  # noqa: E402
+from filing_delta.qa.guard import load_catalog as catalog  # noqa: E402
 
 OUT = ROOT / "export" / "b4-finance-qa.jsonl"
 SCHEMA = ROOT / "schemas" / "b4-qa-item.schema.json"

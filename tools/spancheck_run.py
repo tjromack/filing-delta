@@ -31,7 +31,7 @@ from spancheck.span import citation_accuracy, verify_citation  # noqa: E402
 from filing_delta.classify.model import Recorder  # noqa: E402
 from filing_delta.cli import load_env  # noqa: E402
 from filing_delta.qa.ask import ask  # noqa: E402
-from filing_delta.qa.index import catalog  # noqa: E402
+from filing_delta.qa.guard import load_catalog as catalog  # noqa: E402
 from filing_delta.qa.prompt import CHANGE_LABEL, SECTION_LABEL, filing_label  # noqa: E402
 from filing_delta.qa.scope import ALIASES  # noqa: E402
 
