@@ -107,18 +107,26 @@ class EdgarClient:
         rng: random.Random | None = None,
         timeout: float = 60.0,
     ) -> None:
-        self.user_agent = validate_user_agent(user_agent)
+        # Fair access (pin 1): any client that can reach SEC must declare a User-Agent. An offline client reads only the
+        # cache and has no network client at all, so a clean clone can reproduce from the release without one
+        # (FD-DEC 037). A User-Agent passed to an offline client is still validated.
+        self.offline = offline
+        if offline and not user_agent:
+            self.user_agent = None
+        else:
+            self.user_agent = validate_user_agent(user_agent)
         self.cache = ResponseCache(cache_dir)
         self.limiter = limiter or RateLimiter(clock=clock, sleep=self._counted_sleep)
         self.policy = policy or RetryPolicy()
-        self.offline = offline
         self.stats = Stats()
         self._clock = clock
         self._wall_clock = wall_clock
         self._sleep = sleep
         self._rng = rng or random.Random()
-        headers = {"User-Agent": self.user_agent, "Accept-Encoding": "gzip, deflate"}
-        if transport is None:
+        headers = {"User-Agent": self.user_agent or "", "Accept-Encoding": "gzip, deflate"}
+        if self.user_agent is None:
+            self._http = None           # offline without a User-Agent: no network client exists to misuse
+        elif transport is None:
             # The machine sits behind a TLS-inspecting proxy; verify against the OS trust store (CLAUDE.md gotcha).
             import truststore
 
@@ -132,7 +140,8 @@ class EdgarClient:
         self._sleep(seconds)
 
     def close(self) -> None:
-        self._http.close()
+        if self._http is not None:
+            self._http.close()
 
     def __enter__(self) -> EdgarClient:
         return self

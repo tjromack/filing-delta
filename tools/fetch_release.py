@@ -33,7 +33,10 @@ def main() -> None:
             target = (ROOT / member.name).resolve()
             if not (member.isfile() or member.isdir()) or not str(target).startswith(str((ROOT / "data").resolve())):
                 raise SystemExit(f"refusing archive member {member.name!r}")
-        tar.extractall(ROOT)
+        if hasattr(tarfile, "data_filter"):
+            tar.extractall(ROOT, filter="data")     # also blocks links, devices and absolute paths
+        else:
+            tar.extractall(ROOT)
     for rel, want in m["contents"].items():
         got, n = tree_digest(rel)
         if got != want["digest"]:

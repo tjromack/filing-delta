@@ -73,6 +73,22 @@ def test_refuses_to_start_without_a_declared_user_agent(tmp_path, ua):
         EdgarClient(ua, tmp_path, transport=httpx.MockTransport(lambda r: ok()))
 
 
+def test_offline_client_needs_no_user_agent_and_has_no_network(tmp_path):
+    # A clean clone reproduces from the release cache with no .env (FD-DEC 037). Without a User-Agent the client
+    # has no HTTP client at all, so it can serve only the cache.
+    from filing_delta.edgar.cache import ResponseCache
+    ResponseCache(tmp_path).put("https://www.sec.gov/x", b"cached", "text/html")
+    with EdgarClient(None, tmp_path, offline=True) as c:
+        assert c.get("https://www.sec.gov/x").body == b"cached"
+        assert c._http is None
+        with pytest.raises(OfflineCacheMiss):
+            c.get("https://www.sec.gov/not-cached")
+    with pytest.raises(UserAgentRequired):          # online still refuses
+        EdgarClient(None, tmp_path, offline=False)
+    with pytest.raises(UserAgentRequired):          # a bad User-Agent is rejected even offline
+        EdgarClient("nobody", tmp_path, offline=True)
+
+
 def test_every_request_carries_the_declared_user_agent(tmp_path):
     clock = FakeClock()
     script = Script(clock, [ok()])

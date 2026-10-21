@@ -567,3 +567,14 @@ on every push and on demand; a read view covering changes and questions).
   `corpus/` changed.
 - **DuckDB deferred:** named in the stack, but JSON per filing is the single source the reports already read, and
   it's fast enough for 144 filings. Revisit if the corpus grows.
+
+## FD-DEC 037 — An offline EDGAR client needs no User-Agent (2026-10-20)
+**Status:** Decided. Found by the clean-clone rehearsal (M8), and refines how pin 1 is enforced.
+
+- **Problem:** pin 1 says the client "refuses to start" without a declared User-Agent. A clean clone has no `.env`,
+  so even the cache-only rebuild (`fetch --offline`) failed, though it makes zero requests.
+- **Rule now:** an online client still refuses to start without a valid User-Agent. An offline client without one
+  builds no HTTP client at all (`_http is None`), so it can only read the cache. A User-Agent given to an offline
+  client is still validated. Tested both ways.
+- **Rejected:** a placeholder User-Agent in the reproduce script. If anything ever went online it would send an
+  undeclared identity to SEC, which is the thing pin 1 forbids.
