@@ -880,3 +880,8 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   - the limits statement on every page.
   - 7 test-client tests. Driven in Chrome at 1280 px and 400 px: no overflow, no errors.
   - Fixed after looking: citation context ran paragraphs together.
+- **First CI run on a fresh Linux runner:** all 15 rebuild and report steps passed, then one test failed. The C1
+  test asserted our remap counter was 1, but the Linux lxml wheel bundles a newer libxml2 that already decodes
+  `&#146;` to `’` per HTML5, so our remap had nothing to do. The text was right on both platforms; the counter is
+  in no published file. The test now checks `remap_c1` directly plus the parsed text, and bounds the counter. A
+  test of an implementation detail tied to one machine; the CI run is what exposed it.

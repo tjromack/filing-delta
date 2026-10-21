@@ -56,10 +56,18 @@ def tenk(**sections: str) -> bytes:
 # --- decoding and the block stream ----------------------------------------------------------------------------------
 
 def test_c1_numeric_reference_is_remapped_through_windows_1252():
-    """Weyco FY2015 / Berkshire FY2016: '&#146;' must become ’, not the U+0092 control character."""
+    """Weyco FY2015 / Berkshire FY2016: '&#146;' must become ’, not the U+0092 control character.
+
+    Which layer does it depends on the libxml2 inside the lxml wheel: 2.11 (the Windows wheel here) hands back
+    U+0092 and remap_c1 fixes it; newer builds (the Linux CI wheel) decode it per HTML5 themselves. The outcome must
+    be the same either way, so the mechanism is tested directly and the counter only bounded (found by the M8
+    clean-clone run)."""
+    from filing_delta.parse.blocks import remap_c1
+    assert remap_c1("Management\u0092s Discussion") == ("Management’s Discussion", 1)
+    assert remap_c1("plain ’ text") == ("plain ’ text", 0)
     fl = flatten(b"<html><body><p>Management&#146;s Discussion</p></body></html>")
     assert fl.blocks[0].text == "Management’s Discussion"
-    assert fl.c1_remapped == 1
+    assert fl.c1_remapped in (0, 1)
 
 
 def test_zero_width_spaces_are_whitespace():
