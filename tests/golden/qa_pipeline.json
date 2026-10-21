@@ -1,10 +1,10 @@
 {
- "pipeline_version": "2369f1ea207a",
- "prompt_version": "8e982d7fefa2",
- "frozen": "2026-10-20",
+ "pipeline_version": "eea85f3f0ffb",
+ "prompt_version": "0168f6f29599",
+ "frozen": "2026-10-21",
  "model": "claude-sonnet-5-5 (ANTHROPIC_MODEL default)",
- "change": "FD-DEC 035: every figure and detail must be inside a quote; each citation names the claim it supports",
- "dev": "tools/qa_dev.py: the same 19 dev questions, none in the scored 60; per-citation judged support 42% -> 84%, answer entailed by its citations 90% -> 90%",
+ "change": "FD-DEC 038: before an absence ('doesn't say') answer stands, a second search for other wording the model lists plus question words missed by the first search; one more call with the added passages; FD-DEC 033's boundary enforced in code: an absence answer to a figure question is refused (added after the first v4 scored run over-answered QA19 and QA57; responses unchanged, so the re-run replays)",
+ "dev": "tools/qa_dev.py: 21 dev questions (19 + 2 for the second look, one a disclosed sibling of scored QA21's failure), none in the 60; per-citation judged support 86%, answer entailed by its citations 90%; every answer verified",
  "previous": [
   {
    "pipeline_version": "571c5437f514",
@@ -17,6 +17,12 @@
    "prompt_version": "a3e1a02aa61d",
    "frozen": "2026-10-20",
    "report": "docs/qa-eval-v2.md, docs/spancheck-report-v2.md"
+  },
+  {
+   "pipeline_version": "2369f1ea207a",
+   "prompt_version": "8e982d7fefa2",
+   "frozen": "2026-10-20",
+   "report": "docs/qa-eval-v3.md, docs/spancheck-report-v3.md"
   }
  ]
 }

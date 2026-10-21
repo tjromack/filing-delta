@@ -578,3 +578,38 @@ on every push and on demand; a read view covering changes and questions).
   client is still validated. Tested both ways.
 - **Rejected:** a placeholder User-Agent in the reproduce script. If anything ever went online it would send an
   undeclared identity to SEC, which is the thing pin 1 forbids.
+
+## FD-DEC 038 — Pipeline v4: a second look before any "doesn't say" answer, and the figure boundary in code (2026-10-21)
+**Status:** Decided (Trevor: fix the remaining defects before M9). Frozen at pipeline `eea85f3f0ffb`, prompt
+`0168f6f29599`. v3's reports are kept as `docs/qa-eval-v3.md` and `docs/spancheck-report-v3.md`.
+
+- **Defect:** v3 answered QA21 "the passages … never mention paid sharing" after retrieval missed the 10-K's
+  "multi-household usage" text. An absence claim is only as good as the search behind it.
+- **First attempt, rejected after a test:** a purely lexical check for question words found in the filing but not
+  retrieved. Stems collide ("sharing" and "shares" both reduce to "shar"), so a share-repurchase paragraph made
+  "sharing" look covered. A vocabulary gap can't be closed by comparing the question's own words.
+- **Fix:**
+  1. The answer schema gains `absence` and `search_terms`. When an answer claims something isn't there, the same
+     call lists up to 6 other phrasings a filing might use.
+  2. A deterministic second search on those phrasings, plus any missed question words, adds the best 4 new
+     passages. One more call answers over all of them.
+  3. Every step is recorded, so it replays with no key.
+- **The figure boundary, now in code:** the first v4 scored run over-answered QA19 (Exxon's Guyana breakeven price)
+  and QA57 (Coca-Cola's Super Bowl spend). The second search found related figures, and the model answered
+  "doesn't say X; does say Y" to questions asking for a figure, against FD-DEC 033's boundary. Now an absence
+  answer to a figure question ("how much", "how many", price, amount, salary, units, breakeven) is withheld by rule
+  (`absence_guard`). This enforces a rule already decided; the scored run exposed the gap, and that's disclosed.
+  The responses were unchanged, so the re-score replayed at no model cost.
+- **v4 on the 60:**
+  - 37/37 answerable answered, all citing the key's passage;
+  - 23/23 abstentions;
+  - recall 37/37;
+  - answers entailed by their own citations 59/60;
+  - per-citation support 88%;
+  - p50 2.9 s; $0.45.
+  - The one remaining spancheck failure (QA52) is the inherent limit of an absence answer.
+- **Scoring fix:** the judge now sees the heading over each quote, as the answering model did. Before that, QA20 and
+  QA35 failed for naming a heading the judge couldn't see.
+- **Read view and README:** "doesn't say" answers carry a visible note ("wasn't found", not proof of absence, with
+  the wording the second search tried). Guard refusals say why. The README's limits gain "can't prove absence" and
+  "the QA key is model-built".

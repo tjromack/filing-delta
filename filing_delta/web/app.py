@@ -239,8 +239,11 @@ scored against blind hand labels: precision 0.89, recall 0.80 for "material" (do
     def render_answer(t: dict, key: dict | None) -> str:
         r = t["result"]
         if r["type"] == "abstain":
+            guard = ('<div class="why">Withheld by rule: the question asks for a figure, and an answer that the '
+                     'filing doesn\'t state it would not answer it (FD-DEC 038).</div>') \
+                if t.get("stage") == "absence_guard" else ""
             out = f'<div class="card"><div class="chips"><span class="chip">abstained</span></div>' \
-                  f'<div class="text">{escape(r["reason"])}</div></div>'
+                  f'<div class="text">{escape(r["reason"])}</div>{guard}</div>'
         else:
             cites = []
             for c in r["citations"]:
@@ -253,8 +256,18 @@ scored against blind hand labels: precision 0.89, recall 0.80 for "material" (do
                              f' · {escape(SECTION_LABEL[c["section"]])} · chars {c["start"]:,}–{c["end"]:,}</div>'
                              + (f'<div class="why">Supports: {escape(c["claim"])}</div>' if c.get("claim") else "")
                              + f'<div class="text ctx">…{ctx}…</div></div>')
-            out = f'<div class="card"><div class="chips"><span class="chip">answer</span></div>' \
-                  f'<div class="text">{escape(r["text"])}</div>' + \
+            absent = ""
+            if (t.get("raw") or {}).get("absence"):
+                sp = t.get("second_pass") or {}
+                tried = ", ".join(sp.get("search_terms") or []) or ", ".join(sp.get("missed_terms") or [])
+                absent = ('<div class="why">This answer says the passages searched don\'t state something. Before '
+                          'answering, the tool searched again for other wording'
+                          + (f' ({escape(tried)})' if tried else '') +
+                          '. A search can still miss text phrased differently, so treat "doesn\'t say" as '
+                          '"wasn\'t found", not proof of absence.</div>')
+            out = f'<div class="card"><div class="chips"><span class="chip">answer</span>' + \
+                  ('<span class="chip unsure">says something isn\'t there</span>' if absent else '') + \
+                  f'</div><div class="text">{escape(r["text"])}</div>{absent}' + \
                   (f'<div class="small muted">{escape(t.get("provenance") or "")}</div>' if t.get("provenance") else "") + \
                   f'</div><h2>Citations ({len(r["citations"])}), each an exact span of the filing</h2>{"".join(cites)}'
         if key:

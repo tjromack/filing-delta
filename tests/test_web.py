@@ -68,6 +68,19 @@ def test_refusals_show_as_refusals(client):
     assert ">abstained<" in r and "<mark>" not in r
 
 
+def test_absence_answers_and_guard_refusals_are_explained(client):
+    run = {json.loads(l)["id"]: json.loads(l) for l in (ROOT / "data" / "qa" / "run.jsonl").read_text(encoding="utf-8").splitlines()}
+    absent = [q for q, t in sorted(run.items()) if t["result"]["type"] == "answer" and (t.get("raw") or {}).get("absence")]
+    guarded = [q for q, t in sorted(run.items()) if t["stage"] == "absence_guard"]
+    if absent:
+        assert "not proof of absence" in client.get(f"/questions/{absent[0]}").text
+    if guarded:
+        assert "Withheld by rule" in client.get(f"/questions/{guarded[0]}").text
+    present = next(q for q, t in sorted(run.items()) if t["result"]["type"] == "answer"
+                   and not (t.get("raw") or {}).get("absence"))
+    assert "not proof of absence" not in client.get(f"/questions/{present}").text
+
+
 def test_without_a_key_nothing_calls_a_model(client, monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     assert "needs" in client.get("/ask").text and "<form" not in client.get("/ask").text

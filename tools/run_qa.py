@@ -103,10 +103,10 @@ def main() -> None:
     model_answers = [t for t in traces if t["stage"] == "verify"]
     usd = 0.0
     for t in traces:
-        u = t.get("usage") or {}
-        usd += ((u.get("input_tokens") or 0) * PRICE[0] + (u.get("output_tokens") or 0) * PRICE[1]
-                + (u.get("cache_read_input_tokens") or 0) * PRICE[2]
-                + (u.get("cache_creation_input_tokens") or 0) * PRICE[3]) / 1e6
+        for u in [t.get("usage") or {}] + ([(t["second_pass"]["first"].get("usage") or {})] if t.get("second_pass") else []):
+            usd += ((u.get("input_tokens") or 0) * PRICE[0] + (u.get("output_tokens") or 0) * PRICE[1]
+                    + (u.get("cache_read_input_tokens") or 0) * PRICE[2]
+                    + (u.get("cache_creation_input_tokens") or 0) * PRICE[3]) / 1e6
     by = defaultdict(Counter)
     for r in rows:
         ok = (r["key"] == "answerable" and r["result"] == "answer") or (r["key"] != "answerable" and r["result"] == "abstain")
@@ -133,7 +133,11 @@ def main() -> None:
              f"{wilson(len(model_answers) - len(unverified), len(model_answers))} |", "",
              f"Correct abstentions by where they happened: {dict(Counter(r['stage'] for r in correct_abst))} (`scope` "
              "is a rule before any model call: advice, a company outside the corpus, a period outside coverage; `model` "
-             "is the model finding the passages don't answer it). The `model` ones are the real test of abstention.", "",
+             "is the model finding the passages don't answer it; `absence_guard` is a \"doesn't say\" answer to a "
+             "question asking for a figure, withheld by rule, FD-DEC 038). The `model` ones are the real test of "
+             "abstention.", "",
+             f"Second looks before an absence answer (FD-DEC 038): {sum(1 for t in traces if t.get('second_pass'))} "
+             "question(s); the cost below includes both calls.", "",
              f"Every answer shown cites an exact span or the question abstained. Answers withheld for an unverifiable "
              f"citation: {len(unverified)}. Measured cost of the run: ${usd:.2f} at list price.", "",
              "By author (correct = answered when the key says answerable, abstained when it says not):", ""]

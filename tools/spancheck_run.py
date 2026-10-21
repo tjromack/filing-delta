@@ -107,6 +107,18 @@ def entailed_by_citations(provider, name="answer_entailed_by_citations", thresho
     return g
 
 
+_UNITS: dict[tuple, list] = {}
+
+
+def heading_of(acc: str, sec: str, start: int) -> str:
+    """The section heading over the unit a citation sits in: the same heading the answering model saw."""
+    from filing_delta.qa.index import units_for
+    if (acc, sec) not in _UNITS:
+        f = next(f for f in catalog(ROOT) if f.accession == acc)
+        _UNITS[(acc, sec)] = units_for(ROOT, [f], (sec,))[0]
+    return next((u.heading for u in _UNITS[(acc, sec)] if u.start <= start < u.end), "")
+
+
 def outputs(run_file: str = "run.jsonl") -> tuple[list, dict]:
     """Cases and Outputs from a recorded run. For the dev slice there's no key: each case is marked answerable as
     the pipeline answered it, so only citation and grounding graders mean anything there."""
@@ -147,11 +159,18 @@ def outputs(run_file: str = "run.jsonl") -> tuple[list, dict]:
                      + " · " + SECTION_LABEL[c["section"]]) if f else ""
             if p.get("change"):
                 label += " · " + CHANGE_LABEL[p["change"]]
+            heading = heading_of(c["accession"], c["section"], c["start"])
+            if heading:                              # the model saw it in the passage header; it's filing text
+                label += f' · under the heading "{heading}"'
             cite = {"span": c["quote"], "source_id": src, "label": label}
             if c.get("claim"):                       # v3: the citation names the claim it supports
                 cite["claim"] = c["claim"]
             cites.append(cite)
-        u = t.get("usage") or {}
+        u = dict(t.get("usage") or {})
+        if t.get("second_pass"):                    # the first call of a second look counts too (FD-DEC 038)
+            for k, v in (t["second_pass"]["first"].get("usage") or {}).items():
+                if isinstance(v, (int, float)):
+                    u[k] = (u.get(k) or 0) + v
         cost = ((u.get("input_tokens") or 0) * SONNET[0] + (u.get("output_tokens") or 0) * SONNET[1]
                 + (u.get("cache_read_input_tokens") or 0) * SONNET[2]
                 + (u.get("cache_creation_input_tokens") or 0) * SONNET[3]) / 1e6

@@ -33,7 +33,10 @@ discuss, and the passages don't state that thing but do say something directly o
 "answerable" to true and answer in the form "[The filing]'s [section] doesn't say [X]. It does say [Z]." Cite Z \
 only. Say "doesn't say" about the sections shown, never that something is absent from the company's filings in \
 general. This doesn't apply when the question asks for a specific fact (a number, a name, an amount, a date) that \
-isn't there, or when nothing in the passages is on the same subject: then rule 3 applies."""
+isn't there, or when nothing in the passages is on the same subject: then rule 3 applies.
+   Set "absence" to true whenever your answer says the passages don't say something; otherwise false. When it is \
+true, list in "search_terms" up to 6 other words or phrases a filing might use for the thing you didn't find (for \
+"layoffs": "workforce reduction", "headcount", "restructuring"); otherwise leave "search_terms" empty."""
 
 SCHEMA = {
     "type": "object",
@@ -44,9 +47,11 @@ SCHEMA = {
             "type": "object",
             "properties": {"passage": {"type": "string"}, "quote": {"type": "string"}, "claim": {"type": "string"}},
             "required": ["passage", "quote", "claim"], "additionalProperties": False}},
+        "absence": {"type": "boolean"},
+        "search_terms": {"type": "array", "items": {"type": "string"}},
         "reason": {"type": "string"},
     },
-    "required": ["answerable", "answer", "citations", "reason"],
+    "required": ["answerable", "answer", "citations", "absence", "search_terms", "reason"],
     "additionalProperties": False,
 }
 

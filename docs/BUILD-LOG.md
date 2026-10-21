@@ -899,3 +899,20 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 ### Open / next
 - M8 gate: stop for Trevor's approval. Then M9 (export the QA pairs for Build 4, with each label's provenance:
   jury-agreed or Trevor-adjudicated) and M10 (case study and rubric self-score).
+
+## 2026-10-21 — Pipeline v4 before M9 (Trevor: fix the remaining defects first)
+- Both M8 bugs were already fixed. The live defect was QA21's false "doesn't mention". v4 adds a second search
+  before any absence answer, driven by the model's own list of other wording (FD-DEC 038).
+- **What broke along the way:**
+  1. A lexical-only check found nothing to fix, because "sharing" and "shares" share the stem "shar". I'd have
+     shipped a no-op if the test hadn't asked for the case to actually trigger.
+  2. Two tests were wrong at first, not the code: the added passage matched "retire" from "retirement", and a match
+     sat in a heading.
+  3. The first v4 scored run over-answered two figure questions after the second search found nearby figures. The
+     FD-DEC 033 boundary moved from the prompt into code.
+  4. The report counted the guard's refusals as unverifiable citations; they now have their own stage.
+- **Result:** 37/37 answered with the key's passage, 23/23 abstentions, 37/37 verified, 59/60 entailed by own
+  citations. spancheck abstention 60/60. Cost: dev $0.4, v4 run $0.45, timed re-run $0.45, judge $1.21.
+- **Learning:** every fix to the absence behavior has moved a failure somewhere else: v2 abstained on QA21, v3 gave
+  a false absence, v4's first run over-answered figures. Deterministic guards around model behavior held where
+  prompt wording alone didn't.

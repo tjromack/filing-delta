@@ -41,6 +41,10 @@ DEV = [
     "What does Netflix's 2024 10-K say about the effect of its ad-supported plan on churn?",  # subject yes, aspect no
     "What was Ford's average transaction price for the F-150 in 2024, according to its 10-K?",  # specific fact: abstain
     "Does Coca-Cola's 2023 10-K say that weight-loss drugs have already reduced its sales?",    # no, but a related risk
+    # Added for FD-DEC 038 (a second look before an absence answer). The first is a deliberate sibling of scored
+    # QA21's failure (same company, other year, other wording); the second should find nothing more.
+    "What does Netflix's 2024 10-K say about the effect of password sharing on membership growth?",
+    "Does Apple's 2024 10-K say it depends on TSMC?",
 ]
 
 

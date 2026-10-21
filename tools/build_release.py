@@ -46,7 +46,9 @@ def tree_digest(rel: str) -> tuple[str, int]:
 
 
 def main() -> None:
-    date = time.strftime("%Y-%m-%d")
+    # A published release is never overwritten: a second build on the same day takes a revision label
+    # (python tools/build_release.py 2026-10-20b).
+    date = sys.argv[1] if len(sys.argv) > 1 else time.strftime("%Y-%m-%d")
     name = f"filing-delta-data-{date}.tar.gz"
     out = ROOT / "dist" / name
     out.parent.mkdir(exist_ok=True)

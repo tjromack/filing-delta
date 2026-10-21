@@ -92,6 +92,73 @@ def test_unparseable_and_refusal_abstain(tmp_path, cat):
     assert t["result"] == {"type": "abstain", "reason": "The model declined to answer."}
 
 
+def test_missed_terms_are_question_words_in_scope_but_not_retrieved():
+    from filing_delta.qa.ask import missed_terms
+    from filing_delta.qa.index import Unit
+    units = [Unit("A", "10K_1A", 0, 9, "paragraph", "", "membership growth was strong"),
+             Unit("A", "10K_1A", 10, 19, "paragraph", "", "we limit shared viewing outside a household"),
+             Unit("A", "10K_1A", 20, 29, "paragraph", "", "unrelated text")]
+    top = [(1.0, units[0])]
+    q = "What does Netflix's 2023 10-K say about the effect of paid sharing on membership growth?"
+    assert missed_terms(q, units, top) == ["shar"]        # in the filing, not retrieved; "paid" is in neither
+    assert missed_terms(q, units, [(1.0, units[0]), (1.0, units[1])]) == []
+
+
+def test_absence_answer_with_missed_words_gets_a_second_look(tmp_path, cat):
+    calls = []
+
+    def make(p):
+        calls.append(len(p))
+        return {"answerable": True, "answer": "The 10-K doesn't say X. It does say this.", "reason": "", "absence": True,
+                "search_terms": ["pension", "retirement plan"],      # other wording the model offers for X
+                "citations": [{"passage": "P1", "quote": first_sentence(p), "claim": "It does say this."}]}
+    q = "What does Weyco's 2023 10-K say about tariffs on footwear imported from Vietnam?"
+    t = ask(q, ROOT, cat, Recorder(tmp_path, provider=Scripted(make)))
+    sp = t["second_pass"]                             # an absence claim with other wording: always a second look
+    assert len(calls) == 2 and calls[1] > calls[0] and "pension" in sp["missed_terms"]
+    assert len(t["retrieved"]) == calls[1] and sp["first"]["result"]["type"] == "answer"
+    from filing_delta.qa.index import tokens
+    for a in sp["added"]:                              # every added passage holds a word the second search was for
+        text = (ROOT / "data" / "sections" / a["accession"] / f"{a['section']}.txt").read_text(
+            encoding="utf-8")[a["start"]:a["end"]]
+        assert set(tokens(a["heading"] + " " + text)) & set(sp["missed_terms"])
+    # an answer that doesn't claim an absence never triggers a second look
+    calls.clear()
+    t2 = ask(q, ROOT, cat, Recorder(tmp_path / "b", provider=Scripted(
+        lambda p: {"answerable": True, "answer": "It says this.", "reason": "", "absence": False,
+                   "citations": [{"passage": "P1", "quote": first_sentence(p), "claim": "It says this."}]})))
+    assert "second_pass" not in t2
+
+
+@pytest.mark.parametrize("q,figure", [
+    ("How much did Coca-Cola spend on Super Bowl advertising according to its 2022 10-K?", True),
+    ("What does Exxon's 2023 10-K say its breakeven oil price is for its Guyana projects?", True),
+    ("How many iPhones did Apple sell in fiscal 2023, according to its 10-K?", True),
+    ("What does Apple's 2023 10-K say Tim Cook's salary was?", True),
+    ("Does Walmart's fiscal 2025 10-K discuss climate-related litigation as a risk?", False),
+    ("Does Pfizer's 2021 10-K discuss COVID-19 vaccine pricing pressure?", False),
+])
+def test_figure_questions_are_recognized(q, figure):
+    from filing_delta.qa.ask import FIGURE_Q
+    assert bool(FIGURE_Q.search(q)) == figure
+
+
+def test_absence_answer_to_a_figure_question_is_refused(tmp_path, cat):
+    t = ask("How much does Weyco's 2023 10-K say it paid per pair of shoes?", ROOT, cat, Recorder(
+        tmp_path, provider=Scripted(lambda p: {
+            "answerable": True, "answer": "The 10-K doesn't say a price per pair. It does say it buys abroad.",
+            "reason": "", "absence": True, "search_terms": [],
+            "citations": [{"passage": "P1", "quote": first_sentence(p), "claim": "It buys abroad."}]})))
+    assert t["result"]["type"] == "abstain" and t["result"]["reason"].startswith("The filings in scope don't state")
+    assert t["absence_guard"]["answer_withheld"]["type"] == "answer"
+    # the same answer without the absence flag stands
+    t2 = ask("How much does Weyco's 2023 10-K say it paid per pair of shoes?", ROOT, cat, Recorder(
+        tmp_path / "b", provider=Scripted(lambda p: {
+            "answerable": True, "answer": "It buys abroad.", "reason": "", "absence": False, "search_terms": [],
+            "citations": [{"passage": "P1", "quote": first_sentence(p), "claim": "It buys abroad."}]})))
+    assert t2["result"]["type"] == "answer"
+
+
 def test_scope_abstentions_never_call_the_model(tmp_path, cat):
     class Boom:
         def complete(self, request):
