@@ -134,4 +134,5 @@ Decisions already settled: `DECISIONS.md` FD-DEC 001–006.
         rehearsed from fresh clones until clean (two bugs found and fixed; FD-DEC 041)
 - [x] `docs/CASE-STUDY.md` on the §06 template, with the parse-failure log as its spine; every number checked against its source
 - [x] Repo + release public; one-line demo passed cold on macOS; curl fallback run (2026-10-22)
-- [ ] **Gate:** 14+/16 (self-scored 16/16), Trevor's approval; then the site page (`draft: false`). **← stop**
+- [x] **Gate:** 14+/16 (self-scored 16/16). Trevor published the case study and the build card on the site
+      (`tjromack-site` commit `590600b`, 2026-10-22). Build 3 is done.

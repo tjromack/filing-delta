@@ -21,7 +21,7 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
 | M7 · spancheck | `9357eca` + v3 (approved) | v3: provenance 89/89; answers entailed by their own citations 59/60 (51 in v2); p50 2.6 s; $0.38 per 60 | 9 answers add true but uncited details; the exact-substring verifier can't see that, the judge can |
 | M8 · release + read view | `0a17762` (approved) | clean clone on a fresh Linux runner reproduces every report byte for byte, no key (752 s); 63 MB data release; read view | the EDGAR client refused to run offline without a User-Agent; a libxml2 difference broke a test, not an output |
 | M9 · Build 4 export | `6e8e28c` (approved) | 60 items, 37 answerable with 202 exact spans; validates against the proposed schema; every span re-read | no B4 schema existed; proposed one (FD-DEC 039); the validator crashed on bad input before it was fixed |
-| M10 · self-score + case study | (this commit, awaiting approval) | §01 self-score 16/16, conditional on going public; `filing-delta demo`: fresh clone to read view in 254 s, no key | the demo served a run where every question was scoped out, silently; the first fix changed the frozen pipeline's hash |
+| M10 · self-score + case study | `593364b` (on the site) | §01 self-score 16/16, conditional on going public; `filing-delta demo`: fresh clone to read view in 254 s, no key | the demo served a run where every question was scoped out, silently; the first fix changed the frozen pipeline's hash |
 
 ---
 
@@ -984,3 +984,5 @@ Entry template: **What happened · Decisions · Learnings · What broke (+ fix) 
   clone downloaded the release anonymously, then verified and unpacked it. Both self-score conditions are met.
 - Prepared a prompt for the site repo (`tjromack-site`) to build the case-study page from `docs/CASE-STUDY.md` in
   the site's own format, kept as a draft until approved.
+- Trevor published the case study and the build card on the site (`tjromack-site` `590600b`). M10's gate is
+  closed and Build 3 is done. Its labeled QA pairs (`export/b4-finance-qa.jsonl`) wait for Build 4.
